@@ -1,4 +1,4 @@
-FreeCAD має потужний [Expression Engine](https://www.freecadweb.org/wiki/Expressions). У цьому посібнику показано, як створити простий механізм за допомогою обмежень, керованих деякими виразами.
+FreeCAD має потужний [Expression Engine](https://www.freecadweb.org/wiki/Expressions). This tutorial shows how to create simple mechanism using constraints driven by some expressions.
 
 # Гвинтовий механізм
 
@@ -6,25 +6,25 @@ FreeCAD має потужний [Expression Engine](https://www.freecadweb.org/w
 
 * Встановіть властивість `LockAngle` обмеження на `True`;
 * Введіть вираз;
-  * Якщо ви хочете рухатись, обертаючи гвинт, виразіть властивість `Offset` через властивість `Angle`, як показано на екрані нижче;
-  * Якщо ви хочете рухатися шляхом переміщення, виразіть `Angle` через `Offset`.
+  * If you want to drive by rotating the screw, then express the `Offset` property in term of the `Angle` property, as shown in the screen cast below;
+  * If you want to drive by translation, then express `Angle` in term of `Offset`.
 
 [[images/screw.gif]]
 
 # Зубчастий механізм
 
-Трохи складніший приклад це [rack and pinion](https://en.wikipedia.org/wiki/Rack_and_pinion) система нижче. Всі шестерні мають модуль 1 мм. Велика шестерня має 18 зубів, а мала – 15. Ви можете завантажити деталі [тут](https://github.com/realthunder/files/raw/master/misc/gears.fcstd). Вам необхідно встановити [Gear Workbench](https://github.com/looooo/FCGear), якщо ви хочете змінити шестерні.
+A slightly more complex example is a [rack and pinion](https://en.wikipedia.org/wiki/Rack_and_pinion) system shown below. Всі шестерні мають модуль 1 мм. The big pinion gear has 18 teeth, while the small one has 15. You can download the parts [here](https://github.com/realthunder/files/raw/master/misc/gears.fcstd). You need to install the [Gear Workbench](https://github.com/looooo/FCGear) if you want to modify the gears.
 
 [[images/gear.png]]
 
 
-При перегляді зображення вище, інтуїтивно можна подумати про використання `PointOnLine` обмеження для шестерні в слоті. Але в цьому випадку набагато простіше використовувати беззаперечно потужне обмеження `PlaneCoincident`. Ми ділимо цю систему на дві збірки - шестерні та рейки.
+By the look of the picture above, one may intuitively think of using the `PointOnLine` constraint for the gear in the slot. But in this case, it is much easier to use, again, the all powerful `PlaneCoincident` constraint. We divide this system into two assemblies for, well, the pinions and the rack.
 
-Спочатку створіть ескіз, щоб визначити положення двох шестерень. У реальних застосунках вам, ймовірно, знадобиться також визначити відстань двох кіл, а також більшості інших констант за допомогою виразів, показаних у цьому посібнику, або краще використовувати [>Spreadsheet](https://www.freecadweb.org/wiki/Spreadsheet_Workbench).
+Спочатку створіть ескіз, щоб визначити положення двох шестерень. In real applications, you probably should derive the distance of the two circle using expressions, too, as well as most of other constants shown in this tutorial, or better, use a [Spreadsheet](https://www.freecadweb.org/wiki/Spreadsheet_Workbench).
 
-Потім створіть збірку, додати ескіз та два шестерні та розташуйте їх використовуючи ескіз з `PlaneCoincident` обмеженням.
+Then, create an assembly, add the sketch and two gears, and position the two using the sketch with `PlaneCoincident` constraint.
 
-Увімкніть властивість `LockAngle` для обох обмежень. І оскільки ми будемо переміщати велику шестерню, введіть вираз для властивості `Angle` обмеження малої шестерні, як показано нижче, яке по суті є коефіцієнтом передачі з деяким зміщенням,
+Увімкніть властивість `LockAngle` для обох обмежень. And since we will be driving the big gear, enter the expression for the `Angle` property of the small gear constraint as below, which is basically the gear ration with some offset,
 
 ```
 -Constraint002.Angle*18/15-6
@@ -34,7 +34,7 @@ FreeCAD має потужний [Expression Engine](https://www.freecadweb.org/w
 
 [[images/gear1.gif]]
 
-Тепер ми створюємо остаточну збірку, додавши збірку шестерні та основу з зубчастою рейкою та закріплюємо їх разом за допомогою іншого `PlaneCoincident`. Зверніть увагу на те, що ми використовуємо для обмеження `Sketch`. Це важливо, тому що шестерня має повертатись, поки `Sketch` зафіксований. Ми знову маємо заблокувати поворот цього обмеження. Ми хочемо переміщати шестерні відносно осі Y, тому введіть вираз у властивість `OffsetY` обмеження,
+Now, we create the final assembly, add the pinion assembly and the base with the rack gear, and fix them together with another `PlaneCoincident`. Notice that we are using the `Sketch` for constraining. This is important, because the gear is meant to be rotated, while the `Sketch` is fixed. We shall again lock the rotation of this constraint. We want to translate the pinions in its relative Y position, so enter an expression in the `OffsetY` property of the constraint,
 
 ```
 -Constraint001.Angle/360*15*pi
