@@ -10,7 +10,7 @@ The finished rotor assembly looks like this,
 
 The assembly consists of the following parts.
 
-\[\[images/wind-turbine-gear.png]\] \[[images/wind-turbine-ring.png\]] \[[images/wind-turbine-dome.png]\] \[[images/wind-turbine-socket.png\]\] \[[images/wind-turbine-pin.png\]]
+\[[images/wind-turbine-gear.png]\] \[[images/wind-turbine-ring.png\]] \[[images/wind-turbine-dome.png]\] \[[images/wind-turbine-socket.png\]] [[images/wind-turbine-pin.png]]
 
 The original parts file can be downloaded [here](https://github.com/realthunder/files/raw/master/freecad/asm3/misc/wind-turbine-parts.zip)
 
