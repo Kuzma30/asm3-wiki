@@ -2,7 +2,7 @@ __New Feature__
 
 * Add support for MacOS
 
-__Bug Fix__
+__Виправлено помилки__
 
 * Fix axial alignment redundancy handling
 
