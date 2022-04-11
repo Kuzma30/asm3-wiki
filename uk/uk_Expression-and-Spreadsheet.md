@@ -1,22 +1,22 @@
-# Overview
+# Загальна інформація
 
-Starting from version 0.9, there is a major upgrade of FreeCAD [Expression Engine](http://www.freecadweb.org/wiki/index.php?title=Expressions) and [Spreadsheet Workbench](http://www.freecadweb.org/wiki/index.php?title=Spreadsheet_Module). This article highlights the difference and enhancement made in my branch comparing to the upstream. It assumes that the reader is already familiar with the basic usage of expression and spreadsheet. If not, please check out the links above first, and also [this](https://yorikvanhavre.gitbooks.io/a-freecad-manual/content/working_with_freecad/using_spreadsheets.html) book chapter.
+Починаючи з версії 0.9, існує значне оновлення FreeCAD [Expression Engine](http://www.freecadweb.org/wiki/index.php?title=Expressions) і [Spreadsheet Workbench](http://www.freecadweb.org/wiki/index.php?title=Spreadsheet_Module). У цій статті висвітлюються відмінності та покращення, зроблені в моїй гілці у порівнянні з офіційною(upstream). Передбачається, що читач вже знайомий з основами використанням виразів і електронних таблиць. Якщо ні, спершу перегляньте посилання вище, а також розділ [цієї](https://yorikvanhavre.gitbooks.io/a-freecad-manual/content/working_with_freecad/using_spreadsheets.html) книги.
 
-Here is a brief list of the enhancements,
+Короткий список покращень,
 
-* Expression syntax has been greatly extended to become a full blown scripting language. The syntax is borrowed from Python with a few extension to support FreeCAD unit system, document object reference, etc. It is _mostly_ backward compatible with upstream syntax with very few [exceptions](#python-syntax-mode).
+* Синтаксис виразів був значно розширений, щоб стати повноцінною мовою сценаріїв. Синтаксис запозичений з Python з кількома розширеннями для підтримки системи модулів FreeCAD, посилання на об’єкт документа тощо. Він _здебільшого_ зворотно сумісний із синтаксисом upstream із дуже невеликими [винятками](#python-syntax-mode).
 
-* Because of the extended syntax, expression can now evaluates into any type of Python object. And the expression engine has been extended to support binding to any type of property. See [here](#expression-binding) for more details.
+* Завдяки розширеному синтаксису вираз тепер може перетворюватися на будь-який тип Python об’єкта. І механізм виразів був розширений, щоб підтримувати прив’язування до будь-якого типу властивості. Додаткову інформацію див. [тут](#expression-binding).
 
-* Both the `PropertyExpressionEngine` and `PropertySheet` has been modified to behave similarly as a link property that supports external objects. This means,
-  * The external referenced document will be automatically opened together with the owner document;
-  * Supports the new \[\[Topological Naming]\\] (with the [new syntax](#user-content-subobject))
+* Обидва `PropertyExpressionEngine` та `PropertySheet` були модифіковані, щоб вони поводилися аналогічно до властивостей посилання, яке підтримує зовнішні об’єкти. Це означає,
+  * Зовнішній документ з посиланням, буде автоматично відкрито разом з документом власника;
+  * Підтримує нове \[[Топологічні імена]\] (з [ новим синтаксисом](#user-content-subobject))
 
-* New alternative [edit mode](#spreadsheet-edit-mode) support in `Spreadsheet`, including button, combo box, and label, which makes it possible for user to create simple customized GUI using spreadsheet.
+* Нова альтернативна підтримка [режиму редагування](#spreadsheet-edit-mode) в `Електронній таблиці`, включаючи кнопку, поле зі списком і мітку, що дає змогу користувачеві створювати простий графічний інтерфейс за допомогою електронної таблиці.
 
-* Support relative and absolute cell and range reference when copying and pasting spreadsheet cell(s). See [here](#cell-and-range-reference) for more details.
+* Підтримка відносних та абсолютних посилань на комірку або діапазон комірок електронної таблиці під час копіювання та вставлення. Додаткову інформацію див. [тут](#cell-and-range-reference).
 
-For those who do not care much of the details, and would like to jump straight into the business, you can skip to [here](#demonstration) for a demo.
+Для тих, кому не дуже важливі деталі й хочеться перейти безпосередньо до справи, ви можете перейти [сюди](#demonstration) для демонстрації.
 
 # Security Concern
 
