@@ -5,7 +5,7 @@ __New Feature__
 
 [[images/workplane.gif]]
 
-__Bug Fix__
+__Виправлено помилки__
 
 * Fix zero angle locking in various composite constraints (`PlaneCoincident`, `PlaneAlignment`, `AxialAlignment`, etc)
 * Fix negative offset in various composite constraints
