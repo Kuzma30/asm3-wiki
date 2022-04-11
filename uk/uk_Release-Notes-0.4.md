@@ -4,7 +4,7 @@ __New Feature__
 * Turn on SolveSpace solver backend redundant constraint tolerance.
 * Auto relax [certain combinations](../commit/80bceefcc69f80ae6812628a5a2368c0bbdd0a77) of constraints.
 
-__Bug Fix__
+__Виправлено помилки__
 
 * Fix (again) negative offset in various composite constraints
 * Tolerate empty lock constraint
