@@ -1,10 +1,10 @@
-New Feature
+Нові Функції
 * Exposed all supported constraints to toolbar.
 * Support sketching using Draft wire, circle/arc.
 * Add auto element visible command.
 * Support `Trace` of any element in the assembly container.
 
-Bug Fix
+Виправлено помилки
 * Partial fix of SymPy backend
 * Fix `Trace` command
 * Fix and improve auto recompute
