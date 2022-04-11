@@ -1,71 +1,71 @@
-Assembly3 supports multiple constraint solver backend. The user can choose different solver for each `Assembly`. The type of constraints available may be different for each solver. At the time of this writing, two backend are supported, one based on the solver from [SolveSpace](http://solvespace.com/index.pl), while the other uses [SymPy](http://www.sympy.org/en/index.html) and [SciPy](https://www.scipy.org/), and is modeled after SolveSpace. In other word, the current two available solvers supports practically the same set of constraints and should have very similar behavior, except some difference in performance.
+Assembly3 підтримує декілька бекендів вирішувача обмежень. Користувач може вибрати різні вирішувачі для кожної `Збірки`. Тип доступних обмежень може відрізнятися для кожного вирішувача. На момент написання цього тексту підтримуються два бекенда, один на основі вирішувача з [SolveSpace](http://solvespace.com/index.pl), а інший використовує [SymPy](http://www.sympy.org/en/index.html) і [SciPy](https://www.scipy.org/), і моделюється після SolveSpace. Іншими словами, поточні два доступні вирішувачі підтримують практично той самий набір обмежень і повинні мати дуже схожу поведінку, за винятком певної різниці в продуктивності.
 
-Assembly3 exposed most of SolveSpace's constraints. In addition, it also provides several new constraints that are more useful for assembly purposes. Most of these constraints are in fact composite of the original constraints from SolveSpace. All of the constraints are available as toolbar buttons, but only the more common ones are visible by default. To reveal all the constraints, click ![More](../raw/master/freecad/asm3/Gui/Resources/icons/constraints/Assembly_ConstraintMore.svg?sanitize=true). See the [section](#list-of-constraints) below for links to details of each individual constraint.
+В Assembly3 реалізована більшість обмежень SolveSpace. Крім того, реалізовано декілька нових обмежень, які є більш корисними для збірок. Більшість із цих обмежень насправді є складовими оригінальних обмежень SolveSpace. Усі обмеження доступні у вигляді кнопок на панелі інструментів, але за замовчуванням видно лише найпоширеніші. Щоб показати всі обмеження, натисніть кнопку ![More](../raw/master/freecad/asm3/Gui/Resources/icons/constraints/Assembly_ConstraintMore.svg?sanitize=true). Перегляньте [розділ](#list-of-constraints) нижче для ознайомлення з кожним обмеженням.
 
-# Creating Constraint
+# Створення Обмеження
 
-Creating constraint is easy. Simply create an assembly by clicking ![AddAssembly](../raw/master/freecad/asm3/Gui/Resources/icons/Assembly_New_Assembly.svg?sanitize=true), drag in the parts, select some geometry elements of the parts in 3D view, and click one of the constraint buttons to create the constraint. The constraining elements will appear as child objects under the constraint object. By default, auto element visibility function is active, which will hide the constraining element, and auto reveal itself when being selected, either directly, or when its parent constraint is selected. You can deactivate this function by clicking ![AutoVis](../raw/master/freecad/asm3/Gui/Resources/icons/Assembly_AutoElementVis.svg?sanitize=true), and control the element visibility manually as shown in the following screen cast.
+Створювати обмеження легко. Просто створіть збірку натиснувши ![AddAssembly](../raw/master/freecad/asm3/Gui/Resources/icons/Assembly_New_Assembly.svg?sanitize=true), перетягніть туди деталі, виберіть деякі елементи геометрії в 3D-виді і натисніть одну з кнопок обмеження, щоб створити обмеження. Елементи обмеження будуть показані як дочірні об’єкти під об’єктом обмеження. За замовчуванням, функція автоматичної видимості елементів активна, яка приховає обмежувальний елемент і автоматично покаже його під час вибору, або при виборі його батьківське обмеження. Щоб деактивувати цю функцію, натисніть ![AutoVis](../raw/master/freecad/asm3/Gui/Resources/icons/Assembly_AutoElementVis.svg?sanitize=true), і керуйте видимістю елементів вручну, як показано на наступному скриншоті.
 
 [[images/create-constraint.gif]]
 
-When you create an assembly, it is advisable to first choose a _base part_, which is supposed to have a fixed placement relative to its containing assembly. You do this by creating a [[Lock]] constraint ![Lock](../raw/master/freecad/asm3/Gui/Resources/icons/constraints/Assembly_ConstraintLock.svg?sanitize=true), as shown in the above screen cast. You can still move the _locked_ part, either using various [[Mover]] tools (![Mover](../raw/master/freecad/asm3/Gui/Resources/icons/Assembly_Move.svg?sanitize=true), ![AxialMover](../raw/master/freecad/asm3/Gui/Resources/icons/Assembly_AxialMove.svg?sanitize=true), ![QuickMover](../raw/master/freecad/asm3/Gui/Resources/icons/Assembly_QuickMove.svg?sanitize=true)), or directly modify the part's `Placement` property. The `Lock` constraint only prevent the assembly solver from changing the part's location. If you moved a locked part, every other part will gather around the new location of the locked part, after solver recompute. If you don't want to accidentally activate the mover for locked parts, click ![LockMover](../raw/master/freecad/asm3/Gui/Resources/icons/Assembly_LockMover.svg?sanitize=true).
+Коли ви створюєте збірку, бажано спочатку вибрати _базову деталь_, яка повинна мати фіксоване розташування відносно самої збірки. Ви зробите це, створивши обмеження [[Lock]] ![Lock](../raw/master/freecad/asm3/Gui/Resources/icons/constraints/Assembly_ConstraintLock.svg?sanitize=true), як показано на скриншоті. Ви можете переміщати_locked_ деталі, використовуючи різні засоби переміщення \[[Mover]\] (![Mover](../raw/master/freecad/asm3/Gui/Resources/icons/Assembly_Move.svg?sanitize=true), ![AxialMover](../raw/master/freecad/asm3/Gui/Resources/icons/Assembly_AxialMove.svg?sanitize=true), ![QuickMover](../raw/master/freecad/asm3/Gui/Resources/icons/Assembly_QuickMove.svg?sanitize=true)), або напряму змінюючи параметр `Placement` деталі. Обмеження `Lock` лише перешкоджає вирішувачу збірки змінювати розташування деталі. Якщо ви перемістили заблоковану деталь, кожна інша деталь переміститься до нового розташування заблокованої деталі після повторного обчислення вирішувача. Якщо ви не хочете випадково перемістити заблоковану деталь, натисніть ![LockMover](../raw/master/freecad/asm3/Gui/Resources/icons/Assembly_LockMover.svg?sanitize=true).
 
-Each `Constraint` object has a `Type` property, which allows the user to change the type of an existing constraint using the property editor. Not all constraints require the same types of geometry elements, which means that changing the type may invalidate a constraint. The tree view will mark those invalid constraints with a red exclamation mark. Hover the mouse over those invalid items to see the explanation. You can reorder the elements using ![Up](../raw/master/freecad/asm3/Gui/Resources/icons/Assembly_TreeItemUp.svg?sanitize=true) and ![Down](../raw/master/freecad/asm3/Gui/Resources/icons/Assembly_TreeItemDown.svg?sanitize=true) buttons. You change an existing constraining element by selecting a new face or edge in the 3D view and drag the corresponding tree item and drop it over the element item.
+Кожен об’єкт `Constraint` має властивість `Type`, яка дозволяє користувачеві змінювати тип існуючого обмеження за допомогою редактора властивостей. Не всі обмеження вимагають однакових типів елементів геометрії, а це означає, що зміна типу може зробити обмеження недійсним. В ієрархії документа ці недійсні обмеження будуть позначені червоним знаком оклику. Наведіть курсор миші на ці некоректні елементи, щоб побачити пояснення. Можна змінити порядок елементів за допомогою кнопок ![Up](../raw/master/freecad/asm3/Gui/Resources/icons/Assembly_TreeItemUp.svg?sanitize=true) ![Down](../raw/master/freecad/asm3/Gui/Resources/icons/Assembly_TreeItemDown.svg?sanitize=true). Ви можете змінити існуючий елемент обмеження, вибиравши нову площину або ребро у 3D виді, почати перетягувати відповідний об'єкт в ієрархії та опустити його на елемент.
 
-# Constraining Geometry Element
+# Обмеження Геометрічних Елементів
 
-`Assembly3` is very flexible about the interpretation of a constraining geometry element. When a constraint is named as `PointOnLine`, it does not mean the constraint only accepts vertex and linear edge. Here is a list of alternative interpretations of an element,
+`Assembly3` дуже гнучко тлумачить геометрію для обмеження елементу. Коли обмеження називається `PointOnLine`, це не означає, що обмеження стосується лише вершину і лінійного ребра. Ось список альтернативних інтерпретацій елементу,
 
-* Point
-    * Coordinate of a vertex;
-    * Middle point of a linear edge;
-    * Center of a circular edge;
-    * Center of bounding box of any other edge;
-    * Center of bounding box of a planar face;
-    * Center of a circular face;
-    * Center of the first edge (i.e. `Edge1`) of a cylindrical face.
-* Line, (of which only the direction is relevant for constraining, not the end points)
-    * Linear edge;
-    * The normal vector of the surface of a circular edge;
-    * The normal vector of the surface of a planar face;
-    * The revolving axis of a cylindrical face.
-* Plane, defined by an origin point interpreted the same way as the above _Point_, and a normal vector
-    * The surface of a circular edge;
-    * The surface of the first edge (i.e. `Edge1`) of a cylindrical face;
-    * The surface of a planar face.
+* Точка
+    * Координата вершини;
+    * Середня точка лінійного ребра;
+    * Центр кола;
+    * Центр рамки для будь-якого іншого ребра;
+    * Центр рамки для планарної поверхні;
+    * Центр кругової поверхні;
+    * Центр першого ребра (тобто `Edge1`) циліндричної поверхні.
+* Лінія (для обмеження має значення лише напрямок, а не кінцеві точки)
+    * Лінійне ребро;
+    * Вектор нормалі поверхні кола;
+    * Вектор нормалі поверхні;
+    * Вісь обертання циліндричної поверхні.
+* Площина, визначена точкою початку координат, що інтерпретується аналогічно до наведеної вище _Точки_, і вектор нормалі
+    * Поверхня кола;
+    * Поверхня першого ребра (тобто `Edge1`) циліндричної поверхні;
+    * Поверхня площини.
 
-One thing that a serious user may find worth getting familiar with is the [Element](Concepts#Eelment) concept in `Assembly3`. The elements used by various constraints never reference the actual part object directly, but instead, through an intermediate object stored in the `ElementGroup`. If the geometry belongs to some model in a sub-assembly, then the `Element` object is stored in the `ElementGroup` of that sub-assembly instead of the parent's. You can consider the `Elements` as a declaration of geometry interfaces that this part (as a sub-assembly) can be constrained in higher level assemblies. Many advanced feature is made possible through this extra indirection, such as [part replacement](Replacing-Part).
+Одна річ, з якою серйозному користувачу слід ознайомитись, це концепція [Елементу](Concepts#Eelment) в `Assembly3`. Елементи, які використовуються різними обмеженнями, ніколи не посилаються на фактичний об’єкт деталі безпосередньо, а через проміжний об’єкт, що зберігається в `ElementGroup`. Якщо геометрія належить якійсь моделі в підзбірці, тоді об’єкт `Element` зберігається в `ElementGroup` цієї підзбірки замість батьківського. Ви можете розглядати `Елементи` як оголошення інтерфейсів геометрії, що ця деталь (як підзбірка) може бути обмежена в збірках вищого рівня. Багато розширених функцій стали можливими завдяки цьому додатковому напряму - [заміні деталей](Replacing-Part).
 
-As shown in the previous section, you can create constraint by simply selecting a face or edge of the part model. What is happening behind the scene is that the program will find the sub-assembly that owns the selected part geometry model, and create an `Element` object in its `ElementGroup` if there isn't one existing, and finally create an `ElementLink` referencing the `Element`, and put it under the new constraint. Instead of directly selecting geometry elements of the model in 3D view, you can also select any existing `ElementLink` or `Element` in the tree view to create new constraints, which is in fact the preferable way to do, as illustrated in this [tutorial](How-to-Handle-Large-Scale-Assembly).
+Як показано в попередньому розділі, ви можете створити обмеження, просто вибравши поверхню або ребро моделі деталі. За сценою відбувається те, що програма знайде підзбірку, якій належить вибрана модель геометрії деталі, і створить об’єкт `Element` у своїй `ElementGroup`, якщо немає існуючого, і, нарешті, створіть `ElementLink`, що посилається на `Element`, і помістить його під нове обмеження. Замість того, щоб безпосередньо вибирати елементи геометрії моделі в 3D-виді, ви також можете вибрати будь-який існуючий `ElementLink` або `Element` в ієрархії документа, щоб створити нові обмеження. Оптимальний спосіб це здійснити показано в [посібнику](How-to-Handle-Large-Scale-Assembly).
 
-If you are constraining a part object directly without using any sub-assembly, then the `Element` will be stored directly in the current assembly. This is allowed for quick testing of simple assemblies, and also to make it easy for beginners to get started. For complex real world assemblies, it is strongly recommended to wrap each part object inside an assembly before further assembling, so that each geometry reference to the part model can be grouped together for easy updating through drag and drop. See, again, [this](How-to-Handle-Large-Scale-Assembly) tutorial for more tips of handling complex assemblies.
+Якщо ви обмежуєте об’єкт деталі безпосередньо без використання будь-яких під-збірок, то `Елемент` буде збережено прямо у поточній збірці. Це дозволено для швидкого тестування простих збірок, а також для полегшення початку роботи новачкам. Для реальних складних збірок рекомендується обернути кожен об’єкт деталі всередині збірки перед подальшим складанням, щоб кожне посилання геометрії до моделі деталі можна було згрупувати разом для легкого оновлення за допомогою перетягування. Знову дивіться [цей](How-to-Handle-Large-Scale-Assembly) посібник, щоб отримати додаткові поради для роботи зі складними збірками.
 
-# Geometry Element Offset
+# Зсув елементу геометрії
 
-Each `ElementLink` has an `Offset` property to allow you to apply some transformation to the element before constraining. The offset is always in the geometry element's coordinate space. For example, for a planar face, the z axis of the offset placement is always pointing to the normal of the face. Because `ElementLink` is used by one and only one `Constraint`, its offset does not affect other constraints. The `Element` object also has an `Offset` property with the same purpose. However, because the `Element` may be referenced by multiple `ElementLink`, changing the offset may affect multiple constraints. This is useful, for example, to introduce some allowance between parts when assembling.
+Кожний `ElementLink` має властивість `Offset`, що дозволяє застосувати деякі перетворення до елемента перед обмеженням. Зсув завжди знаходиться в координатному просторі елемента геометрії. Наприклад, для плоскої поверхні зміщення по вісі z завжди відбувається вздовж нормалі до площини. Оскільки `ElementLink` використовується одним і лише одним `обмеженням`, його зміщення не впливає на інші обмеження. Об’єкт `Element` також має властивість `Offset` з тією ж метою. Однак, оскільки на `Element` може посилатися кілька `ElementLink`, зміна зміщення може вплинути на множинні обмеження. Це корисно, наприклад, для введення певного припуску між деталями при складанні.
 
-The following screen cast shows the usage of element `Offset`, and highlights the difference between applying offset on `ElementLink` and `Element`.
+Наведене нижче відео показує використання `Offset` для елемента і показує різницю між використанням зміщення для `ElementLink` та `Element`.
 
 [[images/element-offset.gif]]
 
-<a name="element-actions"></a>Starting from version 0.11, there is a few new context menu actions to simplify manipulating element offset. Simply right click any `Element` or `ElementLink` item in the tree view to bring up the context menu, available actions are,
+<a name="element-actions"></a>Починаючи з версії 0.11, є кілька нових пунктів контекстного меню для спрощення маніпулювання зміщенням елемента. Просто клацніть правою кнопкою по будь-якому `елементі` або `ElementLink` в ієрархії документа, щоб побачити контекстне меню з доступними діями
 
-* `Flip element`: Flip the Z normal of the element by rotation 180 degrees along its X axis. If `CTRL` key is pressed while activate this action, it will rotate along the element's Y axis. Note that `Flip element` is most effective when used in `Attachment` constraint, because the constraint follows the element's Z normal unambiguously. For other type of constraint, like `PlaneConcidence` or `PlaneAlignment`, you may want to try the `Flip part` menu action, because these types of constraint works the same regardless of the element Z normal orientation, so flipping the element will have no effect.
+* `Flip element (Перевернути елемент)`: перевернути Z нормаль елемента, повернувши його на 180 градусів відносно осі X. Якщо при активації цієї дії була натиснута клавіша `CTRL`, поворот відбудеться відносно осі Y елемента. Зауважте, що `Flip element` доцільно використовувати з обмеженням `Attachment`, оскільки воно однозначно слідує за Z нормаллю елемента. Для інших типів обмежень, наприклад `PlaneConcidence` або `PlaneAlignment`, ви можете спробувати `Flip part`, оскільки ці типи обмежень працюють однаково незалежно від орієнтації Z нормалі елемента, тому перегортання елемента не матиме жодного ефекту.
 
-* `Offset element`, use the dragger (similar to `Mover` tool) to manipulate element offset directly in the 3D view.
+* `Offset element`, використовуйте перетягувач (подібний до інструменту `Mover`), щоб налаштувати зміщенням елемента безпосередньо в 3D-виді.
 
-* `Reset offset`, reset element to no offset.
+* `Reset offset`, скинути зміщення елементу.
 
-# Constraints with More Than Two Elements
+# Обмеження з більш ніж двома елементами
 
-It is intuitive for one to select two geometry elements and create a constraint. However, in `Assembly3`, there are many constraints that can accept more than two elements.
+Вибір двох елементів геометрії та створення обмеження є інтуїтивно зрозумілим. Однак у `Assembly3` є багато обмежень, які можуть приймати понад два елементів.
 
-On the constraint toolbar, when you see an icon with a red dashed border like ![Angle](../raw/master/freecad/asm3/Gui/Resources/icons/constraints/Assembly_ConstraintAngle.svg?sanitize=true), it means the constraint accepts a third optional element as a projection plane to project the first two elements into 2D space. Although 2D constraints are more useful when creating [skeleton-sketch](Create-Skeleton-Sketch), you may find it effective when dealing with the _redundant constraint_ problem, as a way to reduce the number of [DOF](https://en.wikipedia.org/wiki/Degrees_of_freedom_(mechanics)) constrained.
+Коли на панелі інструментів обмежень ви бачите іконку із червоною пунктирною рамкою, наприклад ![Angle](../raw/master/freecad/asm3/Gui/Resources/icons/constraints/Assembly_ConstraintAngle.svg?sanitize=true), це означає, що обмеження приймає третій необов’язковий елемент, такий як площина проєкції для перших двох елементів. Хоча двовимірні обмеження є більш корисними під час створення [скелет-ескізу](Create-Skeleton-Sketch), ви можете виявити їх ефективними під час розв'язання проблеми _зайвих обмежень_, як спосіб зменшити кількість [ ступенів свободи](https://en.wikipedia.org/wiki/Degrees_of_freedom_(mechanics)).
 
-For icons with a red border like ![PointsVertical](../raw/master/freecad/asm3/Gui/Resources/icons/constraints/Assembly_ConstraintPointsVertical.svg?sanitize=true), it means this is a 2D only constraint, and the third projection plane element is mandatory.
+Для іконок із червоною рамкою, таких як ![PointsVertical](../raw/master/freecad/asm3/Gui/Resources/icons/constraints/Assembly_ConstraintPointsVertical.svg?sanitize=true), це означає, що це обмеження лише 2D, а третій елемент площини проєкції є обов’язковим.
 
 
-For icon with a green border like ![AxialAlingment](../raw/master/freecad/asm3/Gui/Resources/icons/constraints/Assembly_ConstraintAxial.svg?sanitize=true), it means the constraint accepts multiple elements of the same type (with a few exceptions). The solver will expand the constraint as follow,
+Для іконок із зеленою рамкою, наприклад ![AxialAlingment](../raw/master/freecad/asm3/Gui/Resources/icons/constraints/Assembly_ConstraintAxial.svg?sanitize=true), це означає, що обмеження приймає кілька елементів одного типу (за кількома винятками). Розв'язувач розширить обмеження наступним чином,
 
 ```
 Constraint
@@ -74,7 +74,7 @@ Constraint
     | -- ElementLink3
     | -- ElementLink4
 
-will be expand to
+буде розширено до
 
 Constraint1
     | -- ElementLink1
@@ -89,7 +89,7 @@ Constraint3
     | -- ElementLink2
 ```
 
-For icons with a blue border like ![PlaneCoincident](../raw/master/freecad/asm3/Gui/Resources/icons/constraints/Assembly_ConstraintCoincidence.svg?sanitize=true), it supports the same multiple elements like those with green boarder. In addition, the constraint has a `Cascade` property, and when set to `True`, it will expand the constraints as follow,
+Для іконок із синьою рамкою, таких як ![PlaneCoincident](../raw/master/freecad/asm3/Gui/Resources/icons/constraints/Assembly_ConstraintCoincidence.svg?sanitize=true), також підтримуются декілька елементів, як і для іконок з зеленою рамкою. Крім того, обмеження має властивість `Cascade`, і якщо встановлено значення `True`, воно розширить обмеження наступним чином
 
 ```
 Constraint
@@ -98,7 +98,7 @@ Constraint
     | -- ElementLink3
     | -- ElementLink4
 
-will be expand to
+буде розширене до
 
 Constraint1
     | -- ElementLink1
@@ -113,27 +113,27 @@ Constraint3
     | -- ElementLink4
 ```
 
-`Constraint2` and onwards will be automatically skipped if their elements belong to the same part. See the following screen cast for an example, which also shows the effect of applying other parameters of a constraint when cascading is activated.
+`Constraint2` і далі буде автоматично пропущено, якщо їх елементи належать до однієї частини. Для прикладу нижче наведено відео, яке також показує ефект застосування інших параметрів обмеження, коли активовано каскадний режим.
 
 [[images/element-cascade.gif]]
 
-# Constraint Multiplication
+# Множення Обмеження
 
-There are some multi-element capable constraints that support another advanced mode, called _constraint multiplication_, which uses `Link Array` to multiply the part of the first element to be constrained against the rest of the elements. At the time of this writing, only `PlaneConicdent` and `AxialAlignment` support this. You can activate this functionality by selecting a supporting constraint object in the tree view and then click ![Multiply](../raw/master/freecad/asm3/Gui/Resources/icons/Assembly_ConstraintMultiply.svg?sanitize=true). There is one additional requirement. In order to activate that button. The owner part of the first constraining element must be the first instance of a `Link Array`.
+Існують деякі багатоелементні обмеження, які підтримують розширений режим, який називається _розмноження обмежень_, який використовує `Link Array`, щоб розмножити обмеження першого елемента на решту елементів. На момент написання цієї статті лише `PlaneConicdent` та `AxialAlignment` підтримують це. Ви можете активувати цю функцію, вибравши підтримуваний об’єкт обмеження в ієрархії документа та потім клацнувши ![Multiply](../raw/master/freecad/asm3/Gui/Resources/icons/Assembly_ConstraintMultiply.svg?sanitize=true). Є одна додаткова вимога. Для того, щоб активувати цю кнопку. Власник елемента першого обмеження має бути першим екземпляром `Link Array`.
 
-If the second constraining element and onwards is a circular edge, it will be automatically expanded to include all coplanar circular edges of the same radius. The following screen cast shows the default behavior of constraint multiplication,
+Якщо другий обмежуючий елемент і далі є круглим ребром, він буде автоматично розширений, щоб включати всі компланарні кругові ребра того самого радіуса. Наведене нижче відео показує поведінку розмноження обмежень за замовчуванням,
 
 [[images/constraint-multiply.gif]]
 
-Notice that the first step shown in the above screen cast is to replace a directly added part object with a link, and then change it to an array by setting the `ElementCount` property. If you drag an object from an external document and drop it in an assembly container, a link will be created automatically, so you don't need this _replace with a link_ step. The screen cast also shows that you can add more constraining element by drag and drop. And the new element will be expanded, too. You can disable element auto expansion, by changing the `NoExpand` property as shown in the following screen cast. If the last added element has `NoExpand` set to `True`, any new elements added afterwards will not be expanded either. This allows you to choose exactly which elements to multiply. You can also manually control the total number of instances of the first part array, by turning off the `AutoCount` property of the first element.
+Зверніть увагу, що першим кроком, показаним у наведеному вище відео, є заміна безпосередньо доданого об’єкта деталі на посилання, а потім зміна його на масив, встановивши властивість `ElementCount`. Якщо ви перетягуєте об’єкт із зовнішнього документа та кидаєте його в контейнер збірки, посилання буде створено автоматично, тому вам не потрібен крок _замінити посиланням_. На відео також показано, що ви можете додати більше обмежувальних елементів шляхом перетягування. І новий елемент також буде розширено. Ви можете вимкнути автоматичне розширення елемента, змінивши властивість `NoExpand`, як показано на наступному відео. Якщо для останнього доданого елемента `NoExpand` встановлено значення `True`, будь-які нові елементи, додані пізніше, також не будуть розширені. Це дозволяє вибрати, які саме елементи розмножувати. Ви також можете вручну керувати загальною кількістю екземплярів масиву першої деталі, вимкнувши властивість `AutoCount` для першого елемента.
 
 [[images/constraint-multiply2.gif]]
 
-One disadvantage of multiplying a constraint this way is that you are forced to use the same set of parameters for all part instances. If you want to have different parameters, say, a different offset for each screw instance, you can select the multiplied constraint, and click again ![Multiply](../raw/master/freecad/asm3/Gui/Resources/icons/Assembly_ConstraintMultiply.svg?sanitize=true). This time, the constraint will be expanded into multiple independent constraint objects equivalent to the multiplied constraint for easy customization.
+Одним з недоліків розмноження обмежень таким чином є те, що ви змушені використовувати той самий набір параметрів для всіх екземплярів деталей. Якщо ви хочете мати різні параметри, скажімо, різне зміщення для кожного екземпляра гвинта, ви можете вибрати розмножене обмеження та клацнути ще раз ![Multiply](../raw/master/freecad/asm3/Gui/Resources/icons/Assembly_ConstraintMultiply.svg?sanitize=true). В цьому випадку обмеження буде розширено на кілька незалежних об’єктів обмеження, еквівалентних помноженому обмеженню для легкого налаштування.
 
 [[images/constraint-multiply3.gif]]
 
-# List of Constraints
+# Перелік обмежень
 
 * [[Lock]]
 * [[Plane Alignment]]
@@ -150,16 +150,16 @@ One disadvantage of multiplying a constraint this way is that you are forced to 
 * [[Point Line Distance]]
 * [[Symmetric]]
 
-# Implementation
+# Реалізація
 
-Assembly3 exposed most of SolveSpace's constraints. If you want to know more about the internals, please read [this document](https://github.com/realthunder/solvespace/blob/python/exposed/DOC.txt) from SolveSpace first. The way Assembly3 uses the solver is that, for a given `Assembly`,
+В Assembly3 реалізована більшість обмежень SolveSpace. Якщо ви хочете дізнатися більше про внутрішню будову, спочатку прочитайте [цей документ](https://github.com/realthunder/solvespace/blob/python/exposed/DOC.txt) із SolveSpace. Для того, щоб Assembly3 використовувала вирішувач, необхідно для певної `Збірки`,
 
-* Create free parameters corresponding to the placement of each movable child feature, that is, three parameters for position, and four parameters for its orientation (quaternion).
-* For each constraint, create SolveSpace `Entities` (i.e. points, normals, rotations, etc) for each geometry element as a transformation of its owner feature's placement parameters.
-* Create SolveSpace `Constraints` with the `Entities` created in the previous step.
-* Ask SolveSpace to solve the constraints. SolveSpace formulate the constraint problems as a non-linear least square minimization problem, generates equations symbolically, and then tries to numerically find a solution for the free parameters.
-* The child features placements are then updated with the found solution.
+* Створити вільні параметри, що відповідають розміщенню кожного рухомого дочірнього об’єкта, тобто три параметри для положення та чотири параметри для його орієнтації (кватерніон).
+* Для кожного обмеження створити SolveSpace `Об’єкти (Entities)` (тобто точки, нормалі, повороти тощо) для кожного елемента геометрії як перетворення параметрів розміщення об’єкта його власника.
+* Створити SolveSpace `Обмеження` за допомогою `Об'єктів (Entities)`, створених на попередньому кроці.
+* Дати завдання SolveSpace вирішити обмеження. SolveSpace формулює задачі обмежень як нелінійну задачу мінімізації найменших квадратів, формує рівняння символічно, а потім намагається чисельно знайти рішення для вільних параметрів.
+* Потім дочірні функції оновлюються зі знайденим рішенням.
 
-For nested assemblies, Assembly3 will always solve all the child assemblies first before the parent.
+Для вкладених збірок Assembly3 завжди вирішує всі дочірні збірки спочатку перед батьківськими.
 
-One thing to take note is that, SolveSpace is a numerical solver, which means it is sensitive to initial conditions. In other word, you must first roughly align two features according to their constraints, or else the solver may not be able to find an answer. Assembly3 has extensive support of easy manual placement of child feature. See the following section for more details.
+Варто звернути увагу на те, що SolveSpace є чисельним вирішувачем, що означає, що він чутливий до початкових умов. Іншими словами, ви повинні спочатку приблизно вирівняти дві характеристики відповідно до їхніх обмежень, інакше вирішувач може не знайти відповідь. Assembly3 має широку підтримку легкого ручного розміщення дочірніх функцій. Для більш детальної інформації зверніться до наступного розділу.
