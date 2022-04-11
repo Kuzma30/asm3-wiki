@@ -1,4 +1,4 @@
-# Overview
+# Загальна інформація
 
 This article details the actual algorithm of generating the topological names using the shape modeling history. The history information is provided by `OCCT`'s [BRepBuilderAPI_MakeShape](https://www.opencascade.com/doc/occt-7.0.0/refman/html/class_b_rep_builder_a_p_i___make_shape.html) and its derivatives. They provides the mapping from the input geometry elements to the newly generated or modified elements in the resulting shape. However, As `OCCT` being `OCCT`, not all of `OCCT's` maker classes follow the same interface. There are exceptions, which is why `TopoShape` uses an abstract class `TopoShape::Mapper` as the mapping interface. Special handling is required for the following `OCCT` maker,
 
