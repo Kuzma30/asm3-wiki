@@ -3,7 +3,7 @@ Starting from version 0.3, support of stable topological naming of geometry elem
 Update: Version 0.4 now has full support of element mapping in all features from the `Part` workbench. In addition, element mapping is fully supported in Python. Most python features automatically gain the benefit of element mapping without any code modification.
 
 
-# Overview
+# Загальна інформація
 
 Current FreeCAD uses generic `type` + `index` as the topological names of various geometry elements, such as `Face1`, `Edge2`, and `Vertex3`. The indexing order of the elements is determined by the CAD kernel, [OCCT](https://www.opencascade.com/content/documentation), which is consistent during document save and restore. However, when the model is edited, i.e. when new geometry elements are added or removed, the element indices are rearranged/reused, and there is no easy way of tracking which one is which after the modification.
 
