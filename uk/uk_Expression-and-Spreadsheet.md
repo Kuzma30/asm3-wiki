@@ -18,7 +18,7 @@
 
 Для тих, кому не дуже важливі деталі й хочеться перейти безпосередньо до справи, ви можете перейти [сюди](#demonstration) для демонстрації.
 
-# Security Concern
+# Турбота про безпеку
 
 The syntax of the expression language is borrowed from Python, minus the class definition stuff. One thing worth mention before we get into the details is that although the scripts look like Python, it is not interpreted by the Python interpreter. For security reason, the FreeCAD expression classes and parser are refactored to interpret the script by itself. This way, we have more control to what the script can or cannot do. By default, the following Python built-in functions are blocked,
 
