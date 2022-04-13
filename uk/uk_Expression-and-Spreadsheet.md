@@ -20,7 +20,7 @@
 
 # Турбота про безпеку
 
-The syntax of the expression language is borrowed from Python, minus the class definition stuff. One thing worth mention before we get into the details is that although the scripts look like Python, it is not interpreted by the Python interpreter. For security reason, the FreeCAD expression classes and parser are refactored to interpret the script by itself. This way, we have more control to what the script can or cannot do. By default, the following Python built-in functions are blocked,
+Синтаксис мови виразів запозичений з Python, за винятком визначення класів. Перш ніж ми перейдемо до деталей, зауважте те що, хоча сценарії виглядають як Python, інтерпретатор Python не інтерпретує їх. З міркувань безпеки класи виразів і синтаксичний аналізатор FreeCAD змінені, щоб інтерпретувати сценарії самостійно. Таким чином, ми маємо більше контролю над тим, що може або не може робити сценарій. За замовчуванням блокуються такі вбудовані функції Python, як
 
 * `eval()`
 * `execfile()`
@@ -30,108 +30,108 @@ The syntax of the expression language is borrowed from Python, minus the class d
 * `open()`
 * `input()`
 
-No Python module is allowed except the following,
+Жоден з Python модулів не доступний, крім
 
-* `builtins` (or `__builtin__` for Python 2)
+* `builtins` (або `__builtin__` для Python 2)
 * `math`
 * `re`
 * `collections`
-* `FreeCAD` (i.e. the `App` module)
-* `FreeCADGui` (i.e. the `Gui` module. However, `Gui.docommand()` is blocked)
-* `Base` (FreeCAD built-in `Base` module)
-* `Units` (FreeCAD built-in module)
-* `__FreeCADConsole__` (FreeCAD built-in `Console` module)
-* `Selection` (FreeCAD built-in module)
-* `Sketcher` (FreeCAD built-in module)
-* `Spreadsheet` (FreeCAD built-in module)
-* `Part` (FreeCAD built-in module)
-* `PartDesign` (FreeCAD built-in module)
-* `freecad.fc_cadquery` (A bundled and modified version of [CadQuery](https://github.com/dcowden/cadquery))
+* `FreeCAD` (тобто `App` модуль)
+* `FreeCADGui` (тобто `Gui` модуль. Однак, `Gui.docommand()` заблокований)
+* `Base` (FreeCAD вбудований `Базовий` модуль)
+* `Units` (вбудований модуль FreeCAD)
+* `__FreeCADConsole__` (FreeCAD вбудований `Console` модуль)
+* `Selection` (вбудований модуль FreeCAD)
+* `Sketcher` (вбудований модуль FreeCAD)
+* `Spreadsheet` (вбудований модуль FreeCAD)
+* `Part` (вбудований модуль FreeCAD)
+* `PartDesign` (вбудований модуль FreeCAD)
+* `freecad.fc_cadquery` (вбудована та модифікована версія [CadQuery](https://github.com/dcowden/cadquery))
 
-User can manually white (and black) list modules by adding a boolean parameter under `BaseApp/Preferences/Expression/PyModules` with the absolute module reference as the parameter name, as shown below. And because of its special purpose, this parameter group is protected against writing using expressions.
+Користувач може вручну ввести модуль в білий (і чорний) список, додавши логічний параметр у розділ `BaseApp/Preferences/Expression/PyModules` з абсолютним посиланням на модуль як ім’я параметра, як показано нижче. Внаслідок свого спеціального призначення ця група параметрів захищена від запису за допомогою виразів.
 
-**Update:** In early releases, the white/black list only applies to direct module import using the `import_py` statement. There is no restriction calling any method of an existing object. With the current release (2020.11.24), the list is enforced before invoking any callable. A white or black (when the boolean parameter is set to False) listed entry applies to the given module and any of its sub modules. That also implies to creating instance of module classes, as the class is a type of callable object. Note that attribute read and write access is not restricted.
+**Оновлення:** У ранніх версіях білий/чорний список застосовується лише до прямого імпорту модуля за допомогою оператора `import_py`. Немає обмежень щодо виклику будь-якого методу існуючого об’єкта. У поточній версії (2020.11.24) список застосовується перед будь-яким викликом. Білий або чорний (якщо для логічного параметра встановлено значення False) застосовується до даного модуля та будь-якого з його підмодулів. Це також означає створення екземплярів класів модулів, оскільки клас є типом викликаного об’єкта. Зауважте, що доступ для читання та запису атрибутів не обмежений.
 
 [[images/module-whitelist.png]]
 
-Even with all the above precautions, the new power of `Expression` may still expose potential danger to the end user, because it can now call into other Python code, which may have unknown security risk. There will be more security measure implemented in the future, possible candidates are,
+Навіть з усіма перерахованими вище застереженнями, нова потужність `Expression` все ще може наражати на потенційну небезпеку для кінцевого користувача, оскільки тепер вона може звертатися до іншого коду Python, що може мати невідомий ризик для безпеки. У майбутньому буде запроваджено більше заходів безпеки, можливі кандидати,
 
-* Explicitly showing every expression usage to the user before loading a file
-* Implement more granulated access control, such as,
-  * No extended scripting allowed (but still allow upstream like expression usage),
-  * No import allowed,
-  * No callable allowed,
-  * No property writing.
-* Support digital signature of files, which not only can deny execution of untrusted files, but also make it more convenient to grant more access right to trusted ones, like those with user's own signature.
+* Явно показувати користувачеві використання кожного виразу перед завантаженням файлу
+* Реалізувати більш детальний контроль доступу, наприклад,
+  * Заборонити розширені сценарії (але все ще дозволяти використання виразів у upstream),
+  * Заборонити імпортування,
+  * Заборонити виклик,
+  * Заборонити запис властивостей.
+* Підтримка цифрового підпису файлів, яка не тільки може заборонити виконання ненадійних файлів, але й полегшить надання прав доступу довіреним, наприклад, з власним підписом користувача.
 
-# Python Syntax Mode
+# Режим синтаксису Python
 
-Great effort has been made to make the extended expression syntax mimicking that of Python and yet backward compatible with upstream FreeCAD. However, there are exceptions. At the time of this writing, the only one I am aware of is that `in` as the unit inch is no longer recognized, as it badly conflicts with Python keyword `in`. You can still use `"` for the unit inch.
+Було докладено великих зусиль, щоб зробити розширений синтаксис, що імітує синтаксис Python, і все ж таки зворотно сумісний з upstream FreeCAD. Однак є винятки. На момент написання цього тексту єдине, що мені відомо, це те, що `in` як одиниця дюймів більше не розпізнається, оскільки він сильно конфліктує з ключовим словом Python `in`. Ви все ще можете використовувати `"` для позначення дюйма.
 
-The extended syntax is fully defined in [this](/realthunder/FreeCAD/tree/LinkStage3/src/App/ExpressionParser.y) file.
+Розширений синтаксис повністю визначено в [цьому](/realthunder/FreeCAD/tree/LinkStage3/src/App/ExpressionParser.y) файлі.
 
-By default, all upstream keywords (except `in`) are recognized, which includes those for units, built-in functions and constants. It adds up to about a hundred keywords, and therefore greatly interfere with Python-like script code. And not to mention the awkward way to quote string using `<<` and `>>` because `'` and `"` are taken up by unit foot and inch. To alleviate this problem, a pseudo statement is introduced to switch syntax to Python compatible mode
+За замовчуванням розпізнаються всі основні ключові слова (крім `in`), зокрема для одиниць, вбудованих функцій і констант. Це додає близько сотні ключових слів і, отже, сильно перешкоджає коду сценарію, схожому на Python. І не кажучи вже про незручний спосіб взяття строки в лапки за допомогою `<<` та `>>`, тому що `'` та `"` відповідають одиницям футів і дюймів. Щоб полегшити цю проблему, введено псевдооператор для перемикання синтаксису в сумісний з Python режим
 
 ```
 #@pybegin
 ```
 
-Although it looks like a Python comment, it is recognized by the expression parser as a statement, just like `pass` or `return`, so you must honour the usual Python indentation rules. In addition, this statement only takes effect in runtime, not parse-time. This means that if you add this statement outside of a function definition, the code inside of the function may not be run in Python mode depending on its calling context.
+Хоча він виглядає як коментар Python, синтаксичний аналізатор виразів розпізнає його як інструкцію, аналогічно `pass` або `return`, тому ви повинні дотримуватися звичайних правил відступів Python. Крім того, цей оператор діє лише під час виконання, а не під час розбору. Це означає, що якщо ви додасте цей оператор за межами визначенням функції, код всередині функції може не виконуватися в режимі Python залежно від контексту її виклику.
 
-Once inside Python mode,
+В режимі Python,
 
-* Units keywords are no longer recognized;
+* Ключові слова одиниць більше не розпізнаються;
 
-* Expression built-in functions are still recognized, but can be overload by variables and your own function definition.
+* Вбудовані функції для виразів все ще розпізнаються, але можуть бути перевизначені змінними та власними визначеннями функцій.
 
-* Variable name lookup will include Python builtin module, and take precedence over expression built-in functions.
+* Пошук імені змінної включає вбудований модуль Python і має пріоритет над вбудованими функціями для виразів.
 
-* String literal now supports the usual `'` and `"`. Note that `<<` and `>>` as well as the long string `'''` and `"""` are always supported regardless of the current mode.
+* Текстовий літерал тепер підтримує звичайні `'` і `"`. Зверніть увагу, що `<<` та `>>`, а також довгий рядок `'''` та `"""` завжди підтримуються незалежно від поточного режиму.
 
-* `,` can no longer be used as decimal separator. In default mode, expression `1,2` is interpreted as decimal `1.2`, while `1, 2` means two integers. In Python mode, they are both interpreted as two integers.
+* `,` не можна використовувати як десятковий розділювач. У режимі за замовчуванням вираз `1,2` інтерпретується як число `1.2`, тоді як `1, 2` означає два цілих числа. У режимі Python вони обидва інтерпретуються як два цілих числа.
 
-* Python comments work as expected. However, in default mode, comment is only recognized if `#` is followed by at least one space. This is to allow external object referencing syntax, `document#object`. One thing to note that, after you entered the script into a spreadsheet cell, it is immediately parsed with all comments stripped away. So there won't be any comments left if you edit the script again. You can always use the string expression as comment, which will be kept untouched after parsing, especially the `'''` or `"""` long string. However, since string expression is considered a statement, it must obey the usual indentation rules. If you really want to use and keep the normal comments, you can enter the script as plain string (by starting the script with a single `'`, instead of `=`). You can then run the script using the built-in function `eval()` (which is not the Python `eval`, but FreeCAD's own implementation), or `func()`. See [here](#eval) for more details.
+* Коментарі Python працюють без змін. Однак у режимі за замовчуванням коментар розпізнається, лише якщо після `#` стоїть принаймні один пробіл. Це дозволяє використовувати синтаксис посилань на зовнішні об’єкти, `document#object`. Варто зазначити, що після того, як ви ввели сценарій у комірку електронної таблиці, він негайно аналізується, а всі коментарі видаляються. Тому коментарі не залишаться, під час повторного редагування сценарію. Ви завжди можете використати рядковий вираз як коментар, який залишиться після аналізу, головним чином довгий рядок `'''` або `"""`. Однак, оскільки строковий вираз вважається оператором, він повинен підкорятися звичайним правилам відступів. Якщо ви дійсно хочете використовувати і зберігати звичайні коментарі, ви можете ввести сценарій як звичайний рядок (почавши сценарій з одного `'` замість `=`). Потім ви можете запустити сценарій за допомогою вбудованої функції `eval()` (яка не відповідає `eval` у Python, а є власною реалізацією FreeCAD) або `func()`. Додаткову інформацію див. [тут](#eval).
 
-To end the Python mode,
+Для закінчення режиму Python, введіть
 
 ```
 #@pyend
 ```
 
-Note that the mode switching statement is not counted, so it can be ended by a single `#@pyend` regardless how many `#@pybegin` ahead. When writing expression inside a spreadsheet, you can use the new spreadsheet property `Python Mode` to control the default mode.
+Зауважте, що оператор перемикання режимів не враховується, тому його можна завершити одним `#@pyend` незалежно від того, скільки `#@pybegin` попереду. Під час написання виразу в електронній таблиці ви можете використовувати нову властивість електронної таблиці `Режим Python` для керування режимом за замовчуванням.
 
-# Syntax Difference vs. Python
+# Синтаксична різниця у порівнянні з Python
 
-As mentioned above, the extended expression syntax is borrowed from Python, Python 3 to be exact. This section highlights the difference between the two.
+Як згадувалося вище, розширений синтаксис виразів запозичений з Python, а точніше Python 3. Цей розділ підкреслює різницю між обома.
 
-Here is a diagram showing the relation between Python syntax, extended expression syntax, and the upstream Expression syntax.
+Ось діаграма, що показує зв’язок між синтаксисом Python, розширеним синтаксисом для виразів та синтаксисом виразів з upstream.
 
 ![expression-engine-overall-map](./images/expression-engine-overall-map.png)
 
-* `#1`: [Python-syntax-mode](#python-syntax-mode)
-* `#2`: This is the default mode ("Compatibility mode") while entering an expression, unless
-    * `Python Mode` is set to `True` for a spreadsheet
-    * `#@pybegin;` isn't prepended to an expression
-* `#3`: Currently none.
-* `#4`: [not-implemented](#not-implemented), [security-related](#security-concern)
+* `#1`: [Режим Python-у](#python-syntax-mode)
+* `#2`: це режим за замовчуванням ("Режим сумісності") за умови, що
+    * `Режим Python` встановлений в `True` для таблиці
+    * `#@pybegin;` не стоїть перед виразом
+* `#3`: Наразі не реалізовано.
+* `#4`: [не реалізований](#not-implemented), [пов’язаний з безпекою](#security-concern)
 
-## Not Implemented
+## Не реалізований
 
-Here are the things Python has, but not implemented (yet) by FreeCAD expression parser,
+Ось що є в Python, але не реалізовано (поки що) аналізатором виразів FreeCAD,
 
-* No support of class definition, decorator or annotation.
+* Немає підтримки визначення class, decorator чи annotation.
 
-* No implementation of `async`, `yield`, `with` or `assert` statement.
+* Немає реалізації `async`, `yield`, `with` або `assert` операторів.
 
-* No bitwise or matrix operator. The reason for not supporting bitwise operator is because the shift operator `<<` and `>>` conflicts with expression string quoting.
+* Відсутні побітові або матричні оператори. Причина непідтримки побітового оператора тому, що оператор зсуву `<<` і `>>` конфліктує з лапками для рядка.
 
-* Limited string literal prefix. Only support `r` and `u`, in other words no support of binary or formatted string literal.
+* Обмежений строковий літеральний префікс. Підтримуються лише `r` та `u`, іншими словами, не підтримується двійковий або відформатований рядковий літерал.
 
-* Limited string escaping support. Only support `\t, \r, \n \\, \', \"`. And because expression supports quoting string with `<<` and `>>`, `\>` is also supported. There is no support for octal, hex or Unicode escaping.
+* Обмежена підтримка розмітки рядка. Підтримка тільки `\t, \r, \n \\, \', \"`. А оскільки вираз підтримує рядок у лапках за допомогою `<<` та `>>`, `\>` також підтримується. Немає підтримки вісімкового, шістнадцяткового або Unicode розмітки.
 
-* ~~Variable declaration and assignment can only be used inside a function body or by a script invoked through `eval()` or `func()`. This restriction also applies to implicit variable assignment with `for` statement, but not applicable to list/set/dict comprehensions, which can be used anywhere.~~
+* ~~Оголошення та присвоєння змінних можна використовувати лише всередині тіла функції або за сценарієм, викликаним через `eval()` або `func()`. Це обмеження також стосується неявного призначення змінної з оператором `for`, але не застосовується до list/set/dict, які можна використовувати де завгодно.~~
 
-* The _global_ variable scope is defined as the variables defined in top level statement. And _local_ means the current executing function or `eval()`. The variable scope, or more specifically, the evaluation stacks are isolated from the Python interpreter running inside FreeCAD. The `global`, `local`, `nonlocal` and `del` statements are supported but with altered definition of scope described above.
+* Змінні, з областю дії _global_, трактуються як змінні, визначені оператором верхнього рівня. А _local_ означає поточну виконувану функцію або `eval()`. The variable scope, or more specifically, the evaluation stacks are isolated from the Python interpreter running inside FreeCAD. The `global`, `local`, `nonlocal` and `del` statements are supported but with altered definition of scope described above.
 
 * `from ... import ...` statement only supports absolute import.
 
