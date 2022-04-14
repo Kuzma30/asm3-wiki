@@ -131,21 +131,21 @@
 
 * ~~Оголошення та присвоєння змінних можна використовувати лише всередині тіла функції або за сценарієм, викликаним через `eval()` або `func()`. Це обмеження також стосується неявного призначення змінної з оператором `for`, але не застосовується до list/set/dict, які можна використовувати де завгодно.~~
 
-* Змінні, з областю дії _global_, трактуються як змінні, визначені оператором верхнього рівня. А _local_ означає поточну виконувану функцію або `eval()`. The variable scope, or more specifically, the evaluation stacks are isolated from the Python interpreter running inside FreeCAD. The `global`, `local`, `nonlocal` and `del` statements are supported but with altered definition of scope described above.
+* Змінні, з областю дії _global_, трактуються як змінні, визначені оператором верхнього рівня. А _local_ означає поточну виконувану функцію або `eval()`. Область дії змінної, або, точніше, стеки обчислення ізольовані від інтерпретатора Python, що працює у FreeCAD. Оператори `global`, `local`, `nonlocal` і `del` підтримуються, але зі зміненим визначенням області дії, описаним вище.
 
-* `from ... import ...` statement only supports absolute import.
+* Оператор `from ... import ...` підтримує лише абсолютний імпорт.
 
-Anything not mentioned above should be supported by the extended expression syntax, and works about the same as in Python.
+Все, що не згадано вище, має підтримуватися розширеним синтаксисом для виразів і працювати приблизно так само, як і в Python.
 
-## Keywords
+## Ключові слова
 
-In default mode, FreeCAD expression supports over 60 unit keywords. And you can create more unit by doing arithmetics with them, such as `m/s`. The full list of supported units can be found [here](https://github.com/realthunder/FreeCAD/blob/837faf3dde92dcf541fa3859b608e3a0da197eed/src/App/ExpressionParser.l#L361). These are mostly the same as upstream FreeCAD.
+У режимі за замовчуванням вирази FreeCAD підтримують понад 60 ключових слів. І ви можете створити більше одиниць, виконуючи з ними арифметичні дії, наприклад `м/с`. Повний список підтримуваних одиниць можна знайти [тут](https://github.com/realthunder/FreeCAD/blob/837faf3dde92dcf541fa3859b608e3a0da197eed/src/App/ExpressionParser.l#L361). Вони, в основному, аналогічні до upstream FreeCAD.
 
-## Function Definition
+## Визначення функцій
 
-Named function is defined just like in Python, with `def name(args...)`. However, unlike Python, this statement returns a Python callable object, similar to `lambda` expression. This is to make it easy for the user to turn a spreadsheet cell into a callable, which can be accessed by others just like a newly defined instance method. Moreover, if a cell contains nothing but a single function definition, the function name will be automatically used as the alias of the cell.
+Іменовані функції визначаються аналогічно Python `def name(args...)`. Однак, на відміну від Python, цей оператор повертає викликаний об’єкт (callable object) Python, подібний до виразу `lambda`. Це робиться для того, щоб користувачеві було легко перетворити комірку електронної таблиці на виклик, до якого можуть отримати доступ інші, наприклад нещодавно визначений метод екземпляра. На додаток, якщо комірка містить лише визначення функції, ім’я функції автоматично використовується як її псевдонім.
 
-Another subtle difference from Python is that if a function reaching the end of control without a `return` statement, it will return the result of the last statement instead of `None`. However, it is always better to use an explicit `return` statement to avoid any surprises. For example, if the last statement is a string expression, it will return `None` instead of the string. This is an optimization for using string expression as comment.
+Ще одна незначна відмінність від Python полягає в тому, що якщо функція досягає кінця без оператора `return`, вона повертає результат останнього оператора замість `None`. Однак краще завжди використовувати явний оператор `return`, щоб уникнути будь-яких несподіванок. Наприклад, якщо останній оператор є рядковим виразом, він поверне `None` замість рядка. Це оптимізація для використання рядкового виразу як коментаря.
 
 ## Document Object Property Reference
 
