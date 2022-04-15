@@ -572,7 +572,7 @@ Below is a list of API changes of class `Gui::Command`,
 
 * `isActive()` function is made public. So that other class can create context menus with only active commands. An example usage is in `Gui::Workbench::createLinkMenu()`
 
-* `getObjectCmd(obj,prefix=0,postfix=0)`, static helper function to generate Python code of accessing the given object. In case the object passed in is invalid or null, it returns a string of "None". For example,
+* `getObjectCmd(obj,prefix=0,postfix=0)`, static helper function to generate Python code of accessing the given object. In case the object passed in is invalid or null, it returns a string of "None". Наприклад,
 
 ```
     getObjectCmd(obj, "[", "]")
