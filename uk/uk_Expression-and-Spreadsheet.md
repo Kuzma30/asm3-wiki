@@ -147,140 +147,140 @@
 
 Ще одна незначна відмінність від Python полягає в тому, що якщо функція досягає кінця без оператора `return`, вона повертає результат останнього оператора замість `None`. Однак краще завжди використовувати явний оператор `return`, щоб уникнути будь-яких несподіванок. Наприклад, якщо останній оператор є рядковим виразом, він поверне `None` замість рядка. Це оптимізація для використання рядкового виразу як коментаря.
 
-## Document Object Property Reference
+## Посилання на властивість об’єкта документа
 
-FreeCAD expression has dedicated syntax for referencing a property of a document object. The word `identifier` used below is defined as usual in most programming language, that is, a text string starting with an alphabet or `_`, followed by any alpha numericals or `_`. There are a few new additional referencing scheme supported comparing to upstream, all of which are described as follows,
+Вираз FreeCAD має спеціальний синтаксис для посилання на властивість об’єкта документа. Слово `identifier`, що використовується нижче, визначається як зазвичай у більшості мов програмування, тобто текстовий рядок, що починається з літер алфавіту або `_`, за яким слідують будь-які цифри або ` _`. Існує кілька додаткових схем посилань, описаних нижче, які підтримуються у порівнянні з upstream
 
-* `identifier`. A single identifier can be used to reference a property of the owner document object of the expression, which we shall call it reference to a _local property_. However, when inside a function body, or in a script invoked by `eval()`, name lookup will first be conducted from the inner local variable scope, all way up till global scope. And when in Python mode, the builtin modules will also be searched if no matched variable is found. If still no match is found, then the owner object's property list will be searched at last.
+* `identifier`. Окремий ідентифікатор можна використовувати для посилання на властивість виразу власного об’єкта документа, який ми будемо називати посиланням на _локальну властивість_. Однак у тілі функції або в скрипті, викликаному `eval()`, пошук імені спочатку буде починатись від внутрішньої локальної змінної до глобальної області. А в режимі Python, якщо не буде знайдено відповідну змінну, відбудеться пошук по вбудованим модулям. Якщо відповідності не буде знайдено, то буде здійснено пошук у списку властивостей об’єкта власника.
 
-* <a name="pseudo-property"></a>`.identifier`. A new syntax is introduced to make it easy for user to directly reference a _local property_ without ambiguity, by preceding the `identifier` with a `.`, similar to Python's relative import syntax.
+* <a name="pseudo-property"></a>`.identifier`. Введено новий синтаксис, щоб спростити для користувача пряме посилання на _локальну властивість_ без двозначності, поставивши перед `identifier` `.`, аналогічно. до синтаксису відносного імпорту Python.
 
-  As a convenience, there is a list of pseudo properties defined as below, which can be use on any object referencing scheme, not limited to local property reference.
+  Для зручності нижче наведено список псевдовластивостей, які можна використовувати в будь-якій схемі посилання на об’єкт, не обмежуючись посиланням на локальні властивості.
 
-  * `_shape`, using `Part.getShape()` to obtain the referenced object's `Shape`. `Part.getShape()` supports getting shape from many objects without having a property of `Shape`, including `App::Link`, `App::LinkGroup`, `App::Part` and `App::Group`.
+  * `_shape`, використовуючи `Part.getShape()` для отримання `Shape` об’єкта, на який посилаються. `Part.getShape()` підтримує отримання форми з багатьох об'єктів без властивості `Shape`, включаючи `App::Link`, `App::LinkGroup`, `App::Part` та `App::Group`.
 
-  * `_pla`, using `DocumentObject.getSubObject()` to obtained the accumulated placement of a [sub-object](#user-content-subobject) reference.
+  * `_pla`, використовуючи `DocumentObject.getSubObject()`, щоб отримати накопичене розміщення посилання на [підоб’єкт](#user-content-subobject).
 
-  * `_matrix`, same as above, but return as a `App.Matrix`
+  * `_matrix`, те саме, що й вище, але повертає `App.Matrix`
 
-  * `__pla`, similar to `_pla`, except that if the sub-object is an `App::Link`, then it will use `DocumentObject.getLinkedObject()` to accumulate the linked object's placement as well.
+  * `__pla`, подібний до `_pla`, за винятком того, що якщо підоб’єкт є `App::Link`, то він використовуватиме `DocumentObject. getLinkedObject()`, щоб також накопичити розташування зв'язаного об'єкта.
 
-  * `__matrix`, same as `__pla`, but return as a `App.Matrix`
+  * `__matrix`, те саме, що `__pla`, але повертає `App.Matrix`
 
-  * `_self`, refers to the object itself. Because none of the referencing scheme can refer to an object without property, the user can use this pseudo property to access non-property attributes of any object.
+  * `_self`, посилається на сам об'єкт. Оскільки жодна зі схеми посилань не може посилатися на об’єкт без властивості, користувач може використовувати цю псевдовластивість для доступу до атрибутів будь-якого об’єкта, що не є властивістю.
 
-  * `_app`, refers to the `App` module.
+  * `_app`, посилається на модуль `App`.
 
-  * `_gui`, refers to the `Gui` module.
+  * `_gui`, посилається на модуль `Gui`.
 
-  * `_part`, refers to the `Part` module.
+  * `_part`, посилається на модуль `Part`.
 
-  * `_re`, refers to Python `regex` module.
+  * `_re`, посилається на модуль Python `regex`.
 
-  * `_py`, refers to Python `builtins` module.
+  * `_py`, посилається на модуль Python `builtins`.
 
-  * `_math`, refers to Python `math` module.
+  * `_math`, посилається на модуль Python `math`.
 
-  * `_coll`, refers to Python `collections` module.
+  * `_coll`, посилається на модуль Python `collections`.
 
-  * `_cq`, refers to the bundled `CadQuery` module.
+  * `_cq`, посилається на вбудований модуль `CadQuery`.
 
-* `<<label>>.identifier`. Referencing an object using its user changeable label. Note that the label must be a string with FreeCAD expression quoting style. In case the referenced object's label is changed, this expression will be automatically updated. This syntax has no ambiguity, unlike the one below.
+* `<<label>>.identifier`. Посилання на об’єкт за допомогою мітки, яку користувач може змінювати. Зауважте, що мітка має бути рядком зі FreeCAD стилем цитування виразів. У разі зміни мітки об’єкта, цей вираз буде автоматично оновлено. Цей синтаксис не має двозначності, на відміну від наведеного нижче.
 
-* `idenfifier1.identifier2`. This is a troublesome syntax inherited from upstream FreeCAD, because there are many ways to interpret it, as shown below
+* `idenfifier1.identifier2`. Це складний синтаксис, успадкований від upstream FreeCAD. Для нього існує багато способів його інтерпретації, як показано нижче
   * `local_property.sub_property`
   * `object_name.property_name`
   * `object_label.property_name`
-  * And because of the extended syntax, it could also be a reference to a local variable.
+  * І через розширений синтаксис це також може бути посиланням на локальну змінну.
 
-  In order to reduce ambiguities, the new expression parser will try to resolve the identifier at parsing time, and possibly change the input expression to an alternative and less ambiguous form, with the following rules applied in listed order,
+  Щоб зменшити неоднозначність, новий синтаксичний аналізатор виразів намагатиметься вирішити ідентифікатор під час аналізу та за можливістю змінити вхідний вираз на альтернативну і менш неоднозначну форму, із застосуванням наступних правил у зазначеному порядку
 
-  * If there is an object with internal name of `identifier1` and having a property named `identifier2`, then there will be no runtime variable lookup.
+  * Якщо є об’єкт з внутрішньою назвою `identifier1` та властивістю з назвою `identifier2`, то не шукати зміну під час виконання.
 
-  * If there is an object with label of `identifier1` and having a property named `identifier2`, then the expression will be changed to `<<identifier1>>.identifier2`
+  * Якщо є об’єкт з міткою `identifier1` і має властивість з назвою `identifier2`, то вираз буде змінено на `<<identifier1>>.identifier2`
 
-  * If there is a local property of name `identifier1` then the expression will be changed to `.identifier1.identifier2`
+  * Якщо є локальна властивість з іменем `identifier1`, то вираз буде змінено на `.identifier1.identifier2`
 
-  * If none of the above rules is applicable, then a runtime search among all defined variables will be performed.
+  * Якщо жодне з наведених вище правил не застосовне, буде виконано пошук під час виконання серед усіх визначених змінних.
 
-* <a name="subobject"></a>`identifier1.<<subname>>.identifier2`, a reference to a sub-object using a [subname](Link#user-content-subname) reference, where `identifier1` is referencing the parent object by its internal name, and `identifier2` is the sub-object's property name. You can use label reference inside `subname` by preceding the label with `$`, and the labels will also be auto updated if changed by user. In addition, you can also include geometry reference inside `subname`, and it will be auto updated if the referenced geometry model is updated, thanks to the new [[Topological Naming]] feature.
+* <a name="subobject"></a>`identifier1.<<subname>>.identifier2`, посилання на підоб'єкт із використанням посилання [subname](Link#user-content-subname), де `identifier1` посилається на батьківський об’єкт за його внутрішнім ім’ям, а `identifier2` – ім’я властивості підоб’єкта. Ви можете використовувати посилання на мітку всередині `subname`, поставивши перед міткою `$`. Ці мітки також автоматично оновлюються, якщо їх змінить користувач. Крім того, ви також можете включити посилання на геометрію всередині `subname`. Воно буде автоматично оновлено, якщо модель геометрії, на яку посилається, буде оновлена ​​завдяки новій функції [[Топологічна назва]].
 
-  For example, an expression of `Assembly.<<Parts.$Fusion.Edge10>>._shape` will give you a Python edge shape object transformed into the global coordinate space. The `$` inside means that the fusion sub-object is referenced by its label. So if user re-label the object to, say, `Fuse`, then the expression will be auto updated to `Assembly.<<Parts.$Fuse.Edge10>>._shape`. And if the fusion object is modified, say, refined, and `Edge10` is shifted to `Edge9`, then the expression will be auto updated accordingly, too.
+  Наприклад, вираз `Assembly.<<Parts.$Fusion.Edge10>>._shape` дасть вам Python об’єкт ребра форми, перетворений у глобальний простір координат. `$` всередині означає, що підоб’єкт Fusion посилається за своєю міткою. Отже, якщо користувач змінить мітку об’єкта на, скажімо, `Fuse`, тоді вираз буде автоматично оновлено до `Assembly.<<Parts.$Fuse.Edge10>>._shape`. І якщо об’єкт злиття було модифіковано так, що `Edge10` переміщено на `Edge9`, то вираз також буде автоматично оновлено відповідно.
 
-  Note that the expression completer tries to auto correct some common mistakes in `subname` reference and will try label interpretation if the named object cannot be found, which unfortunately creates some ambiguity of `subname` reference that contains only geometry element reference, such as `Box.<<Face1>>._shape`. To resolve this ambiguity, you should always proceed a geometry element reference with a `.`, i.e. `Box.<<.Face1>>._Shape`
+  Зауважте, що завершувач виразів намагається автоматично виправити деякі поширені помилки в посиланнях `subname`. Він спробує інтерпретувати мітки, якщо названий об’єкт не може бути знайдено. Це створює деяку двозначність посилання на `subname` який містить лише посилання на елемент геометрії, наприклад `Box.<<Face1>>._shape`. Щоб вирішити цю неоднозначність, ви завжди повинні уточнювати посилання на елемент геометрії за допомогою `.`, тобто `Box.<<.Face1>>._Shape`
 
-* `<<label>>.<<subname>>.identifier`, same as above, except that the parent object is referenced by its label.
+* `<<label>>.<<subname>>.identifier`, дивись вище, за винятком того, що на батьківський об’єкт посилається його мітка.
 
-* `identifier1#identifier2.identifier3`, this syntax is used to reference a property `identifier3` of an object with internal name `identifier2` that belongs to an external document labeled `identifier1`. Unlike upstream, you have to save both the referencing and referenced documents at least once before using this type of reference, otherwise exception will be thrown. Whenever a document containing this type of reference is opened, the referenced external document will be automatically opened together.
+* `identifier1#identifier2.identifier3`, цей синтаксис використовується для посилання на властивість `identifier3` об'єкта з внутрішнім ім'ям `identifier2`, який належить зовнішньому документу з назвою `identifier1`. На відміну від upstream, ви повинні зберегти як посилання, так і документи, на які посилаються принаймні один раз, перш ніж використовувати цей тип посилання, інакше буде створено exception. Щоразу, коли відкривається документ, що містить посилання такого типу, зовнішній документ, на який посилається, буде також автоматично відкриватися.
 
-  `identifier1` and `identifier2` can also be a quoted string to reference the document and/or object by their label. And there can also be `subname` reference. For example, `<<asm>>#<<top assembly>>.<<Parts.Body.Pad>>.Length`.
+  `identifier1` і `identifier2` також можуть бути рядками в лапках для посилання на документ та/або об’єкт за їх міткою. Також може бути посилання за `subname`. Наприклад, `<<asm>>#<<top assembly>>.<<Parts.Body.Pad>>.Length`.
 
-## Cell and Range Reference
+## Посилання на Комірку і Діапазон Комірок
 
-FreeCAD has a [Spreadsheet Workbench](http://www.freecadweb.org/wiki/index.php?title=Spreadsheet_Module), which allows the user to create spreadsheet similar to Microsoft Excel or Google Sheet. The cells inside a spreadsheet are named with the same convention, that is one or two alphabets to refer to a column, and an integer starting from one to refer to a row, e.g. `A1`, `AB1234`. The maximum supported row index is 16384.
+FreeCAD має [Робоче середовище Spreadsheet](http://www.freecadweb.org/wiki/index.php?title=Spreadsheet_Module), який дозволяє користувачеві створювати електронні таблиці, подібно до Microsoft Excel або Google Sheet. Комірки всередині електронної таблиці називаються за однаковою умовою, тобто одна або дві літери алфавіту для посилання на стовпець і ціле число, починаючи з одиниці, для посилання на рядок, наприклад, `A1`, `AB1234`. Максимальний підтримуваний індекс рядка становить 16384.
 
-The cell naming conforms to the definition of an `identifier`. And also because the spreadsheet object will create a property for each non-empty cell, the cell can be referenced in an expression like any other properties. There is a new feature implemented to support the concept of _relative vs. absolute cell reference_. The normal cell references are all treated as _relative_, meaning that when you copy the cell (or a range of cells), and paste into some other cell location, all relative cell reference will be offset accordingly. For example, if cell `B1` references to `A1`, and the user copies `B1` to `B2`, the `A1` reference will but auto changed to `A2`.
+Правила назви комірок відповідає визначенню `identifier`. Оскільки об’єкт електронної таблиці створює властивість для кожної непорожньої комірки, на комірку можна посилатися у виразі, як на будь-які інші властивості. Для підтримки концепції _відносного та абсолютного посилання на комірку_ реалізовано нову функцію. Усі звичайні посилання на комірку розглядаються як _відносні_. Це означає, що коли ви копіюєте комірку (або діапазон комірок) і вставляєте її в інше місце, усі відносні посилання на комірку будуть відповідно зміщені. Наприклад, якщо клітинка `B1` посилається на `A1`, а користувач копіює `B1` на `B2`, то посилання на ` A1` буде автоматично змінено на `A2`.
 
-If auto offset is not wanted, the user can use the _absolute cell reference_, by preceding either the column, or row, or both with `$`. For example, `$A1` means absolute column `A`, but relative row one, while `$A$1` refers to an absolute cell. Although the absolute reference does not conform to the usual `identifier` definition, it is specifically allowed to be used inside an object property reference just like relative cell reference.
+Якщо автоматичне зміщення не потрібне, користувач може використовувати _абсолютне посилання на комірку_, поставивши перед стовпцем, або рядком символ `$`. Наприклад, `$A1` означає абсолютний стовпець `A`, але відносний перший рядок, тоді як `$A$1` належить до абсолютної комірки. Хоча абсолютне посилання не відповідає звичайному визначенню `identifier`, його спеціально дозволено використовувати всередині посилання на властивість об’єкта, як і відносне посилання на комірку.
 
 [[images/spreadsheet-relative-cell.gif]]
 
 
-A range of cell can be referred to like `A1:C2`. Some of the built-in functions accepts range reference directly as input argument, like `sum(A1:C2)`, etc. However, a range cannot be used inside object property reference. It can, however, be unpacked into a list or tuple, like `[*A1:C2]`, or `(*A1:C2,)`. The same unpack syntax can be used to pass a range of cell into normal function as arguments, such as `test(*A1:C2)`.
+Діапазон клітинок може називатися як `A1:C2`. Деякі вбудовані функції сприймають посилання на діапазон безпосередньо як вхідний аргумент, наприклад `sum(A1:C2)`. Однак діапазон не можна використовувати всередині посилання на властивість об’єкта. Однак його можна розпакувати в список, наприклад `[*A1:C2]` або `(*A1:C2,)`. Той самий синтаксис розпакування можна використовувати для передачі діапазону комірок у звичайну функцію в якості аргументу, наприклад `test(*A1:C2)`.
 
-## Range Reference from outside of the Spreadsheet
+## Посилання на діапазон за межами електронної таблиці
 
-The above range reference only works for referencing the Spreadsheet's own cells. You'll need a different way to refer to a range of cells from outside of the Spreadsheet, or from another Spreadsheet.
+Наведене вище посилання на діапазон працює лише для посилань на власні комірки електронної таблиці. Вам знадобиться інший спосіб посилатися на діапазон комірок за межами електронної таблиці або з іншої електронної таблиці.
 
-Each Spreadsheet in FreeCAD is just like any other objects that have a bunch of properties. The Spreadsheet automatically expose any non-empty cells as property using the cell address as its name. That's how you can reference a cell from outside of the Spreadsheet using the normal syntax like `Sheet.A1`. Spreadsheet stores all its cells also in a property, of type `PropertySheet`, and name `cells`. And this special property offers a way for the other object to dynamically reference to a range of cell with the following syntax.
+Кожна електронна таблиця у FreeCAD подібна до інших об’єктів, які мають безліч властивостей. Електронна таблиця автоматично трактує всі непорожні клітинки як властивість, використовуючи адресу клітинки в якості її назви. Ось як ви можете посилатися на комірку за межами електронної таблиці, використовуючи звичайний синтаксис, наприклад `Sheet.A1`. Електронна таблиця також зберігає всі свої комірки у властивості типу `PropertySheet` з назвою `cells`. І ця спеціальна властивість дає можливість іншим об’єктам динамічно посилатися на діапазон комірок із таким синтаксисом.
 
 ```python
-# return a list of cell content in order A1, B1, A2, B2. Empty cells will correspond to a None item.
+# повертає список вмісту комірки в порядку A1, B1, A2, B2. Порожні клітинки відповідатимуть елементу None.
 Sheet.cells[<<A1:B2>>]
 
-# return the contents of row A starting from A1 until the first empty cell
+# повертає вміст рядка A, починаючи з A1 до першої порожньої комірки
 Sheet.cells[<<A1:->>]
 
-# return the contents of column A starting from A1 until the first empty cell
+# повертає вміст стовпця A, починаючи з A1 до першої порожньої комірки
 Sheet.cells[<<A1:|>>]
 ```
 
-## `IDict`
+## `IDict (словник ідентифікатора)`
 
-In addition to normal `dict`, expression supports another convenience form called `idict`, meaning identifier dictionary, with the following syntax
+На додаток до звичайного `dict`, вирази підтримують іншу зручну форму під назвою `idict`, що означає словник ідентифікатора, з таким синтаксисом
 
 ```
 { identifier=obj, ... }
 ```
 
-The key must be a valid `identifier`, and the value can be anything. The expression evaluates to a normal Python `dict` with string keys. This convenience form is provided to save user from having to quote the key using awkward `<<` and `>>`.
+Ключ має бути дійсним `ідентифікатором`, а значення може бути будь-яким. Вираз обчислюється як звичайний Python `dict` із рядковими ключами. Ця зручна форма призначена для того, щоб позбавити користувача необхідності цитувати ключ, використовуючи незручні `<<` та `>>`.
 
 
-## Special Built-in Functions
+## Спеціальні Вбудовані функції
 
-In addition to all built-in function in upstream FreeCAD, here are some additional ones.
+На додаток до всіх вбудованих функцій в Upstream FreeCAD, існують деякі додаткові.
 
 ### `eval`
 
-Not to be confused with the Python built-in with the same name, this function evaluates scripts with FreeCAD expression extended syntax. The reason why Python's `eval()` is dangerous is because Python's system modules gives the script access to user's local system. And `eval()` allows an attacker to run any script code. FreeCAD expression engine, by default, does not have access to user's local system. So allowing `eval()` exposes no more danger than allowing user to enter expression in a spreadsheet cell.
+Не плутати з аналогічною вбудованою Python функцією. Ця функція виконує сценарії з розширеним синтаксисом виразу FreeCAD. Причина, чому `eval()` Python небезпечна, полягає в тому, що системні модулі Python надають скрипту доступ до локальної системи користувача. І `eval()` дозволяє зловмиснику запускати будь-який код сценарію. Механізм виразів FreeCAD за замовчуванням не має доступу до локальної файлової системи користувача. Таким чином, дозвіл виконання `eval()` спричиняє не більше небезпеки, ніж дозвіл користувачеві вводити вираз у комірку електронної таблиці.
 
-The usage of `eval()` is,
+Використання `eval()` є,
 
 ```
 eval(cmd, ...)
 ```
 
-`cmd` can be a single string or a sequence of strings. You can pass in one or more optional input arguments as predefined variables before script evaluation. The argument supports positional and keyword argument, as well as sequence and dictionary unpacking. Positional argument is named as `_index_`, where `index` is the argument's position starting with one. For example,
+`cmd` може бути одним рядком або послідовністю рядків. Ви можете передати один або кілька необов'язкових вхідних аргументів як попередньо визначені змінні перед виконанням сценарію. Аргумент підтримує позиційний аргумент і аргумент ключового слова, а також розпакування послідовності та словника. Позиційний аргумент називається `_index_`, де `index` – це позиція аргументу, яка починається з одиниці. Наприклад,
 
 ```
-# suppose
+# припустимо
 c = [ 3, 2 ]
 d = { 'g':4 }
 
-# calling eval with the following arguments
+# виклик eval з такими аргументами
 eval(cmd, 5, 6, a=[1,2,3], *c, **d)
 
-# is equivalent to pre-defining the following variable
+# еквівалентно попередньому визначенню наступної змінної
 _1_ = 5
 _2_ = 6
 a = [1,2,3]
@@ -289,99 +289,99 @@ _4_ = 2
 g = 4
 ```
 
-One advantage of `eval()` over function definition is that the script is stored as string, and all comments inside are kept untouched.
+Однією з переваг `eval()` перед визначенням функції є те, що сценарій зберігається як рядок, а всі коментарі всередині залишаються недоторканими.
 
 ### `func/func_d`
 
-`func()` and `func_d()` has the exact same call signature as `eval()`. The difference is that `func/func_d()` returns a callable object instead of evaluating the input scripts. You can think of it compiles the script, but not running it. The `d` in `func_d` means `delayed`, that is, the argument passed into `func_d()` is not evaluated at compile time, but delayed until runtime,
+`func()` and `func_d()` має такий самий синтаксис виклику, як `eval()`. Різниця полягає в тому, що `func/func_d()` повертає викликаний об’єкт замість того, щоб обчислювати вхідні сценарії. Ви можете думати, що він компілює сценарій, але не запускає його. `d` у `func_d` означає `затримку`, тобто обчислення аргументу, переданий у `func_d()`, не відбувається під час компіляції, а відкладається до часу виконання,
 
 ### `import_py`
 
-Similar to Python's `__import__()` function, `import_py(name)` returns a module object of given name. The difference is that `import_py()` only allows to import modules that are explicitly enabled by user with a boolean parameter with the same name as the module, defined in `BaseApp/Preferences/Expression/PyModules`.
+Подібно до Python функції `__import__()`, `import_py(name)` повертає об’єкт модуля із заданою назвою. Різниця полягає в тому, що `import_py()` дозволяє імпортувати лише модулі, які явно ввімкнено користувачем. Перелік модулів знаходиться у `BaseApp/Preferences/Expression/PyModules`.
 
 ### `href`
 
-`href()` stands for __hidden reference__, which accepts a single argument containing an property reference. This function hides any object reference inside the argument to work around cyclic dependency error. You need to be careful when using `href()` because skipping dependency checking may result in unstable recomputing order, and thus given unexpected result. As a rule of thumb, it will be safe if `href()` is referring (directly or indirectly) to some property that will only be changed by user instead of calculated by the object (e.g. with other expressions). When used right, `href()` can be a powerful tool. You can, for example, expose module parameters in a parent container (such as an `App::Part` or `PartDesign::Body`), and refer to these parameters inside any child features, e.g. `href(Part001.Length)`.
+`href()` означає __приховане посилання__, яке приймає один аргумент, що містить посилання на властивість. Ця функція приховує будь-яке посилання на об’єкт всередині аргументу, щоб обійти помилку циклічної залежності. Використовуючи `href()`, потрібно бути обережним, оскільки пропуск перевірки залежностей може призвести до нестабільного порядку переобчислення і, таким чином, отримати несподіваний результат. Як правило, буде безпечно, якщо `href()` посилається (прямо чи опосередковано) на деяку властивість, яка буде змінена лише користувачем, а не обчислюється об’єктом (наприклад, з іншими виразами). При правильному використанні `href()` може бути потужним інструментом. Ви можете, наприклад, надати параметри модуля в батьківському контейнері (наприклад, `App::Part` або `PartDesign::Body`) і посилатися на ці параметри всередині будь-якого дочірнього параметра, напр. `href(Part001.Length)`.
 
 ### `dbind`
 
-`dbind()` stands for __double binding__. It accepts a single argument containing an property property reference and let you bind to that property in both ways. Unlike normal one-way expression binding, where it only reads value from the bound property, `dbind()` allows you write to the bound property as well. In other word, it lets you link properties from many different objects, and put them in the same place (which can be any type of object, not limited to a Spreadsheet) for easy configuration. At the same time, you can still edit the property in the original object, and the changes will be reflected on the other side. Like `href()`, the property reference is hidden from dependency checking.
+`dbind()` означає __подвійну прив'язку__. Він приймає один аргумент, що містить посилання на властивість, і дозволяє прив’язуватися до цієї властивості обома способами. На відміну від звичайного одностороннього зв’язування виразів, де воно зчитує значення лише з пов’язаної властивості, `dbind()` також дозволяє записувати до пов’язаної властивості. Іншими словами, він дозволяє зв’язувати властивості багатьох різних об’єктів і розміщувати їх в одному місці ( це можуть бути будь-який тип об’єкта, не обмежений електронною таблицею) для легкого налаштування. Водночас ви все ще можете редагувати властивість у вихідному об’єкті, а зміни будуть показуватися з іншого боку. Як і `href()`, посилання на властивість приховано від перевірки залежностей.
 
-If used in a Spreadsheet, you will need to choose one the cell [edit mode](#spreadsheet-edit-mode) for editing. If used in normal objects, the property view will allow you to edit the property even through it is bound with an expression, as shown below.
+У випадку електронної таблиці, вам потрібно буде вибрати для однієї із комірок [edit mode](#spreadsheet-edit-mode) для редагування. У випадку звичайних об’єктах, перегляд властивостей дозволить вам редагувати властивість, навіть якщо вона пов’язана з виразом, як показано нижче.
 
 
 [[images/dbind.gif]]
 
 
-# Expression Binding
+# Прив'язування виразів
 
-Because of the extended syntax, an expression can now evaluates to any type of Python objects, which in turn allows binding of any type of property. The property view has been modified to enable just that.
+Завдяки розширеному синтаксису вираз тепер може обчислювати будь-який тип об’єктів Python, що, своєю чергою, дозволяє прив’язувати будь-який тип властивостей. Перегляд властивостей було змінено, щоб увімкнути таку можливість.
 
-By default, the property view will only show some of properties of the selected object, among which only some types of properties allow expression binding, by clicking the small blue `f(x)` button shown below.
+За замовчуванням у режимі перегляду властивостей буде показано лише деякі властивості вибраного об’єкта. Деякі типи властивостей дозволяють прив’язувати вирази, натиснувши маленьку синю кнопку `f(x)`, показану нижче.
 
 [[images/property-edit1.png]]
 
-Now, you can reveal all properties by right clicking anywhere in the property view and select `Show all`. As shown below, you can even use an expression to generate a shape and bind it to the `Shape` property, by using the `Expression...` menu action. Be careful though, some properties are hidden for a reason. Consider this as an advanced feature, and make sure you know what you are doing.
+Тепер ви можете відкрити всі властивості, клацнувши правою кнопкою миші в будь-якому місці перегляду властивостей і вибравши `Show all`. Як показано нижче, ви навіть можете використовувати вираз, щоб створити фігуру та прив’язати її до властивості `Shape`, використовуючи дію меню `Expression...`. Однак будьте обережні, деякі властивості приховані з певних причин. Розгляньте це як розширення функціоналу, та переконайтесь, що знаєте, що робите.
 
 [[images/property-edit2.png]]
 
-The other menu actions are used for dynamic access control of properties. See [here](Core-Changes#properties) for more details. One property status that is particular important to `ExpressionEngine` is the `Output` status. When an object is recomputed, its `ExpressionEngine` will compute all `non-Output` property expression binding first, then calls object's `execute()` function, and finally computes any `Output` property expression binding. In other words, the `Output` property status controls the order of expression binding evaluation within an object.
+Інші пункти меню використовуються для динамічного контролю доступу до властивостей. Додаткову інформацію див. [тут](Core-Changes#properties). Одним зі статусів властивостей, особливо важливим для `ExpressionEngine`, є статус `Output`. Коли об’єкт повторно обчислюється, його `ExpressionEngine` спочатку обчислює всі прив’язки виразів `non-Output` властивостей, потім викликає функцію `execute()` об’єкта і, нарешті, обчислює будь-яку прив’язку виразу з властивістю `Output`. Іншими словами, статус властивості `Output` контролює порядок обчислення прив'язаних виразів в об’єкті.
 
 
-## Spreadsheet Binding Rang of Cells
+## Прив’язки діапазону комірок електронної таблиці
 
-Each spreadsheet cell natively supports expression binding. In addition, it also allow you to bind a range of cells to another range of cells in the same or another Spreadsheet using the `Bind...` action in the spreadsheet context menu. Once bound, the cell in target range will mirror what's in the source range. Bound cells are shown with blue border, and are not editable. Double clicking any bound cells to edit or discard the binding.
+У кожній комірці електронної таблиці передбачена підтримка прив'язки виразу. Крім того, також є можливість прив’язати діапазон комірок до іншого діапазону клітинок у тій самій чи іншій електронній таблиці за допомогою дії `Зв’язати...` у контекстному меню електронної таблиці. Після зв’язування комірки в цільовому діапазоні будуть показувати те, що знаходиться в комірках джерела. Зв’язані клітинки показує з синьою рамкою, і їх не можна редагувати. Двічі клацніть на будь-які зв’язані комірки, щоб відредагувати або скасовувати прив’язку.
 
 [[images/spreadsheet-bind-range.gif]]
 
 
-# Spreadsheet Edit Mode
+# Режим редагування електронних таблиць
 
-Apart from the aforementioned [relative cell](#cell-and-range-reference) feature, another important new feature of spreadsheet is the introduction of alternative _edit mode_, which enables user to build simple customized GUI using spreadsheet. Simply right click the cell and choose one of the edit mode in the context menu to activate this feature. `Normal` mode is the default mode, which directly edits the cell content. `Persistent` is an add-on option for all the other edit modes to always show the edit control, or else, the edit control is only shown when you are editing the cell, by double clicking for example. Other modes are described as follows.
+Окрім вищезгаданої функції [відносної комірки](#cell-and-range-reference), ще однією важливою новою функцією електронної таблиці є введення альтернативного _режиму редагування_. Він дає змогу користувачеві створювати простий GUI за допомогою електронної таблиці. Щоб активувати цю функцію, просто клацніть правою кнопкою миші комірку та виберіть один із режимів редагування в контекстному меню. Режим `Звичайний` – це режим за замовчуванням, який безпосередньо редагує вміст комірки. `Постійно` – це додаткова опція для всіх інших режимів редагування, при якій завжди показується елемент керування редагуванням. В іншому випадку він показується лише під час редагування комірки, наприклад, подвійним клацанням. Інші режими описані нижче.
 
 [[images/edit-mode.png]]
 
-## Button Edit Mode
+## Режим редагування кнопок
 
-Any cell that defines a function can be switched into button edit mode, where a button widget is shown in the cell's position. The button text is looked up in the following places in the given order,
-* Function doc string,
-* Function name,
-* Cell alias,
-* Cell address.
+Будь-яку комірку з функцією, можна перевести в режим редагування кнопки, де віджет кнопки показується в позиції комірки. Текст кнопки шукається в наступних місцях у зазначеному порядку,
+* doc строка функції,
+* Ім'я функції
+* Псевдонім комірки,
+* Адреса комірки.
 
-The function is invoked when the button is clicked, after which the whole current document is recomputed.
+Функція викликається при натисканні кнопки, після чого весь поточний документ повторно обчислюється.
 
-## Combo Box Edit Mode
+## Режим редагування Combo Box
 
-The ComboBox edit mode requires a cell with a list or tuple expression of two or more items. If the first item is a mapping of string to anything, then the second item must be a string key of the mapping. If the first item is a sequence of string, then the second item can be either a string or an integer index of the sequence. When the ComboBox edit mode is activated, the cell will only show the second string item as the content. When the cell is edited by double clicking, or keyboard enter, it shows a ComboBox widget populated with the first item's string keys if it's a mapping, or simply the first item if it's a string list. When the user choose an item, the second item will be assigned the selected string. If there is a third callable item in the cell expression, it will be invoked on value change with arguments `callable(sheet, cell_address, seq)`, where `sheet` is the spreadsheet, `cell_address` is the current cell address in text form, and `seq` is the cell's evaluated list or tuple object.
+Для режиму редагування ComboBox потрібна комірка із list або tuple виразом з двох або більше елементів. Якщо перший елемент є відображенням рядка на що-небудь, то другий елемент має бути ключем рядка зіставлення. Якщо перший елемент є послідовністю рядків, то другий елемент може бути або рядком, або цілочисельним індексом послідовності. Коли активовано режим редагування ComboBox, у комірці буде показано лише другий елемент рядка як вміст. Коли комірку редагують подвійним клацанням миші або за допомогою клавіатури, вона показує віджет ComboBox, заповнений ключами рядка першого елемента, якщо це зіставлення, або просто перший елемент, якщо це список рядків. Коли користувач вибирає елемент, другому елементу буде призначено вибраний рядок. Якщо у виразі комірки є третій викликаний елемент, він буде викликаний при зміні значення з аргументами `callable(sheet, cell_address, seq)`, де `sheet` – електронна таблиця, `cell_address` – це поточна адреса комірки в текстовій формі, а `seq` – це обчислений об'єкт типу list або tuple.
 
-## Label Edit Mode
+## Режим редагування міток
 
-The label edit mode requires a cell with a list or tuple expression of at least one item. The first item must be a string. The rest of the items can be any thing, and are not touched. When activated, the cell only shows the first string item as its content, and can be edited as usual. The other items are hidden and not used. See the following demonstration for an example usage of this mode.
+Для режиму редагування мітки необхідна клітинка з виразом типу list або tuple з мінімум одним елементом. Першим елементом має бути рядок. Решта елементів може бути будь-якою. Їх не чіпають. Якщо активовано, комірка показує лише перший елемент рядка як вміст, і його можна редагувати як звичайно. Інші елементи приховані та не використовуються. Перегляньте наступну демонстрацію для прикладу використання цього режиму.
 
-This edit mode can also be used to edit string property from other object using the double binding function, e.g. `dbind(Box.Label2)`.
-
-
-## Quantity Edit Mode
-
-This edit mode provides an easy way to edit values with unit using a SpinBox. It is similar to how the property view lets you edit the object's quantity property, but offers more customizations with expression.
-
-This mode expects the cell to contain either a simple number, a `quantity` (i.e. number with unit) or a `tuple/list(quantity, dict)`. The `dict` contains optional string keys `'step', 'max', 'min', 'unit'` to configure the SpinBox. All keys are expects to have `double` type as value, except `unit` which must be a string. If no `unit` setting is found, the `display unit` setting of the current cell will be used. Note that, the `unit` setting inside the expression does not have any effect on cell display when not editing. You can of course turn on the `Persistent` edit mode to always display the cell content in SpinBox.
-
-## CheckBox Edit Mode
-
-Edit the cell using a CheckBox. The cell is expected to contain any value that can be converted to boolean. If you want the check box to have a title, use `tuple/list(boolean, title)`.
+Цей режим редагування також можна використовувати для редагування властивості рядка з іншого об’єкта за допомогою функції подвійного зв’язування, напр. `dbind(Box.Label2)`.
 
 
-For all edit modes, besides the cell expression mentioned above, they also accept an calling expression to special function `dbind()`. As mentioned before, `dbind()` works similarly as `App::Link` at the object level. It can be used to link to a property. And the edit mode can be used to forward the editing to the linked property.
+## Режим редагування кількості
 
-# Demonstration
+Цей режим редагування забезпечує простий спосіб редагування значень за допомогою SpinBox. Це схоже на те, як перегляд властивостей дозволяє редагувати властивість Кількість об’єкта, але пропонує більше налаштувань із виразом.
 
-Here is a demonstration that uses spreadsheet to populate a simple BOM list. The spreadsheet offers the user to select the document and assembly, and then populate the list with the parts information from the selection.
+У цьому режимі вважаеться, що комірка міститить просте число, `quantity` (тобто число з одиницею виміру) або `tuple/list(quantity, dict)`. `dict` містить додаткові рядкові ключі `'step', 'max', 'min', 'unit'` для налаштування SpinBox. Очікується, що всі значення ключів мають тип `double`, за винятком `unit`, який має бути string (рядком). Якщо параметр `unit` не знайдено, буде використано параметр `display unit` поточної комірки. Зауважте, що параметр `unit` всередині виразу не впливає на відображення комірки, коли не редагується. Ви, звичайно, можете увімкнути режим редагування `Постійно`, щоб завжди показувати вміст комірки в SpinBox.
+
+## Режим редагування CheckBox
+
+Редагує комірку використовуючи CheckBox(Прапорець). Очікується, що комірка містить будь-яке значення, яке можна перетворити на логічне значення. Якщо ви хочете, щоб прапорець мав назву, використовуйте `tuple/list(boolean, title)`.
+
+
+Для всіх режимів редагування, окрім виразу комірки, згаданого вище, вони також приймають вираз виклику спеціальної функції `dbind()`. Як згадувалося раніше, `dbind()` працює так само, як `App::Link` на рівні об’єкта. Його можна використовувати для посилання на властивість. А режим редагування можна використовувати для пересилання редагування до пов’язаної властивості.
+
+# Демонстрація
+
+Наведу демонстрацію, що використовує таблицю для заповнення простого списку BOM. Електронна таблиця пропонує користувачеві вибрати документ і збірку, а потім заповнює список інформацією про деталі з вибраного документа.
 
 [[images/spreadsheet.gif]]
 
-<a name="edit"></a>To reveal the script of a cell with non-default edit mode, you can right click it and select `Edit mode -> Normal`. And then you can edit the cell as usual. Alternatively, you can right click the spreadsheet object in the tree view, and select `Expression actions -> Copy selected`. You can then paste the scripts to your favorite text editor. This gives you expressions of every cell in the spreadsheet. Other actions in `Expression actions` can let you copy expressions of the active document or all opened documents, from not only the spreadsheet, but also all expression bindings in any objects. You can modify the script in your editor, and copy back using `Expression actions -> Paste`. You can paste only part of the scripts, as long as you include the `##@@` marker of the expression you want to change. Make sure your copied text starts with one of the `##@@` marker.
+<a name="edit"></a>Щоб відкрити сценарій комірки з режимом редагування не за замовчуванням, ви можете клацнути її правою кнопкою миші та вибрати `Режим редагування -> Звичайний`. Потім ви можете редагувати комірку як завжди. Як варіант, ви можете клацнути правою кнопкою миші об’єкт електронної таблиці в ієрархії документа та вибрати `Дії з виразом -> Копіювати вибране`. Потім ви можете вставити сценарії у свій улюблений текстовий редактор. Це дасть вам вирази для кожної комірки в електронній таблиці. Other actions in `Expression actions` can let you copy expressions of the active document or all opened documents, from not only the spreadsheet, but also all expression bindings in any objects. You can modify the script in your editor, and copy back using `Expression actions -> Paste`. You can paste only part of the scripts, as long as you include the `##@@` marker of the expression you want to change. Make sure your copied text starts with one of the `##@@` marker.
 
 Here are the script,
 
