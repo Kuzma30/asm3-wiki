@@ -381,9 +381,9 @@ g = 4
 
 [[images/spreadsheet.gif]]
 
-<a name="edit"></a>Щоб відкрити сценарій комірки з режимом редагування не за замовчуванням, ви можете клацнути її правою кнопкою миші та вибрати `Режим редагування -> Звичайний`. Потім ви можете редагувати комірку як завжди. Як варіант, ви можете клацнути правою кнопкою миші об’єкт електронної таблиці в ієрархії документа та вибрати `Дії з виразом -> Копіювати вибране`. Потім ви можете вставити сценарії у свій улюблений текстовий редактор. Це дасть вам вирази для кожної комірки в електронній таблиці. Other actions in `Expression actions` can let you copy expressions of the active document or all opened documents, from not only the spreadsheet, but also all expression bindings in any objects. You can modify the script in your editor, and copy back using `Expression actions -> Paste`. You can paste only part of the scripts, as long as you include the `##@@` marker of the expression you want to change. Make sure your copied text starts with one of the `##@@` marker.
+<a name="edit"></a>Щоб відкрити сценарій комірки з режимом редагування не за замовчуванням, ви можете клацнути її правою кнопкою миші та вибрати `Режим редагування -> Звичайний`. Потім ви можете редагувати комірку як завжди. Як варіант, ви можете клацнути правою кнопкою миші об’єкт електронної таблиці в ієрархії документа та вибрати `Дії з виразом -> Копіювати вибране`. Потім ви можете вставити сценарії у свій улюблений текстовий редактор. Це дасть вам вирази для кожної комірки в електронній таблиці. Інші пункти меню в `Дії з виразом` можуть дозволити вам копіювати вирази активного документа або всіх відкритих документів не тільки з електронної таблиці, а й з усіх прив’язок виразів у будь-яких об’єктах. Ви можете змінити сценарій у своєму редакторі та скопіювати його назад за допомогою `Дії з виразом -> Вставити`. Ви можете вставити лише частину сценаріїв, якщо включите маркер `##@@` виразу, який потрібно змінити. Переконайтеся, що ваш скопійований текст починається з одного з маркерів `##@@`.
 
-Here are the script,
+Ось сценарій,
 
 ```python
 ##@@ A1 bom#Spreadsheet.cells (Spreadsheet)
@@ -508,14 +508,13 @@ def partInfo(obj, idx):
 
 ```
 
-The third row of the spread sheet is used to define several helper functions to enumerate documents, assemblies, parts, and so on. You can optionally hide this row for better presentation as shown in the screen cast. Simply right click the row index and select `Toggle rows`. The reveal the hidden rows, select `Show
-all rows`.
+Третій рядок електронної таблиці використовується для визначення кількох допоміжних функцій для підрахунку документів, збірок, деталей тощо. Ви можете за бажанням приховати цей рядок для кращого вигляду, як показано на відео. Просто клацніть правою кнопкою миші на індексі рядка та виберіть `Toggle rows`. Щоб знову показати приховані рядки, виберіть `Показати всі рядки`.
 
-The *Part No.* and *Description* is filled by function `partInfo()`, which reads the part object's `Label2` property, i.e. the text shown in tree view `Description` column. As shown in the screen cast, you can edit the tree view column by pressing `F2` key. The demo code simply split the string with separator `:`. You can of course use more complex data structure, or add dedicated property to the part object for more details.
+*Номер частини* і *Опис* заповнюються функцією `partInfo()`, яка зчитує властивість об’єкта частини `Label2`, тобто текст, показаний у стовпці `Опис` ієрархії документа. Як показано на відео, ви можете редагувати стовпець в ієрархії документа, натиснувши клавішу `F2`. Демо-код просто розбиває рядок за допомогою роздільника `:`. Звичайно, ви можете використовувати складнішу структуру даних або додати спеціальну властивість до об’єкта деталі для отримання додаткової інформації.
 
-The BOM list columns (`A4:D4`) are defined using `Label` edit mode, where the first item of the list is the column heading, the second item stores the current column address, and the third item is a lambda to extract the corresponding part information.
+Стовпці списку BOM (`A4:D4`) визначаються за допомогою режиму редагування `Label`, де перший елемент списку є заголовком стовпця, другий елемент зберігає поточну адресу стовпця., а третій елемент — це лямбда для вилучення інформації про відповідну частину.
 
-`D3` (i.e `template`)  is defined as a convenience to consolidate all column definition. It is using `Label` edit mode to reduce cell display verbosity.
+`D3` (тобто `template`) визначається як зручний спосіб об'єднання всіх визначень стовпців. Він використовує режим редагування `Мітки`, щоб зменшити детальність відображення комірок.
 
-Once thing to note is that `B1` containing a list of currently opened documents for user to select. There is no auto recompute mechanism in case of new or deleted document. The button `Refresh` defines a function of the same name to re-scan all open documents, and re-populate the assembly list of the current document.
+Зверніть увагу на те, що `B1` містить список поточних відкритих документів, які користувач може вибрати. Немає механізму автоматичного переобчислення у разі створення нового чи видалення документа. Кнопка `Оновити` визначає функцію з такою ж назвою для повторного сканування всіх відкритих документів і повторного заповнення списку збірок поточного документа.
 
