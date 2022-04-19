@@ -1,6 +1,6 @@
 The design of Assembly3 (and the fork of FreeCAD) partially follows the unfinished FreeCAD Assembly [project plan](https://www.freecadweb.org/wiki/Assembly_project), in particularly, the section [Infrustracture](https://www.freecadweb.org/wiki/Assembly_project#Infrastructure) and [Object model](https://www.freecadweb.org/wiki/Assembly_project#Object_model), which are summarized below,
 
-### Multi model
+### Мульти модель
 
 The forked FreeCAD core supports external object linking (with a new type of property, `PropertyXLink`, as a drop-in replacement of PropertyLink), displaying, editing, importing/exporting, and cross-document undo/redo.
 
