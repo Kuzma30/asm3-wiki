@@ -1,4 +1,4 @@
-**NOTE: The build instruction in this article is outdated. Assembly3 now works with official FreeCAD version 0.19 onwards. In addition, you can now install SolveSpave solver backend through `pip install py-slvs`**. The Python wheel repository can be found [here](https://github.com/realthunder/slvs_py/).
+**UWAGA: Instrukcja budowy zawarta w tym artykule jest przestarzała. Assembly3 now works with official FreeCAD version 0.19 onwards. In addition, you can now install SolveSpave solver backend through `pip install py-slvs`**. The Python wheel repository can be found [here](https://github.com/realthunder/slvs_py/).
 
 ~~At the moment of this writing, Assembly3 only works with a forked FreeCAD [branch](https://github.com/realthunder/FreeCAD/tree/LinkStage3). You need to first checkout this branch and [build](https://github.com/realthunder/FreeCAD/tree/LinkStage3#compiling) it yourself.~~
 
