@@ -1,4 +1,4 @@
-# Coordinate System
+# Układ współrzędnych
 
 The user is encouraged to first read [this tutorial](https://web.archive.org/web/20191130140733/https://www.freecadweb.org/wiki/Assembly_Basic_Tutorial) to get some idea about the new concept of _local coordinate systems_. The tutorial is for the original unfinished Assembly workbench, but gives a pretty comprehensive overview of what Assembly3 is providing as well. The `Part` or `Product` container mentioned in the tutorial are equivalent to the `Assembly` container in Assembly3, which of course can be treated just as a _part_ and added to other assemblies. There is one thing I disagree with this tutorial. The concept of _global coordinate system_ is still useful, and necessary to interoperate with objects from other legacy (i.e. non-local-CS-aware) workbench. Let's just define the _global coordinate system_ as the 3D view coordinate system, in other word, the location where you actually see the object in the 3D view, or, the coordinates displayed in the status bar when you move your mouse over some object.
 
