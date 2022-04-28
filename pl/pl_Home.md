@@ -1,9 +1,9 @@
-Welcome to the FreeCAD Assembly3 wiki!
+Witaj w Wiki FreeCAD dla środowiska pracy Złożenie 3!
 
-* [[Build Instruction]]
+* [[Instrukcje kompilacji]]
 * [[Concepts]]
 * [[Navigation]]
-* Tutorials
+* Poradniki
     * [[Common Operations]]
     * [[Replacing Part]]
     * [[Create Skeleton Sketch]]
@@ -25,7 +25,7 @@ Welcome to the FreeCAD Assembly3 wiki!
     * [[Points Plane Distance]]
     * [[Point Line Distance]]
     * [[Symmetric]]
-* Release Notes
+* Informacje o wydaniu
     * [0.11](wiki/Release-Notes-0.11)
     * [0.10](wiki/Release-Notes-0.10)
     * [0.9](wiki/Release-Notes-0.9)
@@ -35,4 +35,4 @@ Welcome to the FreeCAD Assembly3 wiki!
     * [0.4](wiki/Release-Notes-0.4)
     * [0.3](wiki/Release-Notes-0.3)
     * [0.2](wiki/Release-Notes-0.2)
-    * 0.1 - Initial preview release
+    * 0.1 — Wstępna wersja zapoznawcza
