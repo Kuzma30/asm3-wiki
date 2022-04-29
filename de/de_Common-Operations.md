@@ -1,18 +1,18 @@
-# Create a Simple Assembly with a Constraint
+# Einen einfachen Zusammenbau mit einer Bedingung erstellen
 
-* Start FreeCAD and create a new document
-* Switch to the `Part` workbench and create a `Cube` and a `Cylinder`
-* Switch to the `Assembly3` workbench, click ![AddAssembly](../raw/master/freecad/asm3/Gui/Resources/icons/Assembly_New_Assembly.svg?sanitize=true) to create a new assembly
-* Select both the `Cube` and the `Cylinder` and drag them into the new assembly
-* Select any face of the `Cylinder` or `Cube`, and click ![Move](../raw/master/freecad/asm3/Gui/Resources/icons/Assembly_Move.svg?sanitize=true) to activate part manual movement. Click any arrow to drag the `Cylinder` on top of the `Cube`, press the `ESC` key to leave part movement (Alternative: right-click `Assembly` in the tree view and click `Finish editing`)
-* Select the top face of the `Cube` and (while holding the `CTRL` key) select the bottom face or edge of the `Cylinder` and then click ![AddCoincidence](../raw/master/freecad/asm3/Gui/Resources/icons/constraints/Assembly_ConstraintCoincidence.svg?sanitize=true) to create a plane coincidence constraint.
-* Finally, click ![Solve](../raw/master/freecad/asm3/Gui/Resources/icons/AssemblyWorkbench.svg?sanitize=true) to solve the constraint system.
+* FreeCAD starten und ein neues Dokument anlegen
+* Zum Arbeitsbereich `Part` wechseln und einen `Würfel` und einen `Zylinder`erstellen
+* Zum Arbeitsbereich `Assembly3` wechseln und ![AddAssembly](../raw/master/freecad/asm3/Gui/Resources/icons/Assembly_New_Assembly.svg?sanitize=true) anklicken, um einen neuen Zusammenbau (eine Baugruppe) zu erstellen
+* Sowohl den `Würfel` als auch den `Zylinder` auswählen und auf die neue Baugruppe ziehen
+* Eine beliebige Fläche des `Zylinders` oder des `Würfels` auswählen und ![Move](../raw/master/freecad/asm3/Gui/Resources/icons/Assembly_Move.svg?sanitize=true) anklicken, um den Befehl TeilBewegen zu aktivieren. Einen der Pfeile anklicken, um den `Zylinder` auf die Oberseite des `Würfels`zu ziehen; die `ESC` Taste drücken, um TeilBewegen zu verlassen (Alternative: Rechtsklick auf das `Assembly`-Objekt in der Baumansicht und dann `Bearbeitung beenden` anklicken)
+* Die Oberseite des `Würfels` und dann (mit gedrückter `STRG`-Taste) die Unterseite oder den Rand des `Zylinders` auswählen und anschließend auf ![AddCoincidence](../raw/master/freecad/asm3/Gui/Resources/icons/constraints/Assembly_ConstraintCoincidence.svg?sanitize=true) klicken, um eine Bedingung DeckungsgleicheEbenen anzulegen.
+* Abschließend klickt man auf ![Solve](../raw/master/freecad/asm3/Gui/Resources/icons/AssemblyWorkbench.svg?sanitize=true), um das Bedingungssystem zu lösen.
 
 [[images/simple.gif]]
 
-You can click ![Auto recompute](../raw/master/freecad/asm3/Gui/Resources/icons/Assembly_AutoRecompute.svg?sanitize=true) to enable auto-solving with any changes in constraint.
+Man kann ![Auto recompute](../raw/master/freecad/asm3/Gui/Resources/icons/Assembly_AutoRecompute.svg?sanitize=true) anklicken, um die automatische Neuberechnung bei jeder Änderung der Bedingungen zu aktivieren.
 
-After a new constraint is created, the selected elements will be highlighted in red. You can easily change the color of individual constraining elements under its view object property page. Or, set the color of the entire constraint by changing the color of constraint object itself. Make sure you set the `OverrideMaterial` view property to `True`.
+Nachdem eine neue Bedingung erstellt wurde, werden die ausgewählten Elemente rot hervorgehoben. Man kann ganz einfach die Farbe der einzelnen Bedingungs-Elemente auf der Seite ihrer Objekteigenschaften ändern. Or, set the color of the entire constraint by changing the color of constraint object itself. Make sure you set the `OverrideMaterial` view property to `True`.
 
 In case you find that the constraining element highlight obscure the assembly 3D view, you can enable the _Auto Element Visibility_ feature by clicking ![AutoElementVis](../raw/master/freecad/asm3/Gui/Resources/icons/Assembly_AutoElementVis.svg?sanitize=true). When enabled, all constraining elements will be hidden by default. You can reveal them by selecting any constraint or constraint element object in the tree view.
 
