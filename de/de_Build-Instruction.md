@@ -1,4 +1,4 @@
-**NOTE: The build instruction in this article is outdated. Assembly3 now works with official FreeCAD version 0.19 onwards. In addition, you can now install SolveSpave solver backend through `pip install py-slvs`**. The Python wheel repository can be found [here](https://github.com/realthunder/slvs_py/).
+**HINWEIS: Die Bauanweisung in diesem Artikel ist veraltet. Assembly3 funktioniert jetzt mit der offiziellen FreeCAD-Version 0.19 und folgenden. Zusätzlich kann man jetzt das SolveSpave Solver-Backend durch `pip install py-slvs`** installieren. The Python wheel repository can be found [here](https://github.com/realthunder/slvs_py/).
 
 ~~At the moment of this writing, Assembly3 only works with a forked FreeCAD [branch](https://github.com/realthunder/FreeCAD/tree/LinkStage3). You need to first checkout this branch and [build](https://github.com/realthunder/FreeCAD/tree/LinkStage3#compiling) it yourself.~~
 
@@ -6,9 +6,9 @@
 
 # SolveSpace
 
-[SolveSpace](http://solvespace.com/) is by itself a standalone CAD software with excellent assembly support. IMO, it has the opposite design principle of FreeCAD, which is big, modular, and fully extensible. SolveSpace, on the other hand  is lean and compact, and does extremely well for what it offers. But, you most likely will find something you want that's missing, and have to seek out other software for help. The constraint solver of SolveSpace is available as a small library for integration by third party software, which gives us the opportunity to bring the best from both worlds.
+[SolveSpace](http://solvespace.com/) ist eine eigenständige CAD-Software mit hervorragender Baugruppenunterstützung. Ich meine es entspricht dem entgegengesetzten Designprinzip von FreeCAD, das groß, modular und vollständig erweiterbar ist. SolveSpace, auf der anderen Seite, ist schlank und kompakt und macht, was es kann, sehr gut. Aber wahrscheinlich wird man etwas finden, was man vermisst und man muss nach anderer Software zur Unterstützung suchen. Der Constraint-Solver von SolveSpace ist als eine kleine Bibliothek für die Integration durch Software von Drittanbietern verfügbar, was uns die Gelegenheit gibt, das Beste aus beiden Welten zu bringen.
 
-There is no official python binding of SolveSpace at the moment. Besides, some small modification is required to bring out the SolveSpace assembly functionality into the solver library. You can find my fork [here](https://github.com/realthunder/solvespace). Check out the repository to your local file system,
+Es gibt derzeit keine offizielle Python-Bindung von SolveSpace. Außerdem sind ein paar kleine Änderungen erforderlich, um die SolveSpace Baugruppen- Funktionalität in die Solver-Bibliothek zu integrieren. Meinen Zweig findet man [hier](https://github.com/realthunder/solvespace). Das Projektarchiv entpackt man im eigenen lokalen Dateisystem,
 
 ```
 git clone https://github.com/realthunder/solvespace
@@ -134,11 +134,11 @@ The other constraint solver backend uses [SymPy](http://www.sympy.org/) and [Sci
 
 SciPy offers a dozen of different [minimization](https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html) algorithms, but most of which cannot compete with SolveSpace performance wise. The following list shows some non-formal testing result using default parameters with the sample [assembly](#create-a-super-assembly-with-external-link-array) described later
 
-| Algorithm                 | Time                                                       |
+| Algorithmus               | Time                                                       |
 | ------------------------- | ---------------------------------------------------------- |
-| SolveSpace (as reference) | 0.006s                                                     |
+| SolveSpace (als Referenz) | 0.006s                                                     |
 | Nelder-Mead               | Not converge                                               |
-| Powell                    | 7.8s                                                       |
+| Powell                    | 7,8 s                                                      |
 | CG                        | 10+37s <sup>[1](#f1)</sup>                                 |
 | BFGS                      | 10+0.8 <sup>[1](#f1)</sup>                                 |
 | Newton-CG                 | 10+61+0.5s <sup>[2](#f2),</sup><sup>[3](#f3)</sup>         |
