@@ -8,7 +8,7 @@
 
 [SolveSpace](http://solvespace.com/) jest samodzielnym oprogramowaniem CAD ze znakomitym wsparciem dla złożeń. IMO, it has the opposite design principle of FreeCAD, which is big, modular, and fully extensible. SolveSpace, on the other hand  is lean and compact, and does extremely well for what it offers. But, you most likely will find something you want that's missing, and have to seek out other software for help. The constraint solver of SolveSpace is available as a small library for integration by third party software, which gives us the opportunity to bring the best from both worlds.
 
-There is no official python binding of SolveSpace at the moment. Besides, some small modification is required to bring out the SolveSpace assembly functionality into the solver library. You can find my fork [here](https://github.com/realthunder/solvespace). Check out the repository to your local file system,
+W tej chwili nie ma oficjalnego połączenia SolveSpace z Pythonem. Besides, some small modification is required to bring out the SolveSpace assembly functionality into the solver library. You can find my fork [here](https://github.com/realthunder/solvespace). Sprawdź repozytorium w swoim systemie plików,
 
 ```
 git clone https://github.com/realthunder/solvespace
@@ -45,7 +45,7 @@ cd build_mingw
 cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_PYTHON=On -DCMAKE_TOOLCHAIN_FILE=../cmake/Toolchain-mingw64.cmake ..
 make _slvs
 ```
-After finish, copy `slvs.py` and `_slvs.pyd` from `build/src/swig/python/` to `asm3/py_slvs`, where `asm3` is the directory you install Assembly3 workbench. Be sure to create an empty file named `__init__.py` at `asm3/py_slvs`.
+Po ukończeniu skopiuj `slvs.py` i `_slvs. yd` z `build/src/swig/python/` do `asm3/py_slvs`gdzie `asm3` jest katalogiem, w którym zainstalowałeś środowisko pracy Złożenie 3. Upewnij się, że utworzyć pusty plik o nazwie `__init__.py` na `asm3/py_slvs`.
 
 ## Kompilacja dla Windows
 
@@ -130,24 +130,24 @@ Done, and you can fire up FreeCAD.app and try out Assembly3.
 
 # SymPy + SciPy
 
-The other constraint solver backend uses [SymPy](http://www.sympy.org/) and [SciPy](https://www.scipy.org/). They are mostly Python based, with some native acceleration in certain critical parts. The backend implementation models after SolveSpace's solver design, that is, symbolic algebraic + non-linear least square minimization. It can be considered as a python implementation of the SolveSpace's solver.
+Drugi solver rozwiązywania wiązań używa [SymPy](http://www.sympy.org/) oraz [SciPy](https://www.scipy.org/). Są one w większości oparte na Pythonie, z pewną naturalną akceleracją w niektórych krytycznych miejscach. The backend implementation models after SolveSpace's solver design, that is, symbolic algebraic + non-linear least square minimization. It can be considered as a python implementation of the SolveSpace's solver.
 
 SciPy offers a dozen of different [minimization](https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html) algorithms, but most of which cannot compete with SolveSpace performance wise. The following list shows some non-formal testing result using default parameters with the sample [assembly](#create-a-super-assembly-with-external-link-array) described later
 
-| Algorithm                 | Time                                                       |
-| ------------------------- | ---------------------------------------------------------- |
-| SolveSpace (as reference) | 0.006s                                                     |
-| Nelder-Mead               | Not converge                                               |
-| Powell                    | 7.8s                                                       |
-| CG                        | 10+37s <sup>[1](#f1)</sup>                                 |
-| BFGS                      | 10+0.8 <sup>[1](#f1)</sup>                                 |
-| Newton-CG                 | 10+61+0.5s <sup>[2](#f2),</sup><sup>[3](#f3)</sup>         |
-| L-BFGS-B                  | 10+1.5s <sup>[1](#f1),</sup><sup>[3](#f3)</sup>            |
-| TNC                       | 10+0.8s <sup>[1](#f1)</sup>                                |
-| COBYLA                    | 0.2s <sup>[3](#f3)</sup>                                   |
-| SLSQP                     | 10+0.3 <sup>[1](#f1),</sup><sup>[3](#f3)</sup>             |
-| dogleg                    | 10+61+?s <sup>[2](#f2)</sup> Failed to solve, linalg error |
-| trust-ncg                 | 10+61+1.5s <sup>[2](#f2)</sup>                             |
+| Algorithm                     | Time                                                       |
+| ----------------------------- | ---------------------------------------------------------- |
+| SolveSpace (jako odniesienie) | 0.006s                                                     |
+| Nelder-Mead                   | Not converge                                               |
+| Powell                        | 7.8s                                                       |
+| CG                            | 10+37s <sup>[1](#f1)</sup>                                 |
+| BFGS                          | 10+0.8 <sup>[1](#f1)</sup>                                 |
+| Newton-CG                     | 10+61+0.5s <sup>[2](#f2),</sup><sup>[3](#f3)</sup>         |
+| L-BFGS-B                      | 10+1.5s <sup>[1](#f1),</sup><sup>[3](#f3)</sup>            |
+| TNC                           | 10+0.8s <sup>[1](#f1)</sup>                                |
+| COBYLA                        | 0.2s <sup>[3](#f3)</sup>                                   |
+| SLSQP                         | 10+0.3 <sup>[1](#f1),</sup><sup>[3](#f3)</sup>             |
+| dogleg                        | 10+61+?s <sup>[2](#f2)</sup> Failed to solve, linalg error |
+| trust-ncg                     | 10+61+1.5s <sup>[2](#f2)</sup>                             |
 
 <b name="f1">[1]</b> Including Jacobian matrix calculation (10s in this test case), which is implemented using sympy lambdify with numpy.
 
