@@ -1,22 +1,22 @@
-It is some time desirable to model parts while building the assembly. This tutorial shows two approaches of doing this.
+Manchmal möchte man Teile modellieren, während man einen Zusammenbau erstellt. Dieses Tutorial zeigt zwei Möglichkeiten, dies zu tun.
 
 [[images/assembly-binder.png]]
 
-We are going to assemble the above parts. Imaging the bluish part is a PCB, the brown box is a USB socket, and the green board is a panel. In addition to assembling these three parts together, we also want to cut a hole out of the panel to expose the USB socket, at the assembled location.
+Es werden die oben gezeigten Teile zusammengestellt. Das bläuliche Teil soll eine Leiterplatte darstellen, das braune eine USB-Buchse und das grüne ist eine Blende (Schalttafel?). Zusätzlich zu der Montage dieser drei Teile, soll auch eine Öffnung in die Blende geschnitten werden, um die USB-Buchse an der Montagestelle hervorstehen zu lassen.
 
-# Using `Part` Workbench
+# Verwenden des Arbeitsbereiches `Part`
 
-The first approach uses the `Cut` feature in `Part` workbench. Both approaches will use the new `SubShapeBinder` to link the child shape of some group with synchronized placement update. Although `SubShapeBinder` is exposed in `PartDesign` workbench, it can be used without a `Body`.
+Für die erste Möglichkeit wird die Funktion `Cut` des Arbeitsbereiches `Part` verwendet. Beide Möglichkeiten verwenden den neuen `SubShapeBinder`, um die Teilform einer Gruppe mit den zugehörigen Positionsaktualisierungen zu verknüpfen. Obwohl der `SubShapeBinder` zu `PartDesign` gehört, kann er ohne einen `Body` (Körper) verwendet werden.
 
-We first create a sketch at the opening facing of the socket. In real world usage, you will certainly use some external geometry in sketch to draw the hole shape, which is omitted here for simplicity. Once finished, go to `Part` workbench and extrude the sketch. Then create an assembly to hold the socket and the hole shape. Select the hole shape tree item in the assembly, go to `PartDesign` workbench, and click ![SubShapeBinder](../../FreeCAD/raw/LinkStage3/src/Mod/PartDesign/Gui/Resources/icons/PartDesign_SubShapeBinder.svg?sanitize=true) to create a binder to the shape. This binder will automatically update the shape placement whenever either the hole or its parent assembly changes placement.
+Zuerst erstellen wir eine Skizze für den Durchlass der Buchse. In der realen Welt verwendet man sicherlich eine externe Geometrie in der Skizze, um die Lochkontur zu zeichnen, die hier zur Vereinfachung weggelassen wird. Nach Fertigstellung wechselt man zum Arbeitsbereich `Part` und extrudiert die Skizze. Dann wird ein Zusammenbau erstellt, der den Sockel und die Lochform beinhaltet. Auswählen des Baumobjekts der Lochform im Zusammenbau, wechseln zum Arbeitsbereich `PartDesign` und klicken auf ![SubShapeBinder](../../FreeCAD/raw/LinkStage3/src/Mod/PartDesign/Gui/Resources/icons/PartDesign_SubShapeBinder.svg?sanitize=true), erstellt einen Binder zur Lochform. Dieser Binder aktualisiert automatisch die Position der Form, wenn das Loch oder der übergeordnete Zusammenbau die Position ändert.
 
 [[images/part-binder.gif]]
 
-Next, create another assembly. Here comes the most critical step. You need to add the original uncut panel shape to the assembly. When you drop to the assembly you'll probably getting error message like "Box cannot be dragged out of Cut", you can correct this by holding `CTRL` key before dropping. After that, proceed to add other parts.
+Als Nächstes wird ein weiterer Zusammenbau erstellt. Here comes the most critical step. You need to add the original uncut panel shape to the assembly. When you drop to the assembly you'll probably getting error message like "Box cannot be dragged out of Cut", you can correct this by holding `CTRL` key before dropping. After that, proceed to add other parts.
 
-Finally, it is time to assemble the parts. First, lock the PCB part. Add `PlaneAlignment` constraints to fix the socket to PCB. Then, another important step, fix the original uncut panel shape to PCB, **instead of** the cut shape. The cut shape does not need to be constrained, it will follow the original panel shape. You can hide the uncut panel and reveal the panel with the hole in the final assembly.
+Finally, it is time to assemble the parts. Zuerst die Leiterplatte festsetzen (lock). Add `PlaneAlignment` constraints to fix the socket to PCB. Then, another important step, fix the original uncut panel shape to PCB, **instead of** the cut shape. The cut shape does not need to be constrained, it will follow the original panel shape. You can hide the uncut panel and reveal the panel with the hole in the final assembly.
 
-# Using `PartDesign` Workbench
+# Verwenden des Arbeitsbereiches `PartDesign`
 
 The second approach is to use the `PartDesign` workbench, which seems to be the natural choice when the panel itself is created using `PartDesign Body`. The first step of creating the hole shape is exactly the same as the previous approach. Because there exists a `PartDesign` body, when you create the `SubShapeBinder`, it will be added to the body automatically. Hide the hole shape, select a face of the binder shape, and create a `Pocket` to punch the hole.
 
