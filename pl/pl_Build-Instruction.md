@@ -134,14 +134,14 @@ Drugi solver rozwiązywania wiązań używa [SymPy](http://www.sympy.org/) oraz 
 
 SciPy offers a dozen of different [minimization](https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html) algorithms, but most of which cannot compete with SolveSpace performance wise. The following list shows some non-formal testing result using default parameters with the sample [assembly](#create-a-super-assembly-with-external-link-array) described later
 
-| Algorithm                     | Time                                                       |
+| Algorytm                      | Czas                                                       |
 | ----------------------------- | ---------------------------------------------------------- |
 | SolveSpace (jako odniesienie) | 0.006s                                                     |
 | Nelder-Mead                   | Not converge                                               |
 | Powell                        | 7.8s                                                       |
 | CG                            | 10+37s <sup>[1](#f1)</sup>                                 |
-| BFGS                          | 10+0.8 <sup>[1](#f1)</sup>                                 |
-| Newton-CG                     | 10+61+0.5s <sup>[2](#f2),</sup><sup>[3](#f3)</sup>         |
+| BFGT                          | 10+0.8 <sup>[1](#f1)</sup>                                 |
+| Newtonon-CG                   | 10+61+0.5s <sup>[2](#f2),</sup><sup>[3](#f3)</sup>         |
 | L-BFGS-B                      | 10+1.5s <sup>[1](#f1),</sup><sup>[3](#f3)</sup>            |
 | TNC                           | 10+0.8s <sup>[1](#f1)</sup>                                |
 | COBYLA                        | 0.2s <sup>[3](#f3)</sup>                                   |
