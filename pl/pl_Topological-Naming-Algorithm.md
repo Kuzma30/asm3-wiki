@@ -5,7 +5,7 @@ This article details the actual algorithm of generating the topological names us
 * `BRepBuilderAPI_Sewing` (used in `makEOffset`, etc.)
 * `BRepOffsetAPI_ThruSections` (used in `makELoft`, etc.)
 
-# Algorithm
+# Algorytm
 
 The core function to generate element names is `TopoShape::makESHAPE()`. At a high level, the algorithm can be described as using four steps to try to name as many elements as possible.
 
