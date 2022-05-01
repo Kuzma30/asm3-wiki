@@ -6,8 +6,8 @@ FreeCAD має потужний [Expression Engine](https://www.freecadweb.org/w
 
 * Встановіть властивість `LockAngle` обмеження на `True`;
 * Введіть вираз;
-  * If you want to drive by rotating the screw, then express the `Offset` property in term of the `Angle` property, as shown in the screen cast below;
-  * If you want to drive by translation, then express `Angle` in term of `Offset`.
+  * Якщо ви хочете рухатись, обертаючи гвинт, виразіть властивість `Offset` через властивість `Angle`, як показано на екрані нижче;
+  * Якщо ви хочете рухатися шляхом переміщення, виразіть `Angle` через `Offset`.
 
 [[images/screw.gif]]
 
@@ -22,7 +22,7 @@ FreeCAD має потужний [Expression Engine](https://www.freecadweb.org/w
 
 Спочатку створіть ескіз, щоб визначити положення двох шестерень. У реальних застосунках вам, ймовірно, знадобиться також визначити відстань двох кіл, а також більшості інших констант за допомогою виразів, показаних у цьому посібнику, або краще використовувати [>Spreadsheet](https://www.freecadweb.org/wiki/Spreadsheet_Workbench).
 
-Then, create an assembly, add the sketch and two gears, and position the two using the sketch with `PlaneCoincident` constraint.
+Потім створіть збірку, додати ескіз та два шестерні та розташуйте їх використовуючи ескіз з `PlaneCoincident` обмеженням.
 
 Увімкніть властивість `LockAngle` для обох обмежень. І оскільки ми будемо переміщати велику шестерню, введіть вираз для властивості `Angle` обмеження малої шестерні, як показано нижче, яке по суті є коефіцієнтом передачі з деяким зміщенням,
 
