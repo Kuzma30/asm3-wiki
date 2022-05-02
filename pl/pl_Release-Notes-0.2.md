@@ -1,4 +1,4 @@
-New Feature
+Nowa funkcjonalność
 * Exposed all supported constraints to toolbar.
 * Support sketching using Draft wire, circle/arc.
 * Add auto element visible command.
