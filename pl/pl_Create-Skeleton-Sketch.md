@@ -1,4 +1,4 @@
-This tutorial is a replication of SolveSpace [linkage](http://solvespace.com/linkage.pl) tutorial. In order to assemble the following linkage system,
+Ten poradnik jest powtórzeniem [powiązanego](http://solvespace.com/linkage.pl) poradnika SolveSpace. w celu zmontowania następującego układu połączenia;
 
 [[images/linkage-view.png]]
 

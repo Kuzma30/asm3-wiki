@@ -1,4 +1,4 @@
-__New Feature__
+__Nowa funkcjonalność__
 
 * Support STEP import ![Import](../raw/master/freecad/asm3/Gui/Resources/icons/Assembly_Import.svg?sanitize=true), which imports STEP assembly into Assembly3 container(s). There is also another import option ![ImportMulti](../raw/master/freecad/asm3/Gui/Resources/icons/Assembly_ImportMulti.svg?sanitize=true) to import multiple-level assembly into separate documents in their own directories. More multiple-document import settings are available through the STEP import preference page
 

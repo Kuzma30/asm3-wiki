@@ -1,4 +1,4 @@
-__New Feature__
+__Nowa funkcjonalność__
 
 * [Element/ElementLink offset](Constraints-and-Solvers#geometry-element-offset)
 

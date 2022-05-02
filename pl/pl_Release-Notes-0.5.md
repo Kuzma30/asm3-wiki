@@ -1,8 +1,8 @@
-__New Feature__
+__Nowa funkcjonalność__
 
-* Add support for MacOS
+* Dodano obsługę MacOS
 
-__Bug Fix__
+__Naprawa błędów__
 
 * Fix axial alignment redundancy handling
 

@@ -1,4 +1,4 @@
-This tutorial shows some of the features offered by `Assembly3` to work with complex assemblies. The sample assembly used in this tutorial is not that complex by itself, but by following the steps illustrated here, smaller assembly can be easily scaled up to build much larger and complex ones.
+Ten poradnik prezentuje niektóre funkcje oferowane przez środowisko `Złożenie 3` do pracy ze skompliwanymi złożeniami. The sample assembly used in this tutorial is not that complex by itself, but by following the steps illustrated here, smaller assembly can be easily scaled up to build much larger and complex ones.
 
 The model was taken from FreeCAD forum member `jpg87` in [this](https://forum.freecadweb.org/viewtopic.php?f=20&t=25712&start=590#p241223) post. It is the rotor head of a wind turbine as shown below,
 

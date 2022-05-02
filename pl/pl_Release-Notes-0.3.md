@@ -1,4 +1,4 @@
-__New Feature__
+__Nowa funkcjonalność__
 
 * Add co-linear constraint
 * Allow creating XZ and ZY working plane. Or select any face and create a work plane on it. The work plane is not attached to the source. If you want an attached plane, use the new `SubShapeBinder` in PartDesign. It can be used without a body.

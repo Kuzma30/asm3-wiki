@@ -1,4 +1,4 @@
-__New Feature__
+__Nowa funkcjonalność__
 
 * Add ![AutoElementFix](../raw/master/freecad/asm3/Gui/Resources/icons/Assembly_AutoFixElement.svg?sanitize=true) button for automatic fix of broken element references. It utilizes the new core feature to search the linked object for sub-shape that are geometrically similar to the one stored in the element object. Enabling this option will activate `Auto Fix` for all elements. You can also disable the option here, and opt to manually fix the element using the new `Fix` tree view menu action of the element object.
 

@@ -1,4 +1,4 @@
-It is some time desirable to model parts while building the assembly. This tutorial shows two approaches of doing this.
+Przy budowie złożenia pożądany jest wolny czas na modelowanie części składowych. Ten poradnik prezentuje dwie metody działania.
 
 [[images/assembly-binder.png]]
 
