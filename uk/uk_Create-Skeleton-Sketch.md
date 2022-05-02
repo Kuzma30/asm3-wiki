@@ -1,10 +1,10 @@
 Цей посібник є копією SolveSpace [linkage](http://solvespace.com/linkage.pl). Щоб зібрати таку систему зв'язків,
 
-[[images/linkage-view.png]]
+[[../images/linkage-view.png]]
 
 ми збираємося побудувати ескіз скелета, як показано нижче,
 
-[[images/linkage-dimensioned.png]]
+[[../images/linkage-dimensioned.png]]
 
 * Перейдіть на робоче середовище Assembly3
 * Створіть порожній контейнер збірки
@@ -23,4 +23,4 @@
 * Щоб простежити переміщення вершини, спочатку виділіть її, а потім натисніть ![Trace](../raw/master/freecad/asm3/Gui/Resources/icons/Assembly_Trace.svg?sanitize=true). Якщо ви вмикали трасування раніше, спочатку вимкніть його, перш ніж вибрати нову вершину, а потім увімкніть знову. Якщо ви виберете ребро або грань, ви побачите рух центральної точки фігури. Якщо ви не виберете жодну фігуру, перш ніж увімкнути трасування, ви побачите рух фігуру.
 * Виберіть будь-яку вершину/ребро/грань, яку потрібно перемістити, і натисніть ![Move](../raw/master/freecad/asm3/Gui/Resources/icons/Assembly_Move.svg?sanitize=true) або ![AxialMove](../raw/master/freecad/asm3/Gui/Resources/icons/Assembly_AxialMove.svg?sanitize=true), а потім потягніть стрілку для переміщення.
 
-[[images/linkage.gif]]
+[[../images/linkage.gif]]

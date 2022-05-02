@@ -6,23 +6,23 @@ FreeCAD має потужний [Expression Engine](https://www.freecadweb.org/w
 
 * Встановіть властивість `LockAngle` обмеження на `True`;
 * Введіть вираз;
-  * If you want to drive by rotating the screw, then express the `Offset` property in term of the `Angle` property, as shown in the screen cast below;
-  * If you want to drive by translation, then express `Angle` in term of `Offset`.
+  * Якщо ви хочете рухатись, обертаючи гвинт, виразіть властивість `Offset` через властивість `Angle`, як показано на екрані нижче;
+  * Якщо ви хочете рухатися шляхом переміщення, виразіть `Angle` через `Offset`.
 
-[[images/screw.gif]]
+[[../images/screw.gif]]
 
 # Зубчастий механізм
 
 Трохи складніший приклад це [rack and pinion](https://en.wikipedia.org/wiki/Rack_and_pinion) система нижче. Всі шестерні мають модуль 1 мм. Велика шестерня має 18 зубів, а мала – 15. Ви можете завантажити деталі [тут](https://github.com/realthunder/files/raw/master/misc/gears.fcstd). Вам необхідно встановити [Gear Workbench](https://github.com/looooo/FCGear), якщо ви хочете змінити шестерні.
 
-[[images/gear.png]]
+[[../images/gear.png]]
 
 
 При перегляді зображення вище, інтуїтивно можна подумати про використання `PointOnLine` обмеження для шестерні в слоті. Але в цьому випадку набагато простіше використовувати беззаперечно потужне обмеження `PlaneCoincident`. Ми ділимо цю систему на дві збірки - шестерні та рейки.
 
 Спочатку створіть ескіз, щоб визначити положення двох шестерень. У реальних застосунках вам, ймовірно, знадобиться також визначити відстань двох кіл, а також більшості інших констант за допомогою виразів, показаних у цьому посібнику, або краще використовувати [>Spreadsheet](https://www.freecadweb.org/wiki/Spreadsheet_Workbench).
 
-Then, create an assembly, add the sketch and two gears, and position the two using the sketch with `PlaneCoincident` constraint.
+Потім створіть збірку, додати ескіз та два шестерні та розташуйте їх використовуючи ескіз з `PlaneCoincident` обмеженням.
 
 Увімкніть властивість `LockAngle` для обох обмежень. І оскільки ми будемо переміщати велику шестерню, введіть вираз для властивості `Angle` обмеження малої шестерні, як показано нижче, яке по суті є коефіцієнтом передачі з деяким зміщенням,
 
@@ -32,7 +32,7 @@ Then, create an assembly, add the sketch and two gears, and position the two usi
 
 Ви можете перевірити механізм, змінюючи `Angle` великого шестерні.
 
-[[images/gear1.gif]]
+[[../images/gear1.gif]]
 
 Тепер ми створюємо остаточну збірку, додавши збірку шестерні та основу з зубчастою рейкою та закріплюємо їх разом за допомогою іншого `PlaneCoincident`. Зверніть увагу на те, що ми використовуємо для обмеження `Sketch`. Це важливо, тому що шестерня має повертатись, поки `Sketch` зафіксований. Ми знову маємо заблокувати поворот цього обмеження. Ми хочемо переміщати шестерні відносно осі Y, тому введіть вираз у властивість `OffsetY` обмеження,
 
@@ -42,5 +42,5 @@ Then, create an assembly, add the sketch and two gears, and position the two usi
 
 Готово!
 
-[[images/gear2.gif]]
+[[../images/gear2.gif]]
 

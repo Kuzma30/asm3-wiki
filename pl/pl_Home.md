@@ -1,14 +1,14 @@
 Witaj w Wiki FreeCAD dla środowiska pracy Złożenie 3!
 
 * [[Instrukcje kompilacji]]
-* [[Concepts]]
+* [[Zagadnienia]]
 * [[Navigation]]
 * Poradniki
     * [[Common Operations]]
-    * [[Replacing Part]]
-    * [[Create Skeleton Sketch]]
-    * [[How to Handle Large Scale Assembly]]
-    * [[Modeling using Assembly]]
+    * [[Zastępowanie części]]
+    * [[Tworzenie szkicu-szkieletu]]
+    * [[Jak obsługiwać złożenie o dużych rozmiarach]]
+    * [[Modelowanie z wykorzystaniem złożenia]]
     * [[Constraint with Expressions]]
 * [[Constraints and Solvers]]
     * [[Lock]]
