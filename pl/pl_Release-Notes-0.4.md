@@ -1,4 +1,4 @@
-__New Feature__
+__Nowa funkcjonalność__
 
 * Constraint/Element auto visible feature now supports highlight on mouse over tree view item.
 * Turn on SolveSpace solver backend redundant constraint tolerance.
