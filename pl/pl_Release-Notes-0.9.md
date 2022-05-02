@@ -1,4 +1,4 @@
-__New Feature__
+__Nowa funkcjonalność__
 
 * Add ![QuickSolve](../raw/master/freecad/asm3/Gui/Resources/icons/Assembly_QuickSolve.svg?sanitize=true) button for quick solve. A normal solve can report any redundant constraints, but can also be very slow because of that. A quick solve (which is also used when auto solve is enabled) is faster as it does not perform redundancy checking.
 
