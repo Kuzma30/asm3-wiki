@@ -1,4 +1,4 @@
-__New Feature__
+__Nowa funkcjonalność__
 
 * Support cylindrical surface in axial alignment and colinear constraint
 
