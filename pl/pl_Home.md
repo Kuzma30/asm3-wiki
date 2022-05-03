@@ -14,7 +14,7 @@ Witaj w Wiki FreeCAD dla środowiska pracy Złożenie 3!
     * [[Wiązanie blokady odległości|pl_Lock]]
     * [[Wyrównanie płaszczyzny|pl_Plane Alignment]]
     * [[Zbieżność płaszczyzn|pl_Plane Coincident]]
-    * [[Wyrównanie osi|pl_Axial Alignment]
+    * [[Wyrównanie osi|pl_Axial Alignment]]
     * [[Identyczna orientacja|pl_Same Orientation]]
     * [[Równoległość wielokrotna|pl_Multi Parallel]]
     * [[Kąt i prostopadłość|pl_Angle and Perpendicular]]
