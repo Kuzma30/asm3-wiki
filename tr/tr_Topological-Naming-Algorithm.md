@@ -43,8 +43,7 @@ def makESHAPE(result_shape, mapper, input_shapes, opcode):
                 for k,new_sub_shape in enumerate(mapper.getModified(sub_shape)):
 
                     # get the topological indexed names of this new sub shape,
-                    # i.e. Vertex1, Edge2, Face3, etc.
-                    index_name = result_shape.getIndexName(new_sub_shape)
+                    # i.e. Vertex1, Edge2, Face3, etc. index_name = result_shape.getIndexName(new_sub_shape)
 
                     # stores a map entry from new_element_index ->
                     # input_mapped_element_name Also stores the input shape's
@@ -132,11 +131,9 @@ def makESHAPE(result_shape, mapper, input_shapes, opcode):
         # important for tracing back element evolving history.
 
 
-    # Now, the reverse pass. Starting from the highest level element, i.e.
-    # Face, for any element that are named, assign names for its lower unnamed
+    # Now, the reverse pass. Starting from the highest level element, i.e. # Face, for any element that are named, assign names for its lower unnamed
     # elements. For example, if Edge1 is named E1, and its vertices are not
-    # named, then name them as E1;:U1, E1;:U2, etc.
-    #
+    # named, then name them as E1;:U1, E1;:U2, etc. #
     # In order to make the name as stable as possible, we may assign multiple
     # names (which must be sorted, because we may use the first one to name
     # upper element in the final pass) to lower element if it appears in
