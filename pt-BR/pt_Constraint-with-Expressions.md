@@ -27,7 +27,7 @@ Then, create an assembly, add the sketch and two gears, and position the two usi
 Toggle the `LockAngle` property of both constraints. And since we will be driving the big gear, enter the expression for the `Angle` property of the small gear constraint as below, which is basically the gear ration with some offset,
 
 ```
--Constraint002.Angle*18/15-6
+-Constraint002. Angle*18/15-6
 ```
 
 You can test the mechanism by changing the `Angle` of the big gear constraint.
@@ -37,7 +37,7 @@ You can test the mechanism by changing the `Angle` of the big gear constraint.
 Now, we create the final assembly, add the pinion assembly and the base with the rack gear, and fix them together with another `PlaneCoincident`. Notice that we are using the `Sketch` for constraining. This is important, because the gear is meant to be rotated, while the `Sketch` is fixed. We shall again lock the rotation of this constraint. We want to translate the pinions in its relative Y position, so enter an expression in the `OffsetY` property of the constraint,
 
 ```
--Constraint001.Angle/360*15*pi
+-Constraint001. Angle/360*15*pi
 ```
 
 Done!
