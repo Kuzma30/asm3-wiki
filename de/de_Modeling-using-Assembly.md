@@ -14,7 +14,7 @@ Zuerst erstellen wir eine Skizze für den Durchlass der Buchse. In der realen We
 
 Als Nächstes wird ein weiterer Zusammenbau erstellt. Hier kommt der wichtigste Schritt: Es muss die originale unbeschnittene Blende zum Zusammenbau hinzugefügt werden. Wird sie auf den Zusammenbau gezogen, erhält man wahrscheinlich eine Fehlermeldung wie "Box cannot be dragged out of Cut" bekommen; diese lässicht sich durch drücken der `STRG`-Taste umgehen. Danach kann man damit fortfahren, weitere Teile hinzuzufügen.
 
-Nun ist es endlich so weit, die Teile zusammenzusetzen. Zuerst die Leiterplatte festsetzen (lock). Add `PlaneAlignment` constraints to fix the socket to PCB. Then, another important step, fix the original uncut panel shape to PCB, **instead of** the cut shape. The cut shape does not need to be constrained, it will follow the original panel shape. You can hide the uncut panel and reveal the panel with the hole in the final assembly.
+Nun ist es endlich so weit, die Teile zusammenzusetzen. Zuerst die Leiterplatte festsetzen (lock). Anschließend fügt man die Bedingung `PlaneAlignment-` hinzu, um die Buchse auf der Leiterplatte zu fixieren. Dann, ein weiterer wichtiger Schritt, wird die originale unbeschnittene Blende an der Platine befestigt, **anstatt** der beschnittenen. Die beschnittene Form braucht keine eigenen Randbedingungen, sie folgt der ursprünglichen Blende. Die unbeschnittene Blende kann ausgeblendet und die Blende mit Loch kann im Zusammenbau angezeigt werden.
 
 # Verwenden des Arbeitsbereiches `PartDesign`
 
