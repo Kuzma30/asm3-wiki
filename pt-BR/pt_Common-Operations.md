@@ -26,7 +26,7 @@ We are going to build a multi-joint _thing_ using the above assembly as the base
 * Make sure the current active 3D view is the new empty document. Now, in the tree view, select the assembly we just created previously, and then hold on `CTRL` key and right click the new document item in the tree view, and select `Link actions -> Make link`. A `Link` will be created that brings the assembly into the new document. You probably need to click `Fit content` button (or press `V,F` in 3D view) to see the assembly.
 * Select the link in the tree view, and change the `ElementCount` property to four. Now you have four identical assemblies.
 * Create a new assembly, and then drag the link object into it.
-* Select any face of any `Cube`, click ![Move](../raw/master/freecad/asm3/Gui/Resources/icons/Assembly_Move.svg?sanitize=true) and click any arrow to drag to spread out the parts. Click the edges of the movement sphere to turn the part. Press `Esc` to leave part movement.
+* Select any face of any `Cube`, click ![Move](../raw/master/freecad/asm3/Gui/Resources/icons/Assembly_Move.svg?sanitize=true) and click any arrow to drag to spread out the parts. Click the edges of the movement sphere to turn the part. Click the edges of the movement sphere to turn the part. Press `Esc` to leave part movement.
 * Select any face of the left most `Cube` in 3D view, and click ![Lock](../raw/master/freecad/asm3/Gui/Resources/icons/constraints/Assembly_ConstraintLock.svg?sanitize=true) to lock the left most sub assembly.
 * Orient the parts whatever you like. Select two face from any two assembly, and create a plane coincidence constraint. If you've enabled _auto recompute_, then the two assembly will now be snapped together
 * Do the same for the rest of the parts.
