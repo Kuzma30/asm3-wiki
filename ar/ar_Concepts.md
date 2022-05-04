@@ -16,7 +16,7 @@ The core provides two ready-to-use link type objects, `App::Link` and `App::Link
 
 `Element` is a brand new concept introduced by Assembly3. It is used to minimize the dreadful consequences of geometry topological name changing, and also brings the object-oriented concept in the programming world into CAD assembling. `Element` can be considered as a declaration of connection interface of the owner assembly, so that other parent assembly can know which part of this assembly can be joined with others.
 
-For a geometry constraint based system, each constraint defines some relationship among geometry elements of some features. Conventionally, the constraint refers to those geometry elements by their topological names, such as `Fusion001.Face1`, `Cut002.Edge2`, etc. The problem with this simple approach is that the topological name is volatile. Faces or edges may be added/removed after the geometry model is modified. More sophisticated algorithm can be applied to reduce the topological name changing, but there will never be guarantee of fixed topological names. Imagine a simple but yet extreme case where the user simply wants to replace an entire child feature, say, changing the type of some screw. The two features are totally different geometry objects with different topological naming. The user has to manually find and amend geometry element references to the original child feature in multiple constraints, which may exists in multiple assembly hierarchies, across multiple documents.
+For a geometry constraint based system, each constraint defines some relationship among geometry elements of some features. Conventionally, the constraint refers to those geometry elements by their topological names, such as `Fusion001. Face1`, `Cut002. Edge2`, etc. The problem with this simple approach is that the topological name is volatile. Faces or edges may be added/removed after the geometry model is modified. More sophisticated algorithm can be applied to reduce the topological name changing, but there will never be guarantee of fixed topological names. Imagine a simple but yet extreme case where the user simply wants to replace an entire child feature, say, changing the type of some screw. The two features are totally different geometry objects with different topological naming. The user has to manually find and amend geometry element references to the original child feature in multiple constraints, which may exists in multiple assembly hierarchies, across multiple documents.
 
 The solution, presented by Assembly3, is to use abstraction by adding multiple levels of indirections to geometry references. Each `Assembly` container has an element group that contains a list of `Elements`, which are a link type of object that links to some geometry element of some child feature of this assembly. In case the feature is also an `Assembly`, then the `Element` in upper hierarchy will instead point to the `Element` inside lower hierarchy assembly. In this way, each `Element` acts as an abstraction to which geometry element can be used by other parent assemblies. Any constraint involving some assembly will only indirectly link to the geometry element through an `Element` of some child assembly. If the geometry element's topological name changes due to whatever reason, the user only needs to change the deepest nested (i.e. nearest to the actual geometry object) `Element`'s link reference, and all upper hierarchy `Elements` and related constraints stays the same.
 
@@ -29,20 +29,20 @@ Assembly001
     |--Constraints001
     |       |--Constraint001
     |               |--ElementLink -> (Elements001, "$Element.")
-    |               |--ElementLink001 -> (Parts001, "Assembly002.Elements002.$Element001.")
+    |               |--ElementLink001 -> (Parts001, "Assembly002. Elements002.$Element001.")
     |--Elements001
-    |     |--Element -> (Parts001, "Cut.Face3")
+    |     |--Element -> (Parts001, "Cut. Face3")
     |--Parts001
           |--Cut
           |--Assembly002
                  |--Constraints002
                  |--Elements002
-                 |      |--Element001 -> (Parts002, "Assembly003.Elements003.$Element002.")
+                 |      |--Element001 -> (Parts002, "Assembly003. Elements003.$Element002.")
                  |--Parts002
                        |--Assembly003
                                 |--Constraints003
                                 |--Elements003
-                                |       |--Element002 -> (Parts003, "Fusion.Face1")
+                                |       |--Element002 -> (Parts003, "Fusion. Face1")
                                 |--Parts003
                                        |--Fusion
 ```
@@ -51,9 +51,9 @@ The `Assembly001` has two child features, a `Cut` object and a child `Assembly00
 
 The grand idea is that, after the author modified an assembly, whether its a modification to the geometry model, or replacing some child feature. He needs to check all element references inside that and only that assembly, and make proper adjustment to correct any undesired changes. Other assemblies with elements or constraints referring to this assembly will stay the same (although recomputation is still required), even if those assemblies reside in different documents, or come from different authors.
 
-Let's say, we have modified `Fusion`, and the original `Fusion.Face1` is now changed to `Face10`. All we need to do is to simply modify `Element002` inside the same owner assembly of `Fusion`. Everything else stays the same.
+Let's say, we have modified `Fusion`, and the original `Fusion. Face1` is now changed to `Face10`. All we need to do is to simply modify `Element002` inside the same owner assembly of `Fusion`. Everything else stays the same.
 
-Again, say, we want to replace `Assembly003` with some other assembly. Now this is a bit involving, because, we added `Aseembly003` directly to `Assembly002`, instead of using a link, which can be changed dynamically. The FreeCAD core has a general command to simplify this task. Right click `Assembly003` in the tree view, and select `Link actions -> Replace with link`. `Assembly003` inside `Parts002` will now be replaced with a link that links to `Assembly003`. Every relative link that involving `Parts002.Assembly003` will be updated to `Parts002.Link_Assembly003` automatically. In our case, that will be `Element001`. You can then simply change the link to point to another assembly containing an element object with the same label `Element001` (remember element object allows duplicated labels). If you still insist on adding the new assembly directly and get rid of the link, you can use `Link actions ->
+Again, say, we want to replace `Assembly003` with some other assembly. Now this is a bit involving, because, we added `Aseembly003` directly to `Assembly002`, instead of using a link, which can be changed dynamically. The FreeCAD core has a general command to simplify this task. Right click `Assembly003` in the tree view, and select `Link actions -> Replace with link`. `Assembly003` inside `Parts002` will now be replaced with a link that links to `Assembly003`. Every relative link that involving `Parts002. Assembly003` will be updated to `Parts002. Link_Assembly003` automatically. In our case, that will be `Element001`. You can then simply change the link to point to another assembly containing an element object with the same label `Element001` (remember element object allows duplicated labels). If you still insist on adding the new assembly directly and get rid of the link, you can use `Link actions ->
 unlink`, and delete the link object afterward.
 
 It may seem intimidating to maintain all these complex hierarchies of `Elements`, but the truth is that it is not mandatory for the user to manually create any element, at all. Simply select any two geometry elements in the 3D view, and you can create a constraint, regardless how many levels of hierarchies in-between. All intermediate `Elements` and `ElementLinks` will be created automatically. Although, for the sake of re-usability, it is best for the user as an assembly author to explicitly create `Element` as interfaces, and give them proper names for easy (re)assembling. Check out [[this|Replacing-Part]] tutorial for a demonstration of part replacement.
@@ -72,7 +72,7 @@ LinkGroup
     |--Cut001 
 ```
 
-Suppose you have already selected `Fusion.Face1`. If you click that face again, the selection will go one hierarchy up, and select the whole `Fusion` object. If you click any where inside `Fusion` object again, the selection goes to `LinkGroup001`, and you'll see both `Fusion` and `Cut` being highlighted. If you again click anywhere inside `LinkGroup001`, `Cut001` will be highlighted, too, because the entire `LinkGroup` is selected. Click again in `LinkGroup`, the selection goes back to the geometry element you just clicked.
+Suppose you have already selected `Fusion. Face1`. If you click that face again, the selection will go one hierarchy up, and select the whole `Fusion` object. If you click any where inside `Fusion` object again, the selection goes to `LinkGroup001`, and you'll see both `Fusion` and `Cut` being highlighted. If you again click anywhere inside `LinkGroup001`, `Cut001` will be highlighted, too, because the entire `LinkGroup` is selected. Click again in `LinkGroup`, the selection goes back to the geometry element you just clicked.
 
 There is a new feature in the forked FreeCAD selection view. Check the `Enable
 pick list` option in selection view. You can now pick any overlapping geometry elements that intersect with your mouse click in the selection view.
