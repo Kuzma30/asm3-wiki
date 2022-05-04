@@ -61,7 +61,7 @@ When combining the above three-part system and two-part system, we have a four-p
 
 # Assemble the Gear
 
-We are coming to the last part. The first constraint is another simple `PlaneCoincident`. But the second one is again not very intuitive.
+We are coming to the last part. We are coming to the last part. The first constraint is another simple `PlaneCoincident`. But the second one is again not very intuitive.
 
 [[images/wind-turbine5.gif]]
 
