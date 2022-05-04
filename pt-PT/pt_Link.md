@@ -34,7 +34,7 @@ The greatest power of `Link` comes when it is used to link to groups, which may 
 
 <a name="selection-context"></a>The biggest challenge of making `Link` work is to solve the selection ambiguity problem. Because with `Link`, the  same object can now appear in many different hierarchy, e.g. with a `Link` that links to a group, the child object now appears in two different coordinate system. Saying some object is selected may now be ambiguous. We must include the hierarchical information of the selected object. We shall call the hierarchy of a specific selection its _Selection Context_.
 
-<a name="subname"></a>To introduce the _Selection Context_ concept in a backward compatible way, we choose to extend the meaning of an existing attribute in FreeCAD selection. The `SubName` is originally used to carry non-object sub-element reference of a selection, such as a geometry element reference like face, edge or vertex. It is now extended to be able to carry object hierarchy information as well. The selected object recorded by FreeCAD is now changed to the top level parent object. And the hierarchical path of the actual selected object is stored in `SubName` as a dot separated names of intermediate objects. `SubName` can still carry geometry element reference. To distinguish the element name from object name, we demand that the object name reference in each hierarchy must always end with a dot, and the geometry element reference, if there is one, should be the last name without the ending dot. So, for example, to reference an object named _Face_ inside some group, the `SubName` will be `'group.Face.'`, and to reference a geometry face of that object, `'group.Face.Face1'`. There are various other extensions to `SubName` reference which gives special meaning to the name referenced in a hierarchy depending on the first character of the name,
+<a name="subname"></a>To introduce the _Selection Context_ concept in a backward compatible way, we choose to extend the meaning of an existing attribute in FreeCAD selection. The `SubName` is originally used to carry non-object sub-element reference of a selection, such as a geometry element reference like face, edge or vertex. It is now extended to be able to carry object hierarchy information as well. The selected object recorded by FreeCAD is now changed to the top level parent object. And the hierarchical path of the actual selected object is stored in `SubName` as a dot separated names of intermediate objects. `SubName` can still carry geometry element reference. To distinguish the element name from object name, we demand that the object name reference in each hierarchy must always end with a dot, and the geometry element reference, if there is one, should be the last name without the ending dot. So, for example, to reference an object named _Face_ inside some group, the `SubName` will be `'group. Face.'`, and to reference a geometry face of that object, `'group. Face. Face1'`. There are various other extensions to `SubName` reference which gives special meaning to the name referenced in a hierarchy depending on the first character of the name,
 
 * `$` marks the following name as the label of the referenced object. In other words, the object of this hierarchy is referenced by its label. The label matching scope is limited to the child objects of the upper hierarchy.
 
@@ -80,7 +80,7 @@ C++ code calls the `LinkBaseExtension::setProperty()` function to supply the pro
 ```python
 class MyLink(object):
     def __init__(self):
-        self.Object = None
+        self. Object = None
 
     def __getstate__(self):
         return
@@ -111,7 +111,7 @@ class MyLink(object):
         'helper function for both initialization (attach()) and restore (onDocumentRestored())'
 
         assert getattr(obj,'Proxy',None)==self
-        self.Object = obj
+        self. Object = obj
 
         # Tell LinkExtension which additional properties are available.
         # This information is not persistent, so the following function must 
@@ -130,11 +130,11 @@ class MyLink(object):
 
 class ViewProviderMyLink(object):
     def __init__(self,vobj):
-        vobj.Proxy = self
+        vobj. Proxy = self
         self.attach(vobj)
 
     def attach(self,vobj):
-        self.ViewObject = vobj
+        self. ViewObject = vobj
 
     def __getstate__(self):
         return None
@@ -148,9 +148,9 @@ def makeMyLink(obj):
 
     # addObject() API is extended to accept extra parameters in order to 
     # let the python object override the type of C++ view provider
-    link = obj.Document.addObject("App::FeaturePython",'link',MyLink(),None,True)
+    link = obj. Document.addObject("App::FeaturePython",'link',MyLink(),None,True)
 
-    ViewProviderMyLink(link.ViewObject)
+    ViewProviderMyLink(link. ViewObject)
 
     link.setLink(obj)
     return link
@@ -161,39 +161,36 @@ Use the following code to create a link array of a box, and customize the color 
 ```python
 doc = App.newDocument('test')
 box = doc.addObject('Part::Box','box')
-box.ViewObject.ShapeColor = (0.8,0.8,0.8)
+box. ShapeColor = (0.8,0.8,0.8)
 
 # create the link object
 link = makeMyLink(box)
 
 # Set element count to switch to collapsed link array.
 # If you want to see the element as object, set ShowElement=True
-link.ElementCount=4
+link. ElementCount=4
 
 # Set each element placement
-link.PlacementList = (
-    App.Placement(App.Vector(15,0,0),App.Rotation()),
-    App.Placement(App.Vector(-15,0,0),App.Rotation()),
-    App.Placement(App.Vector(0,15,0),App.Rotation()),
-    App.Placement(App.Vector(0,-15,0),App.Rotation()))
+link. PlacementList = (
+    App. Vector(15,0,0),App. Vector(-15,0,0),App. Vector(0,15,0),App. Vector(0,-15,0),App. Rotation()))
 
 # Set each element color
-materials = [App.Material(),App.Material(),App.Material(),App.Material()]
-materials[0].DiffuseColor = (1.0,0.0,0.0)
-materials[1].DiffuseColor = (0.0,1.0,0.0)
-materials[2].DiffuseColor = (0.0,0.0,1.0)
-materials[3].DiffuseColor = (0.0,1.0,1.0)
-link.ViewObject.MaterialList = materials
+materials = [App. Material()]
+materials[0]. DiffuseColor = (1.0,0.0,0.0)
+materials[1]. DiffuseColor = (0.0,1.0,0.0)
+materials[2]. DiffuseColor = (0.0,0.0,1.0)
+materials[3]. DiffuseColor = (0.0,1.0,1.0)
+link. MaterialList = materials
 
 # Turn on material override
-link.ViewObject.OverrideMaterialList = [True]*4
+link. OverrideMaterialList = [True]*4
 
 doc.recompute()
 ```
 
 ## `Gui` Namespace
 
-FreeCAD uses `Coin3D` library for 3D visual representation and rendering. `Coin3D` represents geometry information using tree of nodes, such as coordinate transformation node, material node, shape node, etc. See [here](https://www.freecadweb.org/wiki/Scenegraph) for a brief introduction. `Coin3D` supports node sharing, meaning that the same node can be added to different trees to be rendered at a different location and/or with a different material. And this is the foundation of how `Link` can share the visual representation of the linked object. The upstream FreeCAD cannot handle node sharing, because its selection framework cannot distinguish among the same nodes in different context. The aforementioned [Selection Context](#user-content-selection-context) is specifically designed to resolve this problem.
+FreeCAD uses `Coin3D` library for 3D visual representation and rendering. `Coin3D` represents geometry information using tree of nodes, such as coordinate transformation node, material node, shape node, etc. See [here](https://www.freecadweb.org/wiki/Scenegraph) for a brief introduction. See [here](https://www.freecadweb.org/wiki/Scenegraph) for a brief introduction. `Coin3D` supports node sharing, meaning that the same node can be added to different trees to be rendered at a different location and/or with a different material. And this is the foundation of how `Link` can share the visual representation of the linked object. The upstream FreeCAD cannot handle node sharing, because its selection framework cannot distinguish among the same nodes in different context. The aforementioned [Selection Context](#user-content-selection-context) is specifically designed to resolve this problem.
 
 `Gui::ViewProviderLink` is designed as a view provider to work with any type of object that is installed with `App::LinkBaseExtension`. However, this class does not manipulate `Coin3D` nodes directly, but by a member of class type `Gui::LinkView`, exposed to Python by `LinkViewPy`. The separation of logic is done in the hope that one day, `LinkView` may find its usage in other non-document-object related application, for example, more efficient animation of an object by directly manipulating a snapshot of the object's node tree, without affecting any of the object's own nodes or property.
 
@@ -224,16 +221,16 @@ Unlike selection context, which stores the context in the first visited `SoFCSel
 
 doc = App.newDocument('test')
 box = doc.addObject('Part::Box','box')
-box.ViewObject.ShapeColor = (0.8,0.8,0.8)
+box. ShapeColor = (0.8,0.8,0.8)
 box.recompute()
 
 # create a link to box, override color to blue
 
 link1 = doc.addObject('App::Link','link1')
 link1.setLink(box)
-link1.ViewObject.ShapeMaterial.DiffuseColor = (0.0,0.0,1.0)
-link1.ViewObject.OverrideMaterial = True
-link1.Placement.Base.x += 15
+link1. ShapeMaterial. DiffuseColor = (0.0,0.0,1.0)
+link1. OverrideMaterial = True
+link1. Base.x += 15
 
 # create a higher level link to the previous link1, setup partial rendering of
 # only face1 and face2, and override face1 color with transparent red. You can
@@ -242,23 +239,23 @@ link1.Placement.Base.x += 15
 
 link2 = doc.addObject('App::Link','link2')
 link2.setLink(link1, '', ['Face1','Face2'])
-link2.ViewObject.setElementColors({'Face1':(1.0,0.0,0.0,0.5)})
-link2.Placement.Base.x -= 15
+link2. ViewObject.setElementColors({'Face1':(1.0,0.0,0.0,0.5)})
+link2. Base.x -= 15
 
 # create an even higher level link to the previous link2, override its face1
 # color again to transparent green
 
 link3 = doc.addObject('App::Link','link3')
 link3.setLink(link2)
-link3.ViewObject.setElementColors({'Face1':(0.0,1.0,0.0,0.5)})
-link3.Placement.Base.y -= 15
+link3. ViewObject.setElementColors({'Face1':(0.0,1.0,0.0,0.5)})
+link3. Base.y -= 15
 
 # create another link to box, and you can see the color override in other
 # unrelated link has no effect here.
 
 link4 = doc.addObject('App::Link','link4')
 link4.setLink(box)
-link4.Placement.Base.y += 15
+link4. Base.y += 15
 ```
 
 [[images/secondary-context.png]]
@@ -267,7 +264,7 @@ Note that `link3` above demonstrate `Link's` capability of overriding the color 
 
 ## Selection Logic Flow
 
-The core stores the selection in class `Gui::SelectionSingleton` (exposed as `Gui.Selection` in Python), which is also responsible for notifying of selection change to other part of the program. The class is [modified](Core-Changes#selectionsingleton) to be aware of the `SubName` reference, and provides API that either can auto resolve the actual selected object referred by the `SubName` for backward compatibility, or provider full object hierarchy information for newer code that requires it.
+The core stores the selection in class `Gui::SelectionSingleton` (exposed as `Gui. Selection` in Python), which is also responsible for notifying of selection change to other part of the program. The class is [modified](Core-Changes#selectionsingleton) to be aware of the `SubName` reference, and provides API that either can auto resolve the actual selected object referred by the `SubName` for backward compatibility, or provider full object hierarchy information for newer code that requires it.
 
 `SoFCUnifiedSelection` is the class responsible of handling `Coin3D` selection events. There are two sources of selection,
 
@@ -279,9 +276,9 @@ When the user selects an object in the 3D view, the logic flows like this,
 
 * For each picked point returned by `Coin3D`, `SoFCUnifiedSelection` will lookup the top level view provider using the node path of the picked point, and call `ViewProvider::getElementPicked()` to translate the selected path to a `SubName` reference.
 
-* `SoFCUnifiedSelection` will add the first picked object, along with its `SubName` reference, to `Gui.Selection`. If enabled, it will also populate `Gui.Selection.PickedList` with the obtained `SubName` references from all picked points.
+* Tree view adds the top parent object and the `SubName` reference to `Gui. Selection`
 
-* Once a new selection is added (by the above step), `Gui.Selection` will broadcast a message of selection change.
+* Once a new selection is added (by the above step), `Gui. Selection` will broadcast a message of selection change.
 
 * `View3DInventorViewer` receives the message in its `onSelectionChanged()`, encapsulate the selection change message in `SoFCSelectionAction` and applies the action to its scene graph.
 
@@ -301,9 +298,9 @@ When the user selects an object in the tree view, the logic flows in a slightly 
 
 * Tree view finds the object corresponding to the selected tree item, walks upwards the tree hierarchy to find the top parent object, and then translates the hierarchy into a `SubName` reference.
 
-* Tree view adds the top parent object and the `SubName` reference to `Gui.Selection`
+* `SoFCUnifiedSelection` will add the first picked object, along with its `SubName` reference, to `Gui. Selection`.
 
-* `Gui.Selection` broadcasts a message of selection change.
+* `Gui. Selection` broadcasts a message of selection change.
 
 * The reset of the logic flows just like selecting in 3D view.
 
@@ -311,7 +308,7 @@ When the user selects an object in the tree view, the logic flows in a slightly 
 
 `Coin3D` implements several ways for rendering acceleration. One is using OpenGL _Vertex Object Buffer_ (VBO) for shape rendering. The other is using OpenGL display list for render caching. Display list essentially records the OpenGL rendering calls including the involved vertex data for faster replay. `SoSeparator` node is used to manager the render cache. Once a render cache is established, the render action no longer needs to traverse below the caching `SoSeparator` node. For scenegraph with large hierarchy, the most critical factor that affects rendering speed is often the traversing time.
 
-`Coin3D` render cache tracks the traversing state for correct rendering and to auto refresh in case of changes. The state is recorded inside cache using class derived from `SoElement`, holding information such as, transformation matrix, material, texture, etc. Each `SoSeparator` node can keep a number of caches (by default two). During rendering, it will search the cache list for a cache that match the current traversing state. If none is found, it will decide on some heuristics (roughly based on cache hit versus miss frequencies), to either discard some old cache and create a new one, or proceed normal rendering traversal without cache. (See [here](http://developer98.openinventor.com/content/303-optimizing-rendering) and [here](http://developer98.openinventor.com/content/59-special-considerations-caching), for more details).
+`Coin3D` render cache tracks the traversing state for correct rendering and to auto refresh in case of changes. The state is recorded inside cache using class derived from `SoElement`, holding information such as, transformation matrix, material, texture, etc. Each `SoSeparator` node can keep a number of caches (by default two). Each `SoSeparator` node can keep a number of caches (by default two). During rendering, it will search the cache list for a cache that match the current traversing state. If none is found, it will decide on some heuristics (roughly based on cache hit versus miss frequencies), to either discard some old cache and create a new one, or proceed normal rendering traversal without cache. (See [here](http://developer98.openinventor.com/content/303-optimizing-rendering) and [here](http://developer98.openinventor.com/content/59-special-considerations-caching), for more details).
 
 Upstream FreeCAD has just begun supporting hierarchical group (`App::Part`). The node tree of shape object (`PartGui::ViewProviderPartExt`) is not optimized for hierarchical rendering. A typical node tree looks like this,
 
