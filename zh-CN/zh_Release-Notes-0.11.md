@@ -1,8 +1,8 @@
 __New Feature__
 
-* Add ![AutoElementFix](../raw/master/freecad/asm3/Gui/Resources/icons/Assembly_AutoFixElement.svg?sanitize=true) button for automatic fix of broken element references. It utilizes the new core feature to search the linked object for sub-shape that are geometrically similar to the one stored in the element object. Enabling this option will activate `Auto Fix` for all elements. You can also disable the option here, and opt to manually fix the element using the new `Fix` tree view menu action of the element object.
+* Add ![AutoElementFix](../raw/master/freecad/asm3/Gui/Resources/icons/Assembly_AutoFixElement.svg?sanitize=true) button for automatic fix of broken element references. It utilizes the new core feature to search the linked object for sub-shape that are geometrically similar to the one stored in the element object. Enabling this option will activate `Auto Fix` for all elements. You can also disable the option here, and opt to manually fix the element using the new `Fix` tree view menu action of the element object. It utilizes the new core feature to search the linked object for sub-shape that are geometrically similar to the one stored in the element object. Enabling this option will activate `Auto Fix` for all elements. You can also disable the option here, and opt to manually fix the element using the new `Fix` tree view menu action of the element object.
 
-* New element tree view menu actions to offset/flip the element or the owner part. See [here](Constraints-and-Solvers#user-content-element-actions) for more details.
+* New element tree view menu actions to offset/flip the element or the owner part. See [here](Constraints-and-Solvers#user-content-element-actions) for more details. See [here](Constraints-and-Solvers#user-content-element-actions) for more details.
 
 __FreeCAD LinkStage3__
 
@@ -28,10 +28,10 @@ __FreeCAD LinkStage3__
 
 * Improve document recomputation efficiency by doing property comparison, i.e. skip unnecessary recomputation if property content is unchanged.
 
-* Add view option for auto transparency on all objects except those in editing. Currently only applies to editing sketches.
+* Add view option for auto transparency on all objects except those in editing. Currently only applies to editing sketches. Currently only applies to editing sketches.
 
 * Allow saving document to directory without archive, for better support with external version control software.
 
-* Refactor [Hidden Line](https://forum.freecadweb.org/viewtopic.php?p=393073#p394929) draw style. Rename the old `Hidden Line` draw style to `Tessellation`.
+* Refactor [Hidden Line](https://forum.freecadweb.org/viewtopic.php?p=393073#p394929) draw style. Rename the old `Hidden Line` draw style to `Tessellation`. Rename the old `Hidden Line` draw style to `Tessellation`.
 
 * Add new [Shadow](https://forum.freecadweb.org/viewtopic.php?f=10&t=9663&p=394930#p394930) draw style.
