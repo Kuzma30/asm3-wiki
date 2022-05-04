@@ -10,7 +10,7 @@ Here is a brief list of the enhancements,
 
 * Both the `PropertyExpressionEngine` and `PropertySheet` has been modified to behave similarly as a link property that supports external objects. This means,
   * The external referenced document will be automatically opened together with the owner document;
-  * Supports the new \[[Topological Naming]\] (with the [new syntax](#user-content-subobject))
+  * Supports the new \[\[Topological Naming]\\] (with the [new syntax](#user-content-subobject))
 
 * New alternative [edit mode](#spreadsheet-edit-mode) support in `Spreadsheet`, including button, combo box, and label, which makes it possible for user to create simple customized GUI using spreadsheet.
 
