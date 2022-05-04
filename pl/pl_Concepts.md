@@ -62,7 +62,7 @@ Last but not the least, `Element`, as well as the `ElementLink` inside a constra
 
 # Selection
 
-There are two types of selection in FreeCAD, geometry element selection by clicking in the 3D view, and whole object selection by clicking in the tree view. When using Assembly3, it is important to distinguish between these two types of selection, because there are now lots of objects with just one geometry element. While you are getting used to these, it is helpful to bring out the selection view (FreeCAD menu bar, `View -> Panels -> Selection view`). You select a geometry element by clicking any unselected element (Face, Edge or Vertex) in the 3D view. If you click an already selected element, the selection will go one hierarchy up. For example, for a `LinkGroup` shown below,
+There are two types of selection in FreeCAD, geometry element selection by clicking in the 3D view, and whole object selection by clicking in the tree view. When using Assembly3, it is important to distinguish between these two types of selection, because there are now lots of objects with just one geometry element. While you are getting used to these, it is helpful to bring out the selection view (FreeCAD menu bar, `View -> Panels -> Selection view`). You select a geometry element by clicking any unselected element (Face, Edge or Vertex) in the 3D view. If you click an already selected element, the selection will go one hierarchy up. For example, for a `LinkGroup` shown below, For example, for a `LinkGroup` shown below,
 
 ```
 LinkGroup
