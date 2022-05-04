@@ -1,4 +1,4 @@
-Continue from the Multi-join assembly we created in previous [[tutorial|Common-Operations#create-a-super-assembly-with-external-link-array]]. Suppose we want to change the sub-assembly with another part. The screencast below shows how to do it.
+Continue from the Multi-join assembly we created in previous [[tutorial|Common-Operations#create-a-super-assembly-with-external-link-array]]. Suppose we want to change the sub-assembly with another part. The screencast below shows how to do it. The screencast below shows how to do it.
 
 [[images/replace-part.gif]]
 
