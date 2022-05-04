@@ -1,4 +1,4 @@
-# Create a Simple Assembly with a Constraint
+# Tworzenie prostego złożenia opartego na wiązaniach
 
 * Start FreeCAD and create a new document
 * Switch to the `Part` workbench and create a `Cube` and a `Cylinder`
@@ -57,6 +57,6 @@ If you have enabled ![AutoRecompute](../raw/master/freecad/asm3/Gui/Resources/ic
 # Import External Assembly
 
 In some cases, it will be easier to distribute your multi-hierarchy assembly as a single self-contained document. FreeCAD core provides a convenient command to help with this otherwise not so trivial task. Simply right-click any item in the document you want to distribute, and select `Link actions -> Import all
-links`, and that's all. Click ![Solve](../raw/master/freecad/asm3/Gui/Resources/icons/AssemblyWorkbench.svg?sanitize=true) to see if every thing is okay. You can of course selectively import any object you want. Simply right click that item and select `Link actions -> Import
+links`, and that's all. Kliknij w przycisk ![Solve](../raw/master/freecad/asm3/Gui/Resources/icons/AssemblyWorkbench.svg?sanitize=true) aby zobaczyć, czy wszystko jest w porządku. Oczywiście możesz wybiórczo zaimportować dowolny obiekt, który zechcesz. Po prostu kliknij prawym przyciskiem myszy na ten element i wybierz opcję `Akcje z łączami -> Importuj
 link`.
 
