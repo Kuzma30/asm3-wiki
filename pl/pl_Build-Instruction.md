@@ -1,8 +1,8 @@
-**UWAGA: Instrukcja budowy zawarta w tym artykule jest przestarzała. Środowisko Złożenie 3 teraz działa z oficjalną wersją FreeCAD 0.19 i nowszą. Ponadto możesz teraz zainstalować zaplecze solvera SolveSpave za pomocą `pip install py-slvs`**. Repozytorium koła Pythona można znaleźć tutaj [tutaj](https://github.com/realthunder/slvs_py/).
+**UWAGA: Instrukcja budowy zawarta w tym artykule jest przestarzała. Środowisko Złożenie 3 teraz działa z oficjalną wersją FreeCAD 0.19 i nowszą. Ponadto możesz teraz zainstalować zaplecze solvera SolveSpave za pomocą polecenia `pip install py-slvs`**. Repozytorium koła Pythona można znaleźć [tutaj](https://github.com/realthunder/slvs_py/).
 
-~~W chwili pisania tego tekstu środowisko Złożenie3 działa tylko z rozwidloną [gałęzią](https://github.com/realthunder/FreeCAD/tree/LinkStage3) FreeCAD. Najpierw należy zapoznać się z tą gałęzią i [zbudować](https://github.com/realthunder/FreeCAD/tree/LinkStage3#compiling) ją samodzielnie.~~
+~~ W chwili pisania tego tekstu środowisko Złożenie 3 działa tylko z rozwidloną [gałęzią](https://github.com/realthunder/FreeCAD/tree/LinkStage3) FreeCAD. Najpierw należy zapoznać się z tą gałęzią i [zbudować](https://github.com/realthunder/FreeCAD/tree/LinkStage3#compiling) ją samodzielnie.~~
 
-~~After that, checkout this repository directly inside the `Ext/freecad/` directory of your FreeCAD installation or build directory. Be sure to name the directory as **asm3**. The Assembly3 workbench supports multiple constraint solver backends. Currently, there are two backends available, `SolveSpace` and `SymPy + SciPy`, both of which have external dependency. The current focus is to get SolveSpace backend fully working first, with SymPy + SciPy serving as a reference implementation for future exploration. All backends are optional. But, you'll need at least one installed to be able to do constraint based assembling, unless you are fine with manually movement, which is actually doable because Assembly3 provides a powerful mouse dragger.~~
+~~ Następnie sprawdź to repozytorium bezpośrednio wewnątrz katalogu instalacji lub kompilacji FreeCAD `Ext/freecad/`. Upewnij się, że nazwą katalogu jest **asm3**. Środowisko pracy Złożenie 3 obsługuje wiele wiązań z zaplecza solvera. Obecnie dostępne są dwa rozwiązania, `SolveSpace` i `SymPy + SciPy`, z których obydwa mają zależności zewnętrzne. Obecnie skupiamy się na tym, aby najpierw w pełni działał backend SolveSpace, a SymPy + SciPy służyły jako implementacja referencyjna dla przyszłych zastosowań. Wszystkie rozwiązania są opcjonalnie. Powinieneś zainstalować co najmniej jeden, aby móc wykonywać złożenia na podstawie wiązań, chyba że lubisz pracę samodzielną, która w rzeczywistości daje rezultat zadowalający, ponieważ Złożenie 3 zapewnia potężne wsparcie dla myszki.~~
 
 # SolveSpace
 
@@ -26,7 +26,7 @@ cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_PYTHON=On ..
 make _slvs
 ```
 
-If you have more than one version of Python installed, you may want to specify the desired version as follow
+Jeśli masz zainstalowaną więcej niż jedną wersję środowiska Python, możesz określić żądaną wersję w następujący sposób
 
 ```
 cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_PYTHON=On -DPYTHON_EXECUTABLE=/usr/bin/python3 ..
@@ -84,7 +84,7 @@ cd slvs
 git submodule update --init --recursive
 ```
 
-Use the following command to configure and build
+Użyj następujących poleceń, aby uruchomić konfigurację i kompilację
 
 ```
 mkdir build
@@ -100,7 +100,7 @@ cmake \
 make _slvs
 ```
 
-After done, create a directory named `py_slvs_mac` under `asm3`, and copy out the results
+Po wykonaniu utwórz katalog o nazwie `py_slvs_mac` wewnątrz `asm3`, i skopiuj tam wyniki
 
 ```
 cd ~/some/place/FreeCAD.app/Contents/Ext/freecad/asm3
@@ -126,7 +126,7 @@ The last command changes the linked library path to be relative to the bundle's 
 otool -L _slvs.so
 ```
 
-Done, and you can fire up FreeCAD.app and try out Assembly3.
+Gotowe i możesz uruchomić FreeCAD.app i wypróbować Złożenie 3
 
 # SymPy + SciPy
 
@@ -155,13 +155,13 @@ SciPy offers a dozen of different [minimization](https://docs.scipy.org/doc/scip
 
 <b name="f3">[3]</b> The obtained solution contains small gaps in some of the coincidence constrained points. Incorrect use of the algorithm?
 
-The reasons for writing this backend are,
+Powody, dla których napisano ten backend, są następujące,
 
-* SolveSpace is under GPL, which is incompatible with FreeCAD's LGPL,
+* SolveSpace posiada licencję GPL, co jest niezgodne z licencją LGPL programu FreeCAD
 * To gain more insight of the solver system, and easy experimentation with new ideas due to its python based nature,
-* For future extension, physics based simulation, maybe?
+* W przypadku przyszłego rozszerzenia, symulacja oparta na fizyce, może być?
 
-You'll need to install SymPy and SciPy for your platform.
+Będziesz musiał zainstalować SymPy i SciPy dla swojej platformy.
 
 ```
 pip install --upgrade sympy scipy
