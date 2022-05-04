@@ -1,17 +1,17 @@
 __New Feature__
 
-* Add ![QuickSolve](../raw/master/freecad/asm3/Gui/Resources/icons/Assembly_QuickSolve.svg?sanitize=true) button for quick solve. A normal solve can report any redundant constraints, but can also be very slow because of that. A quick solve (which is also used when auto solve is enabled) is faster as it does not perform redundancy checking.
+* Add ![QuickSolve](../raw/master/freecad/asm3/Gui/Resources/icons/Assembly_QuickSolve.svg?sanitize=true) button for quick solve. A normal solve can report any redundant constraints, but can also be very slow because of that. A quick solve (which is also used when auto solve is enabled) is faster as it does not perform redundancy checking. A normal solve can report any redundant constraints, but can also be very slow because of that. A quick solve (which is also used when auto solve is enabled) is faster as it does not perform redundancy checking.
 
 * Add ![SmartRecompute](../raw/master/freecad/asm3/Gui/Resources/icons/Assembly_SmartRecompute.svg?sanitize=true) option to reduce number of recomputation required.
 
-* Various changes to `Assembly` objects as listed below. See demo [here](https://youtu.be/uwPXDx-D4nY)
+* Various changes to `Assembly` objects as listed below. See demo [here](https://youtu.be/uwPXDx-D4nY) See demo [here](https://youtu.be/uwPXDx-D4nY)
     * Change _Add origin_ ![AddOrigin](../raw/master/freecad/asm3/Gui/Resources/icons/Assembly_Add_Origin.svg?sanitize=true) to a checkable action, such that when enabled, the origin features will be automatically added to any newly created assemblies.
 
     * Constraint group object is auto hidden if empty.
 
     * Support `Element` and `ElementLink` in link navigation command.
 
-    * Constraint element link now always link through a local element object, which retains a local copy of the linked geometry, and will continue to synchronize with the owner part's placement even if the lower element is missing. This can serve as a reminder for user to restore the missing element. See demo
+    * Constraint element link now always link through a local element object, which retains a local copy of the linked geometry, and will continue to synchronize with the owner part's placement even if the lower element is missing. This can serve as a reminder for user to restore the missing element. See demo This can serve as a reminder for user to restore the missing element. See demo
 
     * Synchronize label change of `ElementLink` inside constraint with its linked `Element`
 
@@ -39,9 +39,9 @@ __FreeCAD LinkStage3__
 
 * [Enhanced PartDesign SubShapeBinder](https://youtu.be/PY3PU4wDEwk), featuring
     * Support of binding to multiple external objects,
-    * Support of partial document loading. Once enabled, the external document of the bound object does not need to be loaded.
+    * Support of partial document loading. Support of partial document loading. Once enabled, the external document of the bound object does not need to be loaded.
 
-* [TreeView object search], enhanced from upstream to support searching sub-objects, and objects from any document. Simply click anyway in the tree view and press `CTRL+F`.
+* [TreeView object search], enhanced from upstream to support searching sub-objects, and objects from any document. Simply click anyway in the tree view and press `CTRL+F`. Simply click anyway in the tree view and press `CTRL+F`.
 
 * [New treeview options](https://youtu.be/8T_3tHOHsDw), including
     * _Sync view_, single click view switching, that supports switching to 3D view of external objects, TechDraw editing view, and spreadsheet;
@@ -50,14 +50,14 @@ __FreeCAD LinkStage3__
     * _Pre-selection_, tree item mouse over highlight in 3D view;
     * _Record selection_, record tree view selection history so that you can go back and force with [navigation buttons](Navigation#selection-stack)
     * _Single/Multi/Collapse/Expand document_, inherited from upstream to enhance multiple document working experience.
-    * _Initiate dragging_, allowing to initiate tree view item dragging by clicking this button (or better with keyboard shortcut) without holding the mouse button. This greatly enhanced drag and drop experience for large and complex hierarchies. Try it and you'll love it.
+    * _Initiate dragging_, allowing to initiate tree view item dragging by clicking this button (or better with keyboard shortcut) without holding the mouse button. This greatly enhanced drag and drop experience for large and complex hierarchies. Try it and you'll love it. This greatly enhanced drag and drop experience for large and complex hierarchies. Try it and you'll love it.
     * _Go to selection_, manually scroll to the tree item corresponding to the current 3D view selection, in case you disabled _Sync selection_ option.
 
 * Introduce a second column in tree view as the user changeable description of any object.
 
 * Introduce a core-built-in Python [logger](realthunder/FreeCAD/blob/adc477ef1ef50ce43463d72bbdc81766e992b7ae/src/App/FreeCADInit.py#L240), that supports dynamic log level changing.
 
-* Enhanced Python console output. Log all previously non python console logging command, such as
+* Enhanced Python console output. Enhanced Python console output. Log all previously non python console logging command, such as
 
 ```python
 Gui.runCommand('Std_ToggleVisibility',0)
