@@ -24,6 +24,7 @@ mkdir build
 cd build
 cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_PYTHON=On ..
 make _slvs
+make _slvs
 ```
 
 If you have more than one version of Python installed, you may want to specify the desired version as follow
@@ -43,6 +44,7 @@ apt-get install cmake mingw-w64
 mkdir build_mingw
 cd build_mingw
 cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_PYTHON=On -DCMAKE_TOOLCHAIN_FILE=../cmake/Toolchain-mingw64.cmake ..
+make _slvs
 make _slvs
 ```
 After finish, copy `slvs.py` and `_slvs.pyd` from `build/src/swig/python/` to `asm3/py_slvs`, where `asm3` is the directory you install Assembly3 workbench. Be sure to create an empty file named `__init__.py` at `asm3/py_slvs`.
@@ -96,6 +98,8 @@ cmake \
 -DPYTHON_INCLUDE_DIR=/usr/local/opt/python@2/Frameworks/Python.framework/Headers/ \
 -DPYTHON_LIBRARY=/usr/local/opt/python@2/Frameworks/Python.framework/Versions/2.7/lib/libpython2.7.dylib  \
 -DPython_FRAMEWORKS=/usr/local/opt/python@2/Frameworks/Python.framework/ ..
+
+make _slvs
 
 make _slvs
 ```
