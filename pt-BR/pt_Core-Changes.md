@@ -109,7 +109,7 @@ A few of new APIs are added to `App::Application` class.
 
 * <a name="transaction"></a>`get/set/closeActiveTransaction()`, these APIs are part of the implementation of the new core functionality called _Auto Transaction_. The other part exists in `App::Document`. Programmer can now call `Application::setActiveTransaction()` to set a potential transaction with a given name. The transaction is only created when there is an actual change. Moreover, each transaction now has an associated integer ID. `setActiveTransaction()` will create a new ID each time it is called. Each changed document will check for active transaction by calling `getActiveTransaction()` and create the actual transaction with the current active transaction ID. The net effect is that, all modified documents during a single logical operation will use the same ID, so that all related transactions can be undo/redo together like a single logical transaction. This function is essential to support editing document with external links.
 
-  To make the new functionality transparent and yet backward compatible in exiting code, `App::Document::open/commit/abortTransaction()` has been modified to call instead `Application::set/closeActiveTransaction()`. The actual transaction operation is done by `App::Document::_open/_commit/_abortTranaction()`.<a name="auto-transaction"></a>A helper class `App::AutoTransaction` is created to simplify auto transaction. It sets up an active transaction when the first instance is created on the call stack, and will cause `Application` to ignore any further call of `setActiveTransaction()`, and will make sure to call `commitTransaction()` when the last instance go out of scope. `Gui::Command` demonstrates a more advanced usage of this class. `Command::invoke()` now sets up an instance of `AutoTransaction` using the command display name as the transaction name. However, the name is marked as temporary, meaning that the user code in the actual command can override the transaction name either by manually calling `Application::setTransaction()` or creating its own `AutoTransaction` instance. The transaction can be aborted at any time regardless of how many instance of `AutoTransaction` in the call stack. But it will only calls `commitTransaction()` when the last instance of `AutoTransaction` goes out of scope. This makes sure that the transaction holds the complete change of a command regardless if the command invokes any other command recursively, or commits the transaction prematurely. For example, almost all sketcher command commits the transaction first, and then perform a recompute. However, the sketcher solver may sometimes get a drastically wrong solution due to missing external geometries, an undo cannot solved problem because the original `Shape` property is not captured in the transaction. The usage of `AutoTransaction` solves this problem without modifying `Sketcher`.
+  To make the new functionality transparent and yet backward compatible in exiting code, `App::Document::open/commit/abortTransaction()` has been modified to call instead `Application::set/closeActiveTransaction()`. The actual transaction operation is done by `App::Document::_open/_commit/_abortTranaction()`.<a name="auto-transaction"></a>The actual transaction operation is done by `App::Document::_open/_commit/_abortTranaction()`.<a name="auto-transaction"></a>A helper class `App::AutoTransaction` is created to simplify auto transaction. It sets up an active transaction when the first instance is created on the call stack, and will cause `Application` to ignore any further call of `setActiveTransaction()`, and will make sure to call `commitTransaction()` when the last instance go out of scope. `Gui::Command` demonstrates a more advanced usage of this class. `Command::invoke()` now sets up an instance of `AutoTransaction` using the command display name as the transaction name. However, the name is marked as temporary, meaning that the user code in the actual command can override the transaction name either by manually calling `Application::setTransaction()` or creating its own `AutoTransaction` instance. The transaction can be aborted at any time regardless of how many instance of `AutoTransaction` in the call stack. But it will only calls `commitTransaction()` when the last instance of `AutoTransaction` goes out of scope. This makes sure that the transaction holds the complete change of a command regardless if the command invokes any other command recursively, or commits the transaction prematurely. For example, almost all sketcher command commits the transaction first, and then perform a recompute. However, the sketcher solver may sometimes get a drastically wrong solution due to missing external geometries, an undo cannot solved problem because the original `Shape` property is not captured in the transaction. The usage of `AutoTransaction` solves this problem without modifying `Sketcher`.
 
 * `signalUndo/Redo`, new signals triggered after undo and redo. The difference between these and existing `signalUndo/RedoDocument` is that these two are signaled once even though the transaction may involve multiple documents. These signaled as exposed to `App::DocumentObserverPython`.
 
@@ -147,7 +147,7 @@ API changes are listed below,
 
     The two-pass recomputation works like this. The first pass proceed as normal. After its done, any object that is still touched will be marked with a newly added `ObjectStatus::Recompute2` flag. The second pass will then be launched. Those objects that need dependency inversion shall check its dependent objects for this flag, and do not touch them if found. If there are still objects touched after the second pass, an error message will be printed.
 
-    In the above `SketchExport` example, the parent `SketchObject` will update all its children `SketchExport` in its `execute()` function in the first recomputation pass. Since all children (i.e. dependent) objects are recomputed before its parent. Those `SketchExport` object will still be touched after the first pass, and will be marked with `Recompute2` in the second pass. `SketchObject` will then skip updating its children and complete the second pass without any problem.
+    In the above `SketchExport` example, the parent `SketchObject` will update all its children `SketchExport` in its `execute()` function in the first recomputation pass. Since all children (i.e. dependent) objects are recomputed before its parent. Since all children (i.e. dependent) objects are recomputed before its parent. Those `SketchExport` object will still be touched after the first pass, and will be marked with `Recompute2` in the second pass. `SketchObject` will then skip updating its children and complete the second pass without any problem. `SketchObject` will then skip updating its children and complete the second pass without any problem.
 
   * Error handling logic is changed. When some object reports error during recomputation, this object and all objects in its `InListRecursive` will be removed from pending object list, after which recomputation resumes as normal.
 
@@ -280,7 +280,7 @@ Here is a list of new APIs that can be overridden with Python code. The syntax i
 
 * `mustExecute(obj)`, return `True` to indicate the object must be executed.
 
-* `allowDuplicateLabel(obj)`, return `True` to enable duplicated label of this object regardless of preference setting.
+* A new expression syntax is introduced to unambiguously reference a property of the owner object, by omitting the object reference and starting with a leading `.`, kind of similar to Python relative import syntax.
 
 * `onBeforeChangeLabel(obj,newLabel)`, called when label is about to change to the string given by `newLabel`. The object can customize label change by returning a string that is different from `newLabel`.
 
@@ -323,7 +323,7 @@ I had done a major refactor of the [[Expression and SpreadSheet]]. However, beca
 
 * `ObjectIdentifier` is indeed refactored quite a bit, but the public interface remains unchanged. It now supports referencing linked property, and can deal better with potential ambiguity in object name vs. Property name.
 
-* A new expression syntax is introduced to unambiguously reference a property of the owner object, by omitting the object reference and starting with a leading `.`, kind of similar to Python relative import syntax.
+* Add new expression class `PyObjectExpression` so that an expression can now return any Python object, which also means that an expression can now be bound to most types of properties.
 
 * Add new expression class `PyObjectExpression` so that an expression can now return any Python object, which also means that an expression can now be bound to most types of properties.
 
@@ -347,7 +347,7 @@ I had done a major refactor of the [[Expression and SpreadSheet]]. However, beca
 
 * `partialRender()`, new helper function to activate [partial rendering](Link#secondary-context)
 
-* `beforeDelete()`, new API that is guaranteed to be called before the object is about to be deleted, either when the object is being removed, or the document is about to be closed.
+* `getElementPicked(), getDetailPath()`, override to support hierarchical selection of group type object, i.e. those object returns a non null node in `getChildRoot()`.
 
 * `canDragAndDropObject()`, new API to tell tree view whether this object supports removing the dropped object from its original parent. Current FreeCAD supports holding `CTRL` key while dropping to signal the user's intention to drop the object without removing it from its original parent. For some type object, such as `Link`, it sometimes does not make sense to remove the dropping object from its original parent.
 
@@ -388,7 +388,7 @@ I had done a major refactor of the [[Expression and SpreadSheet]]. However, beca
 
 * `getBoundingBox()`, new function to obtain object bounding box using `Coin3D SoGetBoundingBoxAction`, regardless of object's visibility. This function is used in the implementation of `Box element selection` command.
 
-* `forceUpdate(), isUpdateForced()`, new API added because some object (e.g. `Part::Feature`) has an optimization to disable visual update when the object is hidden, and `ViewProviderLink` needs a way to force update the visual in case there is a visible `Link` to that hidden object.
+* `slotDeleteObject()`, modified to handle the new in-place editing view provider, and call the new `ViewProvider::beforeDelete()` API.
 
 ## `ViewProviderExtension`
 
@@ -408,12 +408,12 @@ New extension point corresponding to the newly added APIs,
 
 Here is a list of new APIs that can be overridden with Python code. The syntax is shown here in Python.
 
-* `getElementPicked(pp) -> String`, expect to return a string as the subname reference given the pick point. Return `None` means no selection is found with this object. `pp` here is an object of `pivy.coin.SoPickedPoint`.
+* `getElementPicked(pp) -> String`, expect to return a string as the subname reference given the pick point. Return `None` means no selection is found with this object. `pp` here is an object of `pivy.coin. SoPickedPoint`.
 
-* `getDetailPath(subname,path,append) -> SoDetail|Bool`, expect to return either an object of `pivy.coin.SoDetail` or `Boolean` given a subname reference. `True` means the whole object is referenced, or else no reference is found.
+* `getDetailPath(subname,path,append) -> SoDetail|Bool`, expect to return either an object of `pivy.coin. SoDetail` or `Boolean` given a subname reference. `True` means the whole object is referenced, or else no reference is found.
 
   * `subname`: a String containing the subname reference
-  * `path`: `pivy.coin.SoFullPath`, on input this is current path of the selection, as this function maybe recursively called by a higher hierarchy. On output, append `SoNode` of the current hierarchy.
+  * `path`: `pivy.coin. SoFullPath`, on input this is current path of the selection, as this function maybe recursively called by a higher hierarchy. On output, append `SoNode` of the current hierarchy.
   * `append`: if `True`, then append the view provider root node and switch node. Or else, append node below the switch node. This is used by `ViewProviderLink`, because it will replace the root and switch node.
 
 * `setEditViewer(obj, viewer, mode) -> Bool`
@@ -437,13 +437,13 @@ Here is a list of new APIs that can be overridden with Python code. The syntax i
 
 ## `Application`
 
-* `signalShowHidden`, new signal triggered when a document changes its `ShowHidden` property, i.e. whether to show the hidden object in tree view.
+* `signalShowHidden`, new signal triggered when this document changes its `ShowHidden` property, i.e. whether to show the hidden object in tree view.
 
-* `editDocument(), setEditDocument()`, for getting and setting the current editing document.
+* `signalShowItem`, new signal triggered when an object of this document changes its `ShowInTree` property.
 
 ## `Document`
 
-* `signalShowHidden`, new signal triggered when this document changes its `ShowHidden` property, i.e. whether to show the hidden object in tree view.
+* `signalShowHidden`, new signal triggered when a document changes its `ShowHidden` property, i.e. whether to show the hidden object in tree view.
 
 * `signalShowItem`, new signal triggered when an object of this document changes its `ShowInTree` property.
 
@@ -484,18 +484,17 @@ get/setInEdit()`, these APIs are either new or modified to support in-place edit
 
 * `slotNewObject()`, modified to call the new `DocumentObject::getViewProviderStored()` function to allow Python code to override C++ view provider type. And also call the new API `ViewProviderDocumentObject::reattach()` in case the new object is the result of undoing a previous delete operation.
 
-* `slotDeleteObject()`, modified to handle the new in-place editing view provider, and call the new `ViewProvider::beforeDelete()` API.
+* `beforeDelete()`, new API that is guaranteed to be called before the object is about to be deleted, either when the object is being removed, or the document is about to be closed.
 
 ## `Command`
 
-Because the addition of external `Link`, Python code can not always use `App.ActiveDocument.getObject()` function to obtain the correct object in commands. Great effort has been spent to correct this coding habit in various workbenches, such as `Part`, `PartDesign`, and `Sketcher`. The following helper macros, declared in `Gui/Command.h`, are provided to ease the migration.
+Because the addition of external `Link`, Python code can not always use `App. ActiveDocument.getObject()` function to obtain the correct object in commands. Great effort has been spent to correct this coding habit in various workbenches, such as `Part`, `PartDesign`, and `Sketcher`. The following helper macros, declared in `Gui/Command.h`, are provided to ease the migration.
 
 * `FCMD_DOC_CMD(doc,cmd)`, execute the string command in `cmd` using C++ document object `doc`, it expands to the following simplified code with safety checking omitted. Note that `cmd` can be a composite expression joined by operator `<<`.
 
 ```cpp
 std::ostringstream ss;
-ss << "App.getDocument('" << doc->getName() << "')." << cmd;
-Gui::Command::runCommand(Gui::Command::Doc,ss.str().c_str());
+ss << "App.getDocument('" << doc->getName() << "')." << cmd; Gui::Command::runCommand(Gui::Command::Doc,ss.str().c_str());
 
 // example
 //      FCMD_DOC_CMD(doc,"addObject('Part::Feature','" << name << "')")
@@ -514,14 +513,13 @@ FCMD_DOC_CMD(obj->getDocument(),cmd)`,
 ```cpp
 std::ostringstream ss;
 ss << "App.getDocument('" << obj->getDocument()->getName() << "').getObject('" 
-   << obj->getNameInDocument() << "')." << cmd;
-Gui::Command::runCommand(Gui::Command::Doc,ss.str().c_str());
+   << obj->getNameInDocument() << "')." << cmd; Gui::Command::runCommand(Gui::Command::Doc,ss.str().c_str());
 
 // example
 //      double length = 100.0;
 //      FCMD_OBJ_CMD(cube,"Length = " << length);
 // issues command
-        App.getDocument(doc_name).getObject(obj_name).Length = 100.0
+        App.getDocument(doc_name).getObject(obj_name). Length = 100.0
 ```
 
 * `FCMD_VOBJ_CMD(obj,cmd)`, same as above, but use view object instead of object. Note that the input argument `obj` is still required to be a document object.
@@ -529,17 +527,16 @@ Gui::Command::runCommand(Gui::Command::Doc,ss.str().c_str());
 ```cpp
 std::ostringstream ss;
 ss << "Gui.getDocument('" << obj->getDocument()->getName() << "').getObject('" 
-   << obj->getNameInDocument() << "')." << cmd;
-Gui::Command::runCommand(Gui::Command::Gui,ss.str().c_str());
+   << obj->getNameInDocument() << "')." << cmd; Gui::Command::runCommand(Gui::Command::Gui,ss.str().c_str());
 
 // example
 //      bool visibility = true;
-//      FCMD_VOBJ_CMD(obj, "Visibility = " << (visibility?"True":"False"));
+//      FCMD_VOBJ_CMD(obj, "Visibility = " << (visibility?" True":"False"));
 // issues command
-        Gui.getDocument(doc_name).getObject(obj_name).Visibility = True
+        Gui.getDocument(doc_name).getObject(obj_name). Visibility = True
 ```
 
-* `FCMD_OBJ_CMD2(cmd,obj,...)`, same purpose as `FCMD_OBJ_CMD()` but use conventional C variadic function, instead of C++ stream,
+* `FCMD_OBJ_CMD2(cmd,obj,...)`, same purpose as `FCMD_VOBJ_CMD()` but use conventional C variadic function, instead of C++ stream,
 
 ```cpp
 Gui::Command::doCommand(Gui::Command::Doc,"App.getDocument('%s').getObject('%s')." cmd,
@@ -550,7 +547,7 @@ Gui::Command::doCommand(Gui::Command::Doc,"App.getDocument('%s').getObject('%s')
 //      FCMD_OBJ_CMD2("Length = %g", cube, length);
 ```
 
-* `FCMD_OBJ_CMD2(cmd,obj,...)`, same purpose as `FCMD_VOBJ_CMD()` but use conventional C variadic function, instead of C++ stream,
+* `FCMD_OBJ_CMD2(cmd,obj,...)`, same purpose as `FCMD_OBJ_CMD()` but use conventional C variadic function, instead of C++ stream,
 
 ```cpp
 Gui::Command::doCommand(Gui::Command::Gui,"Gui.getDocument('%s').getObject('%s')." cmd,
@@ -558,14 +555,13 @@ Gui::Command::doCommand(Gui::Command::Gui,"Gui.getDocument('%s').getObject('%s')
 
 // example
 //      bool visibility = true;
-//      FCMD_VOBJ_CMD2("Visibility = %s", obj, visibility?"True":"False");
+//      FCMD_VOBJ_CMD2("Visibility = %s", obj, visibility?" True":"False");
 ```
 
 * `FCMD_OBJ_HIDE(obj), FCMD_OBJ_SHOW(obj)`, shortcut of toggle visibility using a document object with the newly added `Visibility` property. They simply expands to,
 
 ```cpp
-FCMD_OBJ_CMD(obj,"Visibility=True");
-FCMD_OBJ_CMD(obj,"Visibility=False");
+FCMD_OBJ_CMD(obj,"Visibility=True"); FCMD_OBJ_CMD(obj,"Visibility=False");
 ```
 
 Below is a list of API changes of class `Gui::Command`,
@@ -606,7 +602,7 @@ The changes in `Gui::SelectionSingleton` is among the most critical ones in orde
 
 ### APIs Extensions
 
-Most of the APIs are extended by introducing an extra integer argument, `resolve`, which has the following meaning,
+Signal for selection change is extended in a different way by adding two new signals, as shown below
 
 * 0, no auto resolving, the returned selected object is the top level parent of the selection, and the hierarchical path of the actual selected object is returned as a subname reference.
 
@@ -747,7 +743,7 @@ The following new context menu actions are added when an object item is selected
 
 * _Recompute object_, recompute only the selected objects and their dependencies.
 
-The tree view will now catch `signalRecomputed`, and auto expand and scroll to the first object that reports error during recomputation.
+New context aware drag and drop support, including dragging object across document boundary.
 
 New context aware drag and drop support, including dragging object across document boundary.
 
@@ -819,7 +815,7 @@ Various `Part` features and commands has been modified to make it work with `Lin
 
 `PropertyContainerPy` also contains a modification to return `Shape` attribute of any object that does not have a `Shape` property using `Part.getShape()`. This modification allows most `Part` Python feature to work with `Link` without code modification.
 
-`ViewProviderExt` has been modified to support any type of object by using `getTopoShape()` to obtain the shape from the attached object.
+Mostly contains modification to various commands to support [in-place editing](#user-content-in_place_edit).
 
 # `PartDesign` and `Sketcher`
 
