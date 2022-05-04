@@ -14,7 +14,7 @@ We first create a sketch at the opening facing of the socket. In real world usag
 
 Next, create another assembly. Here comes the most critical step. You need to add the original uncut panel shape to the assembly. When you drop to the assembly you'll probably getting error message like "Box cannot be dragged out of Cut", you can correct this by holding `CTRL` key before dropping. After that, proceed to add other parts.
 
-Finally, it is time to assemble the parts. First, lock the PCB part. Add `PlaneAlignment` constraints to fix the socket to PCB. Then, another important step, fix the original uncut panel shape to PCB, **instead of** the cut shape. The cut shape does not need to be constrained, it will follow the original panel shape. You can hide the uncut panel and reveal the panel with the hole in the final assembly.
+Finally, it is time to assemble the parts. First, lock the PCB part. First, lock the PCB part. Add `PlaneAlignment` constraints to fix the socket to PCB. Then, another important step, fix the original uncut panel shape to PCB, **instead of** the cut shape. The cut shape does not need to be constrained, it will follow the original panel shape. You can hide the uncut panel and reveal the panel with the hole in the final assembly.
 
 # Using `PartDesign` Workbench
 
