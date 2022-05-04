@@ -8,7 +8,7 @@ __Bug Fix__
 
 __FreeCAD LinkStage3__
 
-* Introduce new `LinkScrop::Hidden` and the associated `PropertyLinkHidden`, `PropertyLinkSubHidden`, etc. The hidden links are not included in dependency calculation, but still have all the benefits of auto link tear down when linked object are deleted, and more importantly auto geometry reference update. One example use case is the new `ColoredElement` property in `Part::Feature` that stores the geometry reference for color override. This `PropertyLinkSubHidden` property links to the object itself.
+* Introduce new `LinkScrop::Hidden` and the associated `PropertyLinkHidden`, `PropertyLinkSubHidden`, etc. The hidden links are not included in dependency calculation, but still have all the benefits of auto link tear down when linked object are deleted, and more importantly auto geometry reference update. One example use case is the new `ColoredElement` property in `Part::Feature` that stores the geometry reference for color override. This `PropertyLinkSubHidden` property links to the object itself. The hidden links are not included in dependency calculation, but still have all the benefits of auto link tear down when linked object are deleted, and more importantly auto geometry reference update. One example use case is the new `ColoredElement` property in `Part::Feature` that stores the geometry reference for color override. This `PropertyLinkSubHidden` property links to the object itself.
 
 * Enhanced [[Topological Naming|Topological-Naming-Algorithm]] support for tracing element evolving [[history|Topological-Naming-Algorithm#trace-model-history]].
 
