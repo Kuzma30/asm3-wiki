@@ -66,11 +66,9 @@ Gui.runCommand('Std_ToggleVisibility',0)
   For logging command with multiple outputs, insert comments to mark the start and end of the command, such as
 
 ```python
-### Begin command Part_Box
-App.ActiveDocument.addObject("Part::Box","Box")
-App.ActiveDocument.ActiveObject.Label = "Cube"
-App.ActiveDocument.recompute()
-Gui.SendMsgToActiveView("ViewFit")
+### Begin command Part_Box ActiveDocument.addObject("Part::Box","Box")
+App. ActiveDocument. ActiveObject. Label = "Cube" ActiveDocument.recompute()
+Gui. SendMsgToActiveView("ViewFit")
 ### End command Part_Box
 ```
 
@@ -78,7 +76,7 @@ Gui.SendMsgToActiveView("ViewFit")
 
 ```python
 Gui.clearSelection('Unnamed')
-Gui.Selection.addSelection('Unnamed','Box001','Edge9',3.76698,0,0)
+Gui. Selection.addSelection('Unnamed','Box001','Edge9',3.76698,0,0)
 ```
 
 * Various bug fixes
