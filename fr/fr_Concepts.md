@@ -30,6 +30,11 @@ Assembly001
     |       |--Constraint001
     |               |--ElementLink -> (Elements001, "$Element.")
     |               |--ElementLink001 -> (Parts001, "Assembly002.Elements002.$Element001.")
+    Assembly001
+    |--Constraints001
+    |       |--Constraint001
+    |               |--ElementLink -> (Elements001, "$Element.")
+    |               |--ElementLink001 -> (Parts001, "Assembly002.Elements002.$Element001.")
     |--Elements001
     |     |--Element -> (Parts001, "Cut.Face3")
     |--Parts001
@@ -38,6 +43,13 @@ Assembly001
                  |--Constraints002
                  |--Elements002
                  |      |--Element001 -> (Parts002, "Assembly003.Elements003.$Element002.")
+                 |--Parts002
+                       |--Assembly003
+                                |--Constraints003
+                                |--Elements003
+                                |       |--Element002 -> (Parts003, "Fusion.Face1")
+                                |--Parts003
+                                       |--Fusion
                  |--Parts002
                        |--Assembly003
                                 |--Constraints003
