@@ -10,13 +10,13 @@ Assembly3 container has no such restriction. When added to a Assembly3 container
 
 The forked FreeCAD core introduced a new type of object, called _Link_. A _Link_ type object (not to be confused with a _link property_) often does not have geometry data of its own, but instead, link to other objects (using link property) for geometry data sharing. Its companion view provider, `Gui::ViewProviderLink`, links to the linked object's view provider for visual data sharing. It is the most efficient way of duplicating the same object in different places, with optional scale/mirror and material override. The core provides an extension, `App::LinkBaseExtension`, as a flexible way to help users extend their own object into a link type object. The extension utilize a so called _property design pattern_, meaning that the extension itself does not define any property, but has a bunch of predefined property place holders. The extension activates part of its function depending on what properties are defined in the object. This design pattern allows the object to choose their own property names and types.
 
-The core provides two ready-to-use link type objects, `App::Link` and `App::LinkGroup`, which expose different parts of `LinkBaseExtension's` functionality. `App::Link` supports linking to an object, either in the same or external document, and has built-in support of array (through property `ElementCount`) for efficient duplicating of the same object. `LinkGroup` acts like a group type object with local coordinate system. It relies on `LinkBaseExtension` and `ViewProviderLink` to provide advanced features like, adding external child object, adding the same object multiple times, etc. All of the Assembly3 containers are in fact customized `LinkGroup`. All of the Assembly3 containers are in fact customized `LinkGroup`.
+The core provides two ready-to-use link type objects, `App::Link` and `App::LinkGroup`, which expose different parts of `LinkBaseExtension's` functionality. `App::Link` supports linking to an object, either in the same or external document, and has built-in support of array (through property `ElementCount`) for efficient duplicating of the same object. `LinkGroup` acts like a group type object with local coordinate system. It relies on `LinkBaseExtension` and `ViewProviderLink` to provide advanced features like, adding external child object, adding the same object multiple times, etc. All of the Assembly3 containers are in fact customized `LinkGroup`.
 
 # Element
 
 `Element` is a brand new concept introduced by Assembly3. It is used to minimize the dreadful consequences of geometry topological name changing, and also brings the object-oriented concept in the programming world into CAD assembling. `Element` can be considered as a declaration of connection interface of the owner assembly, so that other parent assembly can know which part of this assembly can be joined with others.
 
-For a geometry constraint based system, each constraint defines some relationship among geometry elements of some features. Conventionally, the constraint refers to those geometry elements by their topological names, such as `Fusion001.Face1`, `Cut002.Edge2`, etc. The problem with this simple approach is that the topological name is volatile. The problem with this simple approach is that the topological name is volatile. Faces or edges may be added/removed after the geometry model is modified. More sophisticated algorithm can be applied to reduce the topological name changing, but there will never be guarantee of fixed topological names. Imagine a simple but yet extreme case where the user simply wants to replace an entire child feature, say, changing the type of some screw. The two features are totally different geometry objects with different topological naming. The user has to manually find and amend geometry element references to the original child feature in multiple constraints, which may exists in multiple assembly hierarchies, across multiple documents.
+For a geometry constraint based system, each constraint defines some relationship among geometry elements of some features. Conventionally, the constraint refers to those geometry elements by their topological names, such as `Fusion001.Face1`, `Cut002.Edge2`, etc. The problem with this simple approach is that the topological name is volatile. Faces or edges may be added/removed after the geometry model is modified. More sophisticated algorithm can be applied to reduce the topological name changing, but there will never be guarantee of fixed topological names. Imagine a simple but yet extreme case where the user simply wants to replace an entire child feature, say, changing the type of some screw. The two features are totally different geometry objects with different topological naming. The user has to manually find and amend geometry element references to the original child feature in multiple constraints, which may exists in multiple assembly hierarchies, across multiple documents.
 
 The solution, presented by Assembly3, is to use abstraction by adding multiple levels of indirections to geometry references. Each `Assembly` container has an element group that contains a list of `Elements`, which are a link type of object that links to some geometry element of some child feature of this assembly. In case the feature is also an `Assembly`, then the `Element` in upper hierarchy will instead point to the `Element` inside lower hierarchy assembly. In this way, each `Element` acts as an abstraction to which geometry element can be used by other parent assemblies. Any constraint involving some assembly will only indirectly link to the geometry element through an `Element` of some child assembly. If the geometry element's topological name changes due to whatever reason, the user only needs to change the deepest nested (i.e. nearest to the actual geometry object) `Element`'s link reference, and all upper hierarchy `Elements` and related constraints stays the same.
 
@@ -30,11 +30,6 @@ Assembly001
     |       |--Constraint001
     |               |--ElementLink -> (Elements001, "$Element.")
     |               |--ElementLink001 -> (Parts001, "Assembly002.Elements002.$Element001.")
-    Assembly001
-    |--Constraints001
-    |       |--Constraint001
-    |               |--ElementLink -> (Elements001, "$Element.")
-    |               |--ElementLink001 -> (Parts001, "Assembly002.Elements002.$Element001.")
     |--Elements001
     |     |--Element -> (Parts001, "Cut.Face3")
     |--Parts001
@@ -43,13 +38,6 @@ Assembly001
                  |--Constraints002
                  |--Elements002
                  |      |--Element001 -> (Parts002, "Assembly003.Elements003.$Element002.")
-                 |--Parts002
-                       |--Assembly003
-                                |--Constraints003
-                                |--Elements003
-                                |       |--Element002 -> (Parts003, "Fusion.Face1")
-                                |--Parts003
-                                       |--Fusion
                  |--Parts002
                        |--Assembly003
                                 |--Constraints003
