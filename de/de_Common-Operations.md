@@ -18,7 +18,7 @@ In case you find that the constraining element highlight obscure the assembly 3D
 
 Now, save this document with whatever name you like.
 
-# Create a Super Assembly with External Link Array
+# Einen übergeordneten Zusammenbau mit einer Anordnung externer Links erstellen
 
 We are going to build a multi-joint _thing_ using the above assembly as the base part.
 
@@ -41,11 +41,11 @@ A few more words about link array. Assembly3 normally treats any object added to
 
 By the way, the `Draft` workbench now has two variation of link array, the `LinkArray` and `LinkPathArray`, which provide the same functionality as `Draft` `Array` and `PathArray`, but use link to provide duplicates. Those link arrays, by default, do not show individual element in tree view. You can still access each element through `subname` reference as usual. Having less objects can improve document saving and loading performance. It is particularly noticeable if you have large amount of array elements. You can, however, show the array element at any time by toggle property `ShowElement`. Once the elements are visible, they can be moved independently by change their placements.
 
-# Add/Modify Element and ElementLink
+# Element und ElementLink hinzufügen/bearbeiten
 
 It is quite easy to directly create a new constraint as shown above, with all involved `Element` and `ElementLink` being taken care of for you by Assembly3. It is also straightforward to manually add new or modify existing `Elements` and `ElementLink`. Simply select a geometry element in 3D view, and its corresponding owner object will be selected in the tree view (Remember to turn on _Sync selection_ option in tree view as mentioned before). You can then drag the selected item to the `ElementGroup` of an `Assembly` to create a new `Element`, or to a `Constraint` to add an `ElementLink`. You can modify an existing `Element` or `ElementLink` by simply dragging the item onto an existing item of `Element` or `ElementLink`. Checkout [[this|Replacing-Part]] tutorial for demonstration.
 
-# Part Move
+# Bauteil bewegen
 
 Assembly3 has extensive support of manual movement of nested assembly. In 3D view, select any geometry element (Face, Edge) that belongs to some assembly, and click ![Move](../raw/master/freecad/asm3/Gui/Resources/icons/Assembly_Move.svg?sanitize=true) to activate part dragging. The dragger will be centered around the selected geometry element. In case of multi-hierarchy assemblies, you will be dragging the first level sub-assembly of the top-level assembly. If you want to drag intermediate sub-assembly instead, add that assembly as the second selection (`CTRL` select) before activating part move.
 
@@ -54,7 +54,7 @@ If you have enabled ![AutoRecompute](../raw/master/freecad/asm3/Gui/Resources/ic
 
 [[images/move.gif]]
 
-# Import External Assembly
+# Externen Zusammenbau importieren
 
 In some cases, it will be easier to distribute your multi-hierarchy assembly as a single self-contained document. FreeCAD core provides a convenient command to help with this otherwise not so trivial task. Simply right-click any item in the document you want to distribute, and select `Link actions -> Import all
 links`, and that's all. Click ![Solve](../raw/master/freecad/asm3/Gui/Resources/icons/AssemblyWorkbench.svg?sanitize=true) to see if every thing is okay. You can of course selectively import any object you want. Simply right click that item and select `Link actions -> Import
