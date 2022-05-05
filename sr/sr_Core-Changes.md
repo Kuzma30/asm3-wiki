@@ -280,7 +280,7 @@ Here is a list of new APIs that can be overridden with Python code. The syntax i
 
 * `mustExecute(obj)`, return `True` to indicate the object must be executed.
 
-* A new expression syntax is introduced to unambiguously reference a property of the owner object, by omitting the object reference and starting with a leading `.`, kind of similar to Python relative import syntax.
+* `allowDuplicateLabel(obj)`, return `True` to enable duplicated label of this object regardless of preference setting.
 
 * `onBeforeChangeLabel(obj,newLabel)`, called when label is about to change to the string given by `newLabel`. The object can customize label change by returning a string that is different from `newLabel`.
 
@@ -347,7 +347,7 @@ I had done a major refactor of the [[Expression and SpreadSheet]]. However, beca
 
 * `partialRender()`, new helper function to activate [partial rendering](Link#secondary-context)
 
-* `getElementPicked(), getDetailPath()`, override to support hierarchical selection of group type object, i.e. those object returns a non null node in `getChildRoot()`.
+* `beforeDelete()`, new API that is guaranteed to be called before the object is about to be deleted, either when the object is being removed, or the document is about to be closed.
 
 * `canDragAndDropObject()`, new API to tell tree view whether this object supports removing the dropped object from its original parent. Current FreeCAD supports holding `CTRL` key while dropping to signal the user's intention to drop the object without removing it from its original parent. For some type object, such as `Link`, it sometimes does not make sense to remove the dropping object from its original parent.
 
@@ -437,9 +437,9 @@ Here is a list of new APIs that can be overridden with Python code. The syntax i
 
 ## `Application`
 
-* `signalShowHidden`, new signal triggered when this document changes its `ShowHidden` property, i.e. whether to show the hidden object in tree view.
+* `signalShowHidden`, new signal triggered when a document changes its `ShowHidden` property, i.e. whether to show the hidden object in tree view.
 
-* `signalShowItem`, new signal triggered when an object of this document changes its `ShowInTree` property.
+* `editDocument(), setEditDocument()`, for getting and setting the current editing document.
 
 ## `Document`
 
@@ -539,7 +539,7 @@ Gui::Command::runCommand(Gui::Command::Gui,ss.str().c_str());
         Gui.getDocument(doc_name).getObject(obj_name).Visibility = True
 ```
 
-* `FCMD_OBJ_CMD2(cmd,obj,...)`, same purpose as `FCMD_VOBJ_CMD()` but use conventional C variadic function, instead of C++ stream,
+* `FCMD_OBJ_CMD2(cmd,obj,...)`, same purpose as `FCMD_OBJ_CMD()` but use conventional C variadic function, instead of C++ stream,
 
 ```cpp
 Gui::Command::doCommand(Gui::Command::Doc,"App.getDocument('%s').getObject('%s')." cmd,
@@ -606,7 +606,7 @@ The changes in `Gui::SelectionSingleton` is among the most critical ones in orde
 
 ### APIs Extensions
 
-Signal for selection change is extended in a different way by adding two new signals, as shown below
+Most of the APIs are extended by introducing an extra integer argument, `resolve`, which has the following meaning,
 
 * 0, no auto resolving, the returned selected object is the top level parent of the selection, and the hierarchical path of the actual selected object is returned as a subname reference.
 
@@ -747,7 +747,7 @@ The following new context menu actions are added when an object item is selected
 
 * _Recompute object_, recompute only the selected objects and their dependencies.
 
-New context aware drag and drop support, including dragging object across document boundary.
+The tree view will now catch `signalRecomputed`, and auto expand and scroll to the first object that reports error during recomputation.
 
 New context aware drag and drop support, including dragging object across document boundary.
 
@@ -819,7 +819,7 @@ Various `Part` features and commands has been modified to make it work with `Lin
 
 `PropertyContainerPy` also contains a modification to return `Shape` attribute of any object that does not have a `Shape` property using `Part.getShape()`. This modification allows most `Part` Python feature to work with `Link` without code modification.
 
-Mostly contains modification to various commands to support [in-place editing](#user-content-in_place_edit).
+`ViewProviderExt` has been modified to support any type of object by using `getTopoShape()` to obtain the shape from the attached object.
 
 # `PartDesign` and `Sketcher`
 
