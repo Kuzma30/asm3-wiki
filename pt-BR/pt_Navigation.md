@@ -6,7 +6,7 @@ The _Selection Stack_ is a new core functionality that records the user selectio
 
 # Relation Group
 
-There are always three group objects in each `Assembly` container, the first of which is the constraint group. This group contains the constraints that hold all the parts of this assembly together. Sometimes, it is not obvious which part objects are involved in which constraints. There is a hidden forth _relation group_ containing the _relation_ objects. There is one relation object for each part object of the assembly, and each relation contains a list of constraints that are related in its representing part. In case the part is an array, then its corresponding relation will contain child relations each corresponding to an array element. In case the part is an array, then its corresponding relation will contain child relations each corresponding to an array element.
+There are always three group objects in each `Assembly` container, the first of which is the constraint group. This group contains the constraints that hold all the parts of this assembly together. Sometimes, it is not obvious which part objects are involved in which constraints. There is a hidden forth _relation group_ containing the _relation_ objects. There is one relation object for each part object of the assembly, and each relation contains a list of constraints that are related in its representing part. In case the part is an array, then its corresponding relation will contain child relations each corresponding to an array element.
 
 To reveal the relation group, select any part object and click ![Relation](../raw/master/freecad/asm3/Gui/Resources/icons/Assembly_GotoRelation.svg?sanitize=true). It is not necessary to select the root part object. You can select any child geometry in the 3D view, and click that button to go to the top level assembly's relation object corresponding to the second level part object.
 
@@ -18,7 +18,7 @@ Although relation objects take only small amount of resources, they do take extr
 
 # Toggle Part Visibility
 
-When working with multi-hierarchy assemblies, you may want to toggle the visibility of some part object, but find it tedious to have to scroll the tree up and down to locate the root object of the part. This task can be simplified by clicking ![Vis](../raw/master/freecad/asm3/Gui/Resources/icons/Assembly_TogglePartVisibility.svg?sanitize=true). This task can be simplified by clicking ![Vis](../raw/master/freecad/asm3/Gui/Resources/icons/Assembly_TogglePartVisibility.svg?sanitize=true). Select any geometry in the 3D view that belongs to the part object you want to hide, then click this button. It will find the root part object, collapse the tree item, and then hide the object.
+When working with multi-hierarchy assemblies, you may want to toggle the visibility of some part object, but find it tedious to have to scroll the tree up and down to locate the root object of the part. This task can be simplified by clicking ![Vis](../raw/master/freecad/asm3/Gui/Resources/icons/Assembly_TogglePartVisibility.svg?sanitize=true). Select any geometry in the 3D view that belongs to the part object you want to hide, then click this button. It will find the root part object, collapse the tree item, and then hide the object.
 
 [[images/toggle-part-vis.gif]]
 
