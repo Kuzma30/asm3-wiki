@@ -1,7 +1,7 @@
 __New Feature__
 
 * Add co-linear constraint
-* Allow creating XZ and ZY working plane. Or select any face and create a work plane on it. The work plane is not attached to the source. Allow creating XZ and ZY working plane. Or select any face and create a work plane on it. The work plane is not attached to the source. If you want an attached plane, use the new `SubShapeBinder` in PartDesign. It can be used without a body. It can be used without a body.
+* Allow creating XZ and ZY working plane. Or select any face and create a work plane on it. The work plane is not attached to the source. If you want an attached plane, use the new `SubShapeBinder` in PartDesign. It can be used without a body.
 
 [[images/workplane.gif]]
 
@@ -17,7 +17,7 @@ __FreeCAD LinkStage3__
 
 * Stabilized `Sketcher` geometry element naming.
 
-* <a name="export"></a>New `SketchExport` to export any _private_ geometry of a sketch, including the construction lines, and external edges. The `Export` can have synchronized placement with the parent sketch, or independent placement, or even with its own plane attachment ([5fc101b3](/realthunder/FreeCAD/commit/5fc101b3290555faeec8adb5081e92e38cc9c387)). The `Export` can have synchronized placement with the parent sketch, or independent placement, or even with its own plane attachment ([5fc101b3](/realthunder/FreeCAD/commit/5fc101b3290555faeec8adb5081e92e38cc9c387)).
+* <a name="export"></a>New `SketchExport` to export any _private_ geometry of a sketch, including the construction lines, and external edges. The `Export` can have synchronized placement with the parent sketch, or independent placement, or even with its own plane attachment ([5fc101b3](/realthunder/FreeCAD/commit/5fc101b3290555faeec8adb5081e92e38cc9c387)).
 
 [[images/sketch-export.gif]]
 
@@ -25,9 +25,9 @@ __FreeCAD LinkStage3__
 
 [[images/sketch-history.gif]]
 
-* Two-pass recompute to allow some cases of dependency inversion, which is used on `SketchExport`. ([70c3d859](/realthunder/FreeCAD/commit/70c3d8596b36b411268b4e743146b4073999e7e2)). ([70c3d859](/realthunder/FreeCAD/commit/70c3d8596b36b411268b4e743146b4073999e7e2)).
+* Two-pass recompute to allow some cases of dependency inversion, which is used on `SketchExport`. ([70c3d859](/realthunder/FreeCAD/commit/70c3d8596b36b411268b4e743146b4073999e7e2)).
 
-* New `SubShapeBinder` in PDN supports relative linking that respects the parent group placement. ([73035a66](/realthunder/FreeCAD/commit/73035a6608921cb91bb0852e0b042e1f99469ec2)). ([73035a66](/realthunder/FreeCAD/commit/73035a6608921cb91bb0852e0b042e1f99469ec2)).
+* New `SubShapeBinder` in PDN supports relative linking that respects the parent group placement. ([73035a66](/realthunder/FreeCAD/commit/73035a6608921cb91bb0852e0b042e1f99469ec2)).
 
 [[images/subshapebinder.gif]]
 
