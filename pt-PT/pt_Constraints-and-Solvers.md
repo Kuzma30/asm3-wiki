@@ -74,11 +74,17 @@ Constraint
     | -- ElementLink3
     | -- ElementLink4
 
-will be expand to Constraint1
+will be expand to
+
+Constraint1
     | -- ElementLink1
-    | -- ElementLink2 Constraint2
+    | -- ElementLink2
+
+Constraint2
     | -- ElementLink3
-    | -- ElementLink2 Constraint3
+    | -- ElementLink2
+
+Constraint3
     | -- ElementLink4
     | -- ElementLink2
 ```
@@ -92,16 +98,22 @@ Constraint
     | -- ElementLink3
     | -- ElementLink4
 
-will be expand to Constraint1
+will be expand to
+
+Constraint1
     | -- ElementLink1
-    | -- ElementLink2 Constraint2
     | -- ElementLink2
-    | -- ElementLink3 Constraint3
+
+Constraint2
+    | -- ElementLink2
+    | -- ElementLink3
+
+Constraint3
     | -- ElementLink3
     | -- ElementLink4
 ```
 
-`Constraint2` and onwards will be automatically skipped if their elements belong to the same part. `Constraint2` and onwards will be automatically skipped if their elements belong to the same part. See the following screen cast for an example, which also shows the effect of applying other parameters of a constraint when cascading is activated.
+`Constraint2` and onwards will be automatically skipped if their elements belong to the same part. See the following screen cast for an example, which also shows the effect of applying other parameters of a constraint when cascading is activated.
 
 [[images/element-cascade.gif]]
 
