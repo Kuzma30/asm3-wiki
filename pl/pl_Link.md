@@ -238,8 +238,6 @@ link1.Placement.Base.x += 15
 # create a higher level link to the previous link1, setup partial rendering of
 # only face1 and face2, and override face1 color with transparent red. You can
 # see that for face2 the higher level link inherits the lower level link color
-# override. You can
-# see that for face2 the higher level link inherits the lower level link color
 # override.
 
 link2 = doc.addObject('App::Link','link2')
