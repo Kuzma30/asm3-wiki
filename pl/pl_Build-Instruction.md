@@ -45,7 +45,7 @@ cd build_mingw
 cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_PYTHON=On -DCMAKE_TOOLCHAIN_FILE=../cmake/Toolchain-mingw64.cmake ..
 make _slvs
 ```
-If you want to build the Debug version, either download Python debug libraries, or put FreeCAD libpack directory in `PATH` environment variable before configuring CMake, so that CMake can find the debug version Python library. Upewnij się, że utworzyć pusty plik o nazwie `__init__.py` na `asm3/py_slvs`.
+Po ukończeniu skopiuj `slvs.py` i `_slvs. yd` z `build/src/swig/python/` do `asm3/py_slvs`gdzie `asm3` jest katalogiem, w którym zainstalowałeś środowisko pracy Złożenie 3. Upewnij się, że utworzyć pusty plik o nazwie `__init__.py` na `asm3/py_slvs`.
 
 ## Kompilacja dla Windows
 
@@ -69,7 +69,7 @@ asm/slvs/<your_build_directory>/src/swig/python/slvs.py
 asm/slvs/<your_build_directory>/src/swig/python/Release/_slvs.pyd
 ```
 
-If you want to build the Debug version, either download Python debug libraries, or put FreeCAD libpack directory in `PATH` environment variable before configuring CMake, so that CMake can find the debug version Python library. Po ukończeniu skopiuj `slvs.py` i `_slvs. yd` z `build/src/swig/python/` do `asm3/py_slvs`gdzie `asm3` jest katalogiem, w którym zainstalowałeś środowisko pracy Złożenie 3. Upewnij się, że utworzyć pusty plik o nazwie `__init__.py` na `asm3/py_slvs`.
+If you want to build the Debug version, either download Python debug libraries, or put FreeCAD libpack directory in `PATH` environment variable before configuring CMake, so that CMake can find the debug version Python library. Once built, you must rename `_slvs.pyd` to `_slvs_d.pyd` before copying to `asm/py_slvs`
 
 ## Kompilacja dla MacOS
 
