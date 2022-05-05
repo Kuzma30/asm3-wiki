@@ -21,13 +21,13 @@ __FreeCAD LinkStage3__
 
 * Performance improvement in `PartDesign` feature `Transform`.
 
-* Support Copy/Move/Replace/Link action when drag and drop in tree view. See demo [here](https://youtu.be/f1raOT4thEM).
+* Support adding/removing properties (i.e. dynamic property) in all `DocumentObject` and `Document`. See demo [here](https://youtu.be/UCdJsQe-ZAI).
 
 * Change tab window behavior for external linked document.
 
 * Improve `Selection View` multi-element picking list feature.
 
-* Support Copy/Move/Replace/Link action when drag and drop in tree view. See demo [here](https://youtu.be/UCdJsQe-ZAI).
+* Support Copy/Move/Replace/Link action when drag and drop in tree view. See demo [here](https://youtu.be/f1raOT4thEM).
 
 * Improve tree view and document loading performance.
 
