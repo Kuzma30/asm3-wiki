@@ -12,7 +12,7 @@
 
 You can click ![Auto recompute](../raw/master/freecad/asm3/Gui/Resources/icons/Assembly_AutoRecompute.svg?sanitize=true) to enable auto-solving with any changes in constraint.
 
-After a new constraint is created, the selected elements will be highlighted in red. After a new constraint is created, the selected elements will be highlighted in red. You can easily change the color of individual constraining elements under its view object property page. Or, set the color of the entire constraint by changing the color of constraint object itself. Make sure you set the `OverrideMaterial` view property to `True`.
+After a new constraint is created, the selected elements will be highlighted in red. You can easily change the color of individual constraining elements under its view object property page. Or, set the color of the entire constraint by changing the color of constraint object itself. Make sure you set the `OverrideMaterial` view property to `True`.
 
 In case you find that the constraining element highlight obscure the assembly 3D view, you can enable the _Auto Element Visibility_ feature by clicking ![AutoElementVis](../raw/master/freecad/asm3/Gui/Resources/icons/Assembly_AutoElementVis.svg?sanitize=true). When enabled, all constraining elements will be hidden by default. You can reveal them by selecting any constraint or constraint element object in the tree view.
 
