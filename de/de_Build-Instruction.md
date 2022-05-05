@@ -15,29 +15,28 @@ git clone https://github.com/realthunder/solvespace
 cd solvespace
 ```
 
-## Build for Ubuntu
+## Aufbau für Ubuntu
 
-To build the python binding only
+Nur für den Aufbau der Python-Einbindung
 
 ```
 mkdir build
 cd build
 cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_PYTHON=On ..
 make _slvs
-make _slvs
 ```
 
-If you have more than one version of Python installed, you may want to specify the desired version as follow
+Wenn mehr als eine Version von Python installiert ist, sollte man die gewünschte Version wie folgt angeben
 
 ```
 cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_PYTHON=On -DPYTHON_EXECUTABLE=/usr/bin/python3 ..
 ```
 
-After compilation is done, copy `slvs.py` and `_slvs.so` from `build/src/swig/python/` to `asm3/py_slvs`, where `asm3` is the directory you install Assembly3 workbench. Be sure to create an empty file named `__init__.py` at `asm3/py_slvs`.
+Nach erfolgreichem Kompilieren, kopiert man `slvs.py` und `_slvs. o` von `build/src/swig/python/` nach `asm3/py_slvs`, wobei `asm3` das Verzeichnis ist, in das Assembly3 installiert wird. Nicht vergessen, eine leere Datei mit dem Namen `__init__.py` unter `asm3/py_slvs` anzulegen.
 
-## Cross Compile for Windows
+## Cross-Compile für Windows
 
-To build for Windows 64-bit, you have two options. This section shows how to cross compile for Windows on Ubuntu
+Für einen Aufbau für Windows 64-Bit gibt es zwei Möglichkeiten. Dieser Abschnitt zeigt, wie man cross-compile für Windows auf Ubuntu verwendet.
 
 ```
 apt-get install cmake mingw-w64
@@ -45,11 +44,10 @@ mkdir build_mingw
 cd build_mingw
 cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_PYTHON=On -DCMAKE_TOOLCHAIN_FILE=../cmake/Toolchain-mingw64.cmake ..
 make _slvs
-make _slvs
 ```
-After finish, copy `slvs.py` and `_slvs.pyd` from `build/src/swig/python/` to `asm3/py_slvs`, where `asm3` is the directory you install Assembly3 workbench. Be sure to create an empty file named `__init__.py` at `asm3/py_slvs`.
+After finish, copy `slvs.py` and `_slvs.pyd` from `build/src/swig/python/` to `asm3/py_slvs`, where `asm3` is the directory you install Assembly3 workbench. Nicht vergessen, eine leere Datei mit dem Namen `__init__.py` unter `asm3/py_slvs` anzulegen.
 
-## Build on Windows
+## Aufbau mit Windows
 
 To build on Windows, you should use Visual Studio 2013, the same one FreeCAD uses. Install CMake and Python. If you are building the 64-bit version, make sure you install the Python 64-bit version. I have only tested the build with Python 2.7.14 64-bit. You probably can use the python lib included in FreeCAD libpack by adding the libpack path to `PATH` environment variable. But it doesn't work for me somehow. CMake only found the debug version python lib in the libpack.
 
@@ -73,7 +71,7 @@ asm/slvs/<your_build_directory>/src/swig/python/Release/_slvs.pyd
 
 If you want to build the Debug version, either download Python debug libraries, or put FreeCAD libpack directory in `PATH` environment variable before configuring CMake, so that CMake can find the debug version Python library. Once built, you must rename `_slvs.pyd` to `_slvs_d.pyd` before copying to `asm/py_slvs`
 
-## Build for MacOS
+## Aufbau für MacOS
 
 The pre-build binary for MacOS is located at a [different](../tree/master/py_slvs_mac) sub-module, because MacOS python extension has the same name as Linux one. To build it yourself for use in FreeCAD App bundle, first you need to setup `Homebrew` according to this [wiki](https://www.freecadweb.org/wiki/CompileOnMac), and build FreeCAD App bundle.
 
@@ -98,8 +96,6 @@ cmake \
 -DPYTHON_INCLUDE_DIR=/usr/local/opt/python@2/Frameworks/Python.framework/Headers/ \
 -DPYTHON_LIBRARY=/usr/local/opt/python@2/Frameworks/Python.framework/Versions/2.7/lib/libpython2.7.dylib  \
 -DPython_FRAMEWORKS=/usr/local/opt/python@2/Frameworks/Python.framework/ ..
-
-make _slvs
 
 make _slvs
 ```
