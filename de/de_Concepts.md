@@ -1,4 +1,4 @@
-# Coordinate System
+# Koordinatensystem
 
 The user is encouraged to first read [this tutorial](https://web.archive.org/web/20191130140733/https://www.freecadweb.org/wiki/Assembly_Basic_Tutorial) to get some idea about the new concept of _local coordinate systems_. The tutorial is for the original unfinished Assembly workbench, but gives a pretty comprehensive overview of what Assembly3 is providing as well. The `Part` or `Product` container mentioned in the tutorial are equivalent to the `Assembly` container in Assembly3, which of course can be treated just as a _part_ and added to other assemblies. There is one thing I disagree with this tutorial. The concept of _global coordinate system_ is still useful, and necessary to interoperate with objects from other legacy (i.e. non-local-CS-aware) workbench. Let's just define the _global coordinate system_ as the 3D view coordinate system, in other word, the location where you actually see the object in the 3D view, or, the coordinates displayed in the status bar when you move your mouse over some object.
 
@@ -10,13 +10,13 @@ Assembly3 container has no such restriction. When added to a Assembly3 container
 
 The forked FreeCAD core introduced a new type of object, called _Link_. A _Link_ type object (not to be confused with a _link property_) often does not have geometry data of its own, but instead, link to other objects (using link property) for geometry data sharing. Its companion view provider, `Gui::ViewProviderLink`, links to the linked object's view provider for visual data sharing. It is the most efficient way of duplicating the same object in different places, with optional scale/mirror and material override. The core provides an extension, `App::LinkBaseExtension`, as a flexible way to help users extend their own object into a link type object. The extension utilize a so called _property design pattern_, meaning that the extension itself does not define any property, but has a bunch of predefined property place holders. The extension activates part of its function depending on what properties are defined in the object. This design pattern allows the object to choose their own property names and types.
 
-The core provides two ready-to-use link type objects, `App::Link` and `App::LinkGroup`, which expose different parts of `LinkBaseExtension's` functionality. `App::Link` supports linking to an object, either in the same or external document, and has built-in support of array (through property `ElementCount`) for efficient duplicating of the same object. `LinkGroup` acts like a group type object with local coordinate system. It relies on `LinkBaseExtension` and `ViewProviderLink` to provide advanced features like, adding external child object, adding the same object multiple times, etc. All of the Assembly3 containers are in fact customized `LinkGroup`. All of the Assembly3 containers are in fact customized `LinkGroup`.
+The core provides two ready-to-use link type objects, `App::Link` and `App::LinkGroup`, which expose different parts of `LinkBaseExtension's` functionality. `App::Link` supports linking to an object, either in the same or external document, and has built-in support of array (through property `ElementCount`) for efficient duplicating of the same object. `LinkGroup` acts like a group type object with local coordinate system. It relies on `LinkBaseExtension` and `ViewProviderLink` to provide advanced features like, adding external child object, adding the same object multiple times, etc. All of the Assembly3 containers are in fact customized `LinkGroup`.
 
 # Element
 
 `Element` is a brand new concept introduced by Assembly3. It is used to minimize the dreadful consequences of geometry topological name changing, and also brings the object-oriented concept in the programming world into CAD assembling. `Element` can be considered as a declaration of connection interface of the owner assembly, so that other parent assembly can know which part of this assembly can be joined with others.
 
-For a geometry constraint based system, each constraint defines some relationship among geometry elements of some features. Conventionally, the constraint refers to those geometry elements by their topological names, such as `Fusion001.Face1`, `Cut002.Edge2`, etc. The problem with this simple approach is that the topological name is volatile. The problem with this simple approach is that the topological name is volatile. Faces or edges may be added/removed after the geometry model is modified. More sophisticated algorithm can be applied to reduce the topological name changing, but there will never be guarantee of fixed topological names. Imagine a simple but yet extreme case where the user simply wants to replace an entire child feature, say, changing the type of some screw. The two features are totally different geometry objects with different topological naming. The user has to manually find and amend geometry element references to the original child feature in multiple constraints, which may exists in multiple assembly hierarchies, across multiple documents.
+For a geometry constraint based system, each constraint defines some relationship among geometry elements of some features. Conventionally, the constraint refers to those geometry elements by their topological names, such as `Fusion001.Face1`, `Cut002.Edge2`, etc. The problem with this simple approach is that the topological name is volatile. Faces or edges may be added/removed after the geometry model is modified. More sophisticated algorithm can be applied to reduce the topological name changing, but there will never be guarantee of fixed topological names. Imagine a simple but yet extreme case where the user simply wants to replace an entire child feature, say, changing the type of some screw. The two features are totally different geometry objects with different topological naming. The user has to manually find and amend geometry element references to the original child feature in multiple constraints, which may exists in multiple assembly hierarchies, across multiple documents.
 
 The solution, presented by Assembly3, is to use abstraction by adding multiple levels of indirections to geometry references. Each `Assembly` container has an element group that contains a list of `Elements`, which are a link type of object that links to some geometry element of some child feature of this assembly. In case the feature is also an `Assembly`, then the `Element` in upper hierarchy will instead point to the `Element` inside lower hierarchy assembly. In this way, each `Element` acts as an abstraction to which geometry element can be used by other parent assemblies. Any constraint involving some assembly will only indirectly link to the geometry element through an `Element` of some child assembly. If the geometry element's topological name changes due to whatever reason, the user only needs to change the deepest nested (i.e. nearest to the actual geometry object) `Element`'s link reference, and all upper hierarchy `Elements` and related constraints stays the same.
 
@@ -30,11 +30,6 @@ Assembly001
     |       |--Constraint001
     |               |--ElementLink -> (Elements001, "$Element.")
     |               |--ElementLink001 -> (Parts001, "Assembly002.Elements002.$Element001.")
-    Assembly001
-    |--Constraints001
-    |       |--Constraint001
-    |               |--ElementLink -> (Elements001, "$Element.")
-    |               |--ElementLink001 -> (Parts001, "Assembly002.Elements002.$Element001.")
     |--Elements001
     |     |--Element -> (Parts001, "Cut.Face3")
     |--Parts001
@@ -43,13 +38,6 @@ Assembly001
                  |--Constraints002
                  |--Elements002
                  |      |--Element001 -> (Parts002, "Assembly003.Elements003.$Element002.")
-                 |--Parts002
-                       |--Assembly003
-                                |--Constraints003
-                                |--Elements003
-                                |       |--Element002 -> (Parts003, "Fusion.Face1")
-                                |--Parts003
-                                       |--Fusion
                  |--Parts002
                        |--Assembly003
                                 |--Constraints003
@@ -72,7 +60,7 @@ It may seem intimidating to maintain all these complex hierarchies of `Elements`
 
 Last but not the least, `Element`, as well as the `ElementLink` inside a constraint, make use of a new core feature, `OnTopWhenSelected`, to forcefully show highlight of its referring geometry sub-element (Face, Edge, Vertex) when selected, regardless of any obscuring objects. The property `OnTopWhenSelected` is available to all view object, but default to `False`, while `Element` and `ElementLink` make it active by default. The on-top feature makes it even easier for the user to check any anomaly due to topological name changing.
 
-# Selection
+# Auswahl
 
 There are two types of selection in FreeCAD, geometry element selection by clicking in the 3D view, and whole object selection by clicking in the tree view. When using Assembly3, it is important to distinguish between these two types of selection, because there are now lots of objects with just one geometry element. While you are getting used to these, it is helpful to bring out the selection view (FreeCAD menu bar, `View -> Panels -> Selection view`). You select a geometry element by clicking any unselected element (Face, Edge or Vertex) in the 3D view. If you click an already selected element, the selection will go one hierarchy up. For example, for a `LinkGroup` shown below,
 
@@ -95,7 +83,7 @@ You may find it helpful to turn on tree view selection synchronization (right cl
 
 The usage of sketch in assembly is a technique called _Skeleton Modeling_. It is a type of top-down design approach, where you draw skeleton (lines, arcs, etc) sketches to specify design criteria, and then add individual components that references those criteria. Some type of mechanical systems are naturally modeled in 2D, e.g. a pin joint that can only rotate in a plane, while others must be modeled in 3D, e.g. a ball joint.
 
-FreeCAD already has a powerful _Sketcher_ workbench, but it is limited to creating 2D sketches. In addition, the sketcher is more geared toward geometry modeling, i.e. creating bases for extrusion, pocketing, etc. The sketch object stores all elements and constraints inside the object itself. The sketch object stores all elements and constraints inside the object itself. It has its own editor and solver, which makes it probably the most complex single object in the entire FreeCAD. Instead of modifying the sketch object to suit for assembly needs, Assembly3 opt to repurpose some of the objects from the _Draft_ workbench without modification. The draft workbench, I believe, was originally used for sketching purposes before the birth of the more specialized sketcher.
+FreeCAD already has a powerful _Sketcher_ workbench, but it is limited to creating 2D sketches. In addition, the sketcher is more geared toward geometry modeling, i.e. creating bases for extrusion, pocketing, etc. The sketch object stores all elements and constraints inside the object itself. It has its own editor and solver, which makes it probably the most complex single object in the entire FreeCAD. Instead of modifying the sketch object to suit for assembly needs, Assembly3 opt to repurpose some of the objects from the _Draft_ workbench without modification. The draft workbench, I believe, was originally used for sketching purposes before the birth of the more specialized sketcher.
 
 At the time of this writing, Assembly3 supports using draft wire and circle/arc for sketching purpose. For normal objects added to an assembly container as a part, the placement of the object is used as constraining parameters (see [[here|Constraints-and-Solvers]] for more details). Draft wire is treated specially. Instead of constraining on the object placement, it is constrained on the coordinates of each individual points. Draft circle is still constrained on its placement like other objects, but with an additional parameter for its radius, and draft arc, two more parameters for the first and last angle that defines its two end points. Draft wires has many use cases, not all of which are acceptable by sketching constraint (e.g. `LineLength`). Only non-subdivided wires without a base or tool object attached are accepted.
 
