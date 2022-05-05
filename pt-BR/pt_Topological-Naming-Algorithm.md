@@ -11,7 +11,7 @@ The core function to generate element names is `TopoShape::makESHAPE()`. At a hi
 
 1. Find any unchanged and named elements that appear in both the input and out shape, and just copy those names over to the new shape.
 2. Assign names for generated and modified elements by querying the `Mapper`.
-3. For all unnamed elements, assign an indexed based name using its upper named element. For example, if a face is named `F1`, its unnamed edges will be named as `F1;:U1`, `F1;:U2`, etc. In this step, an element may be assigned multiple names, if it appear in more than one named upper elements. In this step, an element may be assigned multiple names, if it appear in more than one named upper elements. This is to improve the name stability of the next step.
+3. For all unnamed elements, assign an indexed based name using its upper named element. For example, if a face is named `F1`, its unnamed edges will be named as `F1;:U1`, `F1;:U2`, etc. In this step, an element may be assigned multiple names, if it appear in more than one named upper elements. This is to improve the name stability of the next step.
 4. For all remaining unnamed elements, use the combination of lower named elements as its name. For example, if a face has all its edges named, then the face will be named as something like `(edge1,edge2,edge3);:L`.
 
 A simplified version of the algorithm is presented with the following pseudo Python code,
@@ -37,13 +37,6 @@ def makESHAPE(result_shape, mapper, input_shapes, opcode):
                 # means we are asking for reverse mapping, i.e. query the mapped
                 # name using the index name
                 mapped_name = str(shape.Tag) + '_' + \
-                        shape.getElementName(element_type+str(i+1),True)
-
-                # get all the new_sub_shape that is modified from sub_shape
-                for k,new_sub_shape in enumerate(mapper.getModified(sub_shape)):
-
-                    # get the topological indexed names of this new sub shape,
-                    # i.e. Tag) + '_' + \
                         shape.getElementName(element_type+str(i+1),True)
 
                 # get all the new_sub_shape that is modified from sub_shape
@@ -139,7 +132,7 @@ def makESHAPE(result_shape, mapper, input_shapes, opcode):
         # important for tracing back element evolving history.
 
 
-    # Now, the reverse pass. # Now, the reverse pass. Starting from the highest level element, i.e.
+    # Now, the reverse pass. Starting from the highest level element, i.e.
     # Face, for any element that are named, assign names for its lower unnamed
     # elements. For example, if Edge1 is named E1, and its vertices are not
     # named, then name them as E1;:U1, E1;:U2, etc.
@@ -219,35 +212,6 @@ def makESHAPE(result_shape, mapper, input_shapes, opcode):
             if not names:
                 continue
 
-            # Construct the element name. For any elements that are not named, try
-    # construct its name from the lower elements
-
-    for element_type,lower_type in (('Edge','Vertex'),('Face','Edge')):
-        for i,sub_shape in enumerate(result_shape.getSubShapes(element_type)):
-            index_name = element_type + str(i+1)
-
-            # skip any named element
-            if result_shape.getElementName(index_name, True) != index_name:
-                continue
-
-            names = set()
-            for element_shape in sub_shape.getSubShapes(lower_type):
-                # get the indexed name of this lower element in the result
-                # shape
-                index_name = result_shape.getIndexName(element_shape)
-
-                mapped_name = result_shape.getElementName(index_name,True)
-                if mapped_name == index_name:
-                    # only name the upper element if all lower elements are
-                    # named
-                    names.clear()
-                    break
-
-                names.insert(mapped_name)
-
-            if not names:
-                continue
-
             # Construct the element name. For example, if opcode is XTR, and a
             # face with edges Edge1, Edge2, Edge3 will be named as
             # Edge1;:L(Edge2,Edge3);XTR
@@ -278,7 +242,7 @@ Let's take an example to see the new topological naming in action.
 We make a fusion with a simple `Cube` and `Cylinder`. Note that, I have turned off string hash in advance to show the raw topological names. You can do this by typing in the console,
 
 ```python
-App. ActiveDocument. UseHasher = False
+App.ActiveDocument.UseHasher = False
 ```
 
 See the following section for more details of the string hasher.
@@ -337,7 +301,7 @@ This name is difficult for human to read, but easy for program to parse. The end
  -- The modification marker
 ```
 
-<a name="fillet"></a>Next, we create a fillet by selecting an edge, `Edge5;:T1:5:E.Edge5`. The trailing `. Edge5` indicates the old style indexed element name. As you can see, when we turned off `Refine` in the fusion, the edge index jumped from 5 to 9, but its mapped element name is still `Edge5;:T1:5:E`, with `1` being the Cube's object ID, i.e. `Edge5` from Cube 1.
+<a name="fillet"></a>Next, we create a fillet by selecting an edge, `Edge5;:T1:5:E.Edge5`. The trailing `.Edge5` indicates the old style indexed element name. As you can see, when we turned off `Refine` in the fusion, the edge index jumped from 5 to 9, but its mapped element name is still `Edge5;:T1:5:E`, with `1` being the Cube's object ID, i.e. `Edge5` from Cube 1.
 
 [[images/topo-naming-3.gif]]
 
@@ -345,7 +309,7 @@ To further showcase a more advanced application of the new naming scheme, we add
 
 [[images/topo-naming-4.gif]]
 
-The fillet is now broken, because the originally selected edge is gone. Its name will not be reused like old index based names. You can see from the above screen cast that the original edge is modified, and its name has changed from `Edge5;:T1:5:E` into `Edge5;:M;FUS;:T1:5:E`. `TopoShape` offers function called `getRelatedElements()` to help obtaining potential replacement of the missing references. This is how the fillet editing tool can auto select the related edge when activated, as shown in the screen cast. The algorithm of `getRelatedElements()` is described below,
+The fillet is now broken, because the originally selected edge is gone. Its name will not be reused like old index based names.You can see from the above screen cast that the original edge is modified, and its name has changed from `Edge5;:T1:5:E` into `Edge5;:M;FUS;:T1:5:E`. `TopoShape` offers function called `getRelatedElements()` to help obtaining potential replacement of the missing references. This is how the fillet editing tool can auto select the related edge when activated, as shown in the screen cast. The algorithm of `getRelatedElements()` is described below,
 
 ```python
 def getRelatedElements(shape,name):
@@ -444,8 +408,10 @@ The naming algorithm is specifically designed to ease the recovery of the first 
 For example, with the above fillet object, to obtain the history of the top refined face,
 
 ```python
-for o in App. ActiveDocument. Fillet.getElementHistory('Face2'):
-    print '{} {}'.format(o[0]. Name, o[1:]) Fillet ('#21;:M;FLT;:T3:3:F', [])
+for o in App.ActiveDocument.Fillet.getElementHistory('Face2'):
+    print '{} {}'.format(o[0].Name, o[1:])
+
+Fillet ('#21;:M;FLT;:T3:3:F', [])
 Fusion ('#8;:M#7;RFI;:T2:2:F', ['Face2;:M2;FUS;:T2:5:F'])
 Cylinder ('Face2', [])
 ```
@@ -477,12 +443,12 @@ In order to maintain backward compatibility, no changes in the view object will 
 The screen cast above also shows how easy it is to override individual element color and transparency. The element color is stable across recomputation thanks to the stable element reference. Unlike how `Fillet` object treats the edge reference, `ViewProviderPartExt` will auto deduce related element names in case any reference is gone. To color any element using Python,
 
 ```python
-vobj = App. ActiveDocument. Connect. ViewObject
+vobj = App.ActiveDocument.Connect.ViewObject
 # obtain the existing element color as a dict
-colors = vobj. ElementColors
+colors = vobj.ElementColors
 # add some new color
 colors['Face3'] = (1.0,0.0,0.0,0.5)
-vobj.
+vobj.ElementColors = colors
 ```
 
 # Overhead
