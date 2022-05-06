@@ -1,7 +1,7 @@
 # Tworzenie prostego złożenia opartego na wiązaniach
 
-* Start FreeCAD and create a new document
-* Switch to the `Part` workbench and create a `Cube` and a `Cylinder`
+* Uruchom program FreeCAD i utwórz nowy dokument
+* Przełącz się na środowisko pracy `Część` i utwórz `Sześcian` i `Walec`
 * Switch to the `Assembly3` workbench, click ![AddAssembly](../raw/master/freecad/asm3/Gui/Resources/icons/Assembly_New_Assembly.svg?sanitize=true) to create a new assembly
 * Select both the `Cube` and the `Cylinder` and drag them into the new assembly
 * Select any face of the `Cylinder` or `Cube`, and click ![Move](../raw/master/freecad/asm3/Gui/Resources/icons/Assembly_Move.svg?sanitize=true) to activate part manual movement. Click any arrow to drag the `Cylinder` on top of the `Cube`, press the `ESC` key to leave part movement (Alternative: right-click `Assembly` in the tree view and click `Finish editing`)
