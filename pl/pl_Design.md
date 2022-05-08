@@ -1,4 +1,4 @@
-The design of Assembly3 (and the fork of FreeCAD) partially follows the unfinished FreeCAD Assembly [project plan](https://www.freecadweb.org/wiki/Assembly_project), in particularly, the section [Infrustracture](https://www.freecadweb.org/wiki/Assembly_project#Infrastructure) and [Object model](https://www.freecadweb.org/wiki/Assembly_project#Object_model), which are summarized below,
+Projekt Złożenie 3 (i fork FreeCADa) częściowo odpowiada niedokończonemu żłożeniu we FreeCADzie [planowi projektu](https://www.freecadweb.org/wiki/Assembly_project), w szczególności sekcja [Infrustracture](https://www.freecadweb.org/wiki/Assembly_project#Infrastructure) i [Model obiektów](https://www.freecadweb.org/wiki/Assembly_project#Object_model), podsumowana poniżej,
 
 ### Multi model
 
