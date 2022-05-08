@@ -1,4 +1,4 @@
-# Coordinate System
+# Koordinatensystem
 
 The user is encouraged to first read [this tutorial](https://web.archive.org/web/20191130140733/https://www.freecadweb.org/wiki/Assembly_Basic_Tutorial) to get some idea about the new concept of _local coordinate systems_. The tutorial is for the original unfinished Assembly workbench, but gives a pretty comprehensive overview of what Assembly3 is providing as well. The `Part` or `Product` container mentioned in the tutorial are equivalent to the `Assembly` container in Assembly3, which of course can be treated just as a _part_ and added to other assemblies. There is one thing I disagree with this tutorial. The concept of _global coordinate system_ is still useful, and necessary to interoperate with objects from other legacy (i.e. non-local-CS-aware) workbench. Let's just define the _global coordinate system_ as the 3D view coordinate system, in other word, the location where you actually see the object in the 3D view, or, the coordinates displayed in the status bar when you move your mouse over some object.
 
@@ -60,7 +60,7 @@ It may seem intimidating to maintain all these complex hierarchies of `Elements`
 
 Last but not the least, `Element`, as well as the `ElementLink` inside a constraint, make use of a new core feature, `OnTopWhenSelected`, to forcefully show highlight of its referring geometry sub-element (Face, Edge, Vertex) when selected, regardless of any obscuring objects. The property `OnTopWhenSelected` is available to all view object, but default to `False`, while `Element` and `ElementLink` make it active by default. The on-top feature makes it even easier for the user to check any anomaly due to topological name changing.
 
-# Selection
+# Auswahl
 
 There are two types of selection in FreeCAD, geometry element selection by clicking in the 3D view, and whole object selection by clicking in the tree view. When using Assembly3, it is important to distinguish between these two types of selection, because there are now lots of objects with just one geometry element. While you are getting used to these, it is helpful to bring out the selection view (FreeCAD menu bar, `View -> Panels -> Selection view`). You select a geometry element by clicking any unselected element (Face, Edge or Vertex) in the 3D view. If you click an already selected element, the selection will go one hierarchy up. For example, for a `LinkGroup` shown below,
 

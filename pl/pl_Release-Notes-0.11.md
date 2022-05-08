@@ -1,6 +1,6 @@
 __Nowa funkcjonalność__
 
-* Add ![AutoElementFix](../raw/master/freecad/asm3/Gui/Resources/icons/Assembly_AutoFixElement.svg?sanitize=true) button for automatic fix of broken element references. It utilizes the new core feature to search the linked object for sub-shape that are geometrically similar to the one stored in the element object. Enabling this option will activate `Auto Fix` for all elements. You can also disable the option here, and opt to manually fix the element using the new `Fix` tree view menu action of the element object.
+* Add ![AutoElementFix](../raw/master/freecad/asm3/Gui/Resources/icons/Assembly_AutoFixElement.svg?sanitize=true) button for automatic fix of broken element references. Wykorzystuje nową podstawową funkcję do wyszukiwania połączonego obiektu dla kształtu podrzędnego, który jest geometrycznie podobny do obiektu przechowywanego w obiekcie elementu. Włączenie tej opcji aktywuje `Automatyczne naprawianie` dla wszystkich elementów. Możesz również wyłączyć tę opcję tutaj, i zdecyduj się ręcznie naprawić element używając nowego `Napraw` w menu widoku drzewa obiektu elementu.
 
 * New element tree view menu actions to offset/flip the element or the owner part. See [here](Constraints-and-Solvers#user-content-element-actions) for more details.
 
