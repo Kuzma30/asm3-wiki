@@ -6,9 +6,9 @@
 
 # SolveSpace
 
-[SolveSpace](http://solvespace.com/) jest samodzielnym oprogramowaniem CAD ze znakomitym wsparciem dla złożeń. IMO, it has the opposite design principle of FreeCAD, which is big, modular, and fully extensible. SolveSpace, on the other hand  is lean and compact, and does extremely well for what it offers. But, you most likely will find something you want that's missing, and have to seek out other software for help. The constraint solver of SolveSpace is available as a small library for integration by third party software, which gives us the opportunity to bring the best from both worlds.
+[SolveSpace](http://solvespace.com/) jest samodzielnym oprogramowaniem CAD ze znakomitym wsparciem dla złożeń. W mojej opinii ma ono odwrotną zasadę projektowania niż FreeCAD, który jest duży, modularny i w pełni rozszerzalny. Z drugiej strony, środowisko SolveSpace, jest niewielkie i kompaktowe i robi bardzo dobrze to do czego zostało stworzone. Ale, Ty najprawdopodobniej znajdziesz coś, czego brakuje i będziesz musiał szukać innego oprogramowania do pomocy. Solwer wiązań SolveSpace jest dostępny jako mała biblioteka do integracji przez oprogramowanie firm trzecich, co daje nam możliwość wykorzystania tego, co najlepsze z obu światów.
 
-W tej chwili nie ma oficjalnego połączenia SolveSpace z Pythonem. Besides, some small modification is required to bring out the SolveSpace assembly functionality into the solver library. You can find my fork [here](https://github.com/realthunder/solvespace). Sprawdź repozytorium w swoim systemie plików,
+W tej chwili nie ma oficjalnego połączenia SolveSpace z Pythonem. Poza tym wymagana jest niewielka modyfikacja, aby wprowadzić funkcjonalność złożeń SolveSpace do biblioteki solwera. Mój fork możesz znaleźć [tutaj](https://github.com/realthunder/solvespace). Sprawdź repozytorium w swoim systemie plików,
 
 ```
 git clone https://github.com/realthunder/solvespace
@@ -32,11 +32,11 @@ Jeśli masz zainstalowaną więcej niż jedną wersję środowiska Python, może
 cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_PYTHON=On -DPYTHON_EXECUTABLE=/usr/bin/python3 ..
 ```
 
-After compilation is done, copy `slvs.py` and `_slvs.so` from `build/src/swig/python/` to `asm3/py_slvs`, where `asm3` is the directory you install Assembly3 workbench. Be sure to create an empty file named `__init__.py` at `asm3/py_slvs`.
+Po zakończeniu kompilacji należy skopiować `slvs.py` i `_slvs.so` z katalogu `build/src/swig/python/` do `asm3/py_slvs`, gdzie `asm3` jest katalogiem, w którym zainstalowano środowisko Złożenie 3. Upewnij się, że utworzyłeś pusty plik o nazwie `__init__.py` w `asm3/py_slvs`.
 
-## Cross Compile for Windows
+## Kompilacja Skrośna dla Windows
 
-To build for Windows 64-bit, you have two options. This section shows how to cross compile for Windows on Ubuntu
+Zbudować dla 64-bitowego Windows możesz na dwa sposoby. Tak sekcja opisuje jak wykonać na Ubuntu kompilację skrośną dla Windows
 
 ```
 apt-get install cmake mingw-w64
@@ -49,33 +49,33 @@ Po ukończeniu skopiuj `slvs.py` i `_slvs. yd` z `build/src/swig/python/` do `as
 
 ## Kompilacja dla Windows
 
-To build on Windows, you should use Visual Studio 2013, the same one FreeCAD uses. Install CMake and Python. If you are building the 64-bit version, make sure you install the Python 64-bit version. I have only tested the build with Python 2.7.14 64-bit. You probably can use the python lib included in FreeCAD libpack by adding the libpack path to `PATH` environment variable. But it doesn't work for me somehow. CMake only found the debug version python lib in the libpack.
+Aby budować w systemie Windows, należy użyć Visual Studio 2013, tego samego, z którego korzysta FreeCAD. Zainstaluj CMake i Python. Jeśli budujesz wersję 64-bitową, upewnij się, że zainstalowałeś 64-bitową wersję Pythona. Testowałem kompilację tylko z 64-bitowym Pythonem 2.7.14. Prawdopodobnie możesz użyć bibliotek Pythona zawartych w pakiecie FreeCAD libpack, dodając ścieżkę libpack do zmiennej środowiskowej `PATH`. Ale to nie działa dla mnie, z jakiegoś powodu. CMake znalazł w libpack tylko debugowalną wersję biblioteki Python.
 
-Download and extract the latest [swig](http://www.swig.org/download.html) to some where, and add the path to `PATH` environment variable. I haven't tested to build with the old version swig that's bundled with FreeCAD libpack.
+Pobierz i rozpakuj gdzieś najnowszy [swig](http://www.swig.org/download.html), a następnie dodaj ścieżkę do zmiennej środowiskowej `PATH`. Nie testowałem budowania za pomocą starej wersji swig, która jest dołączona do FreeCAD libpack.
 
-Be sure to checkout all the submodules of slvs before building. None of them is actually used, but is still needed to satisfy CMake dependency checking,
+Przed zbudowaniem należy wyprowadzić wszystkie podmoduły slvs. Żaden z nich nie jest w rzeczywistości używany, ale nadal jest wymagany, aby spełnić wymagania sprawdzania zależności CMake
 
 ```
 cd asm3/slvs
 git submodule update --init --recursive
 ```
 
-Run CMake-gui, select a build directory. Add a `BOOL` type entry named `BUILD_PYTHON`, and set it to `true`. Then click `configure` and select Visual Studio 2013 Win64, which is what FreeCAD used. If done without error, click `generate`.
+Uruchom CMake-gui, wybierz katalog kompilacji. Dodaj wpis typu `BOOL` o nazwie `BUILD_PYTHON`i ustaw go na `true`. Następnie kliknij `configure` i wybierz Visual Studio 2013 Win64, którego używa FreeCAD. Jeśli wykonało się bez błędu, kliknij `generate`.
 
-Finally, open the `solvespace.sln` file in the build directory. You only need to build two projects, first `slvs_static_excp`, and then `_slvs`. Once finished, copy the output at the following location to `asm/py_slvs`
+Na koniec otwórz plik `solvespace.sln` z katalogu kompilacji. Musisz zbudować dwa projekty, najpierw `slvs_static_excp`, a potem `_slvs`. Po zakończeniu skopiuj dane wyjściowe z miejsca kompilacji do `asm/py_slvs`
 
 ```
 asm/slvs/<your_build_directory>/src/swig/python/slvs.py
 asm/slvs/<your_build_directory>/src/swig/python/Release/_slvs.pyd
 ```
 
-If you want to build the Debug version, either download Python debug libraries, or put FreeCAD libpack directory in `PATH` environment variable before configuring CMake, so that CMake can find the debug version Python library. Once built, you must rename `_slvs.pyd` to `_slvs_d.pyd` before copying to `asm/py_slvs`
+Jeśli chcesz zbudować wersję debugowalną, pobierz debugowalne biblioteki Pythona, lub umieść katalog libpack FreeCAD w zmiennej środowiskowej `PATH` przed skonfigurowaniem CMake, aby CMake mógł znaleźć debugowalną wersję biblioteki Pythona. Po zbudowaniu, przed skopiowaniem do `asm/py_slvs`, musisz zmienić nazwę `_slvs.pyd` na `_slvs_d.pyd`
 
 ## Kompilacja dla MacOS
 
-The pre-build binary for MacOS is located at a [different](../tree/master/py_slvs_mac) sub-module, because MacOS python extension has the same name as Linux one. To build it yourself for use in FreeCAD App bundle, first you need to setup `Homebrew` according to this [wiki](https://www.freecadweb.org/wiki/CompileOnMac), and build FreeCAD App bundle.
+Prekompilowana wersja binarna dla systemu MacOS znajduje się w [innym](../tree/master/py_slvs_mac) podmodule. podmodule, ponieważ rozszerzenie Pythona dla systemu MacOS ma taką samą nazwę jak dla Linuksa. Aby zbudować go samodzielnie do użycia w pakiecie FreeCAD App, należy najpierw skonfigurować `Homebrew` zgodnie z tym [wiki](https://www.freecadweb.org/wiki/CompileOnMac), i zbudować pakiet FreeCAD App.
 
-Assuming you installed FreeCAD bundle at `~/some/place/FreeCAD.app`, then clone Assembly3 repository at `~/some/place/FreeCAD.app/Contents/Ext/freecad/`. And very importantly, make sure you name the clone directory as __asm3__. After that checkout `slvs` sub-module, and all of its own sub-modules.
+Zakładając, że zainstalowałeś pakiet FreeCAD pod adresem `~/jakies/miejsce/FreeCAD.app`, a następnie sklonowałeś repozytorium Złożenie 3 w `~/jakies/miejsc/FreeCAD.app/Contents/Ext/freecad/`. I bardzo ważne, upewnij się, że nazwałeś katalog kopii __asm3__. Po tym wyprowadź podmoduł `slvs` i wszystkie jego podmoduły.
 
 ```
 cd ~/some/place/FreeCAD.app/Contents/Ext/freecad/asm3
@@ -110,7 +110,7 @@ cp slvs/build/src/swig/python/_slvs.so py_slvs_mac/
 cp slvs/build/src/swig/python/slvs.py py_slvs_mac/
 ```
 
-Finally, you must make `_slvs.so` relocatable in order to be able to load it in FreeCAD bundle, with the following command
+Na koniec musisz uczynić `_slvs.so` przenośnym, aby móc go załadować go w pakiecie FreeCAD, wykonując następujące polecenie
 
 ```
 cd py_slvs_mac
@@ -120,7 +120,7 @@ install_name_tool -change \
     "/usr/local/opt/python@2/Frameworks/Python.framework/Versions/2.7/Python" "@rpath/Python" _slvs.so
 ```
 
-The last command changes the linked library path to be relative to the bundle's dynamic library loader. In case you used a different `CMake` configuration, you can find out your linked library path using the following command
+Ostatnie polecenie zmienia ścieżkę skonsolidowanej biblioteki tak, aby była względna w stosunku do programu ładującego biblioteki dynamiczne pakietu. In case you used a different `CMake` configuration, you can find out your linked library path using the following command
 
 ```
 otool -L _slvs.so
