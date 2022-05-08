@@ -1,8 +1,8 @@
-Here is a list of core changes sorted by C++ namespace, and classes. With only very few exception, most of the core changes are exposed to Python as well.
+Here is a list of core changes sorted by C++ namespace, and classes. Z bardzo nielicznymi wyjątkami, większość zmian w kodzie źródłowym jest widoczna także w Pythonie.
 
 # `App` Namespace
 
-## `Property`
+## `Właściwość`
 
 The property status bits are expanded for dynamic access control, just like file attributes in file system. It will be persisted when the document is saved. This allows for more flexible control of the properties of an object. For example, the programmer can now set a `Trasient` bit on the `Shape` of a `Part::Feature` derived object to make it not persistent, but dynamically generated when restore, which is the more efficient way of handling OCCT compound. Python code can use the following code to manipulate status bits of a property dynamically. This function are implemented in `PropertyContainerPy` class.
 
