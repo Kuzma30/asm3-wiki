@@ -1,4 +1,4 @@
-Projekt Złożenie 3 (i fork FreeCADa) częściowo odpowiada niedokończonemu żłożeniu we FreeCADzie [planowi projektu](https://www.freecadweb.org/wiki/Assembly_project), w szczególności sekcja [Infrustracture](https://www.freecadweb.org/wiki/Assembly_project#Infrastructure) i [Model obiektów](https://www.freecadweb.org/wiki/Assembly_project#Object_model), podsumowana poniżej,
+Projekt Złożenie 3 (i fork FreeCADa) częściowo odpowiada niedokończonemu złożeniu we FreeCADzie [planowi projektu](https://www.freecadweb.org/wiki/Assembly_project), w szczególności sekcja [Infrustracture](https://www.freecadweb.org/wiki/Assembly_project#Infrastructure) i [Model obiektów](https://www.freecadweb.org/wiki/Assembly_project#Object_model), podsumowana poniżej,
 
 ### Multi model
 
@@ -8,14 +8,14 @@ The forked FreeCAD core supports external object linking (with a new type of pro
 
 Assembly3 provides the `Assembly` container for holding its child features (or sub-assembly), and their constraints. It also introduce a new concept of `Elements` for declaring geometry elements used by constraints inside parent assembly. The purpose of the `Element` is to minimize the problem caused by geometry topological name changing, and make the assembly easier to maintain. See the following section for more details. A single object (e.g. Part object, sketch, or another assembly), can be added to multiple parent assemblies, either within the same or located outside of the current document. Each of its appearance inside the parent assembly has independent visibility control, but shares the same placement, meaning that if you move one instance of the object, all other instances moves relative to their parent assembly container. You can have independent placement by converting a child object into a link type object (See the following section for details). Simply right click the child object in the tree view and select `Link actions -> Replace with link`.
 
-### Unified Drag/Drop/Copy/Paste interface
+### Ujednolicony interfejs przeciągnij/upuść/kopiuj/wklej
 
-The drag and drop API has been extended to let the target object know where the dropped object located in the object hierarchy, which is taken full advantage by Assembly3. The copy and paste is extended as well to be aware of external objects, and let the user decide whether to do a shallow or deep copy.
+API przeciągnij i upuść zostało rozszerzone, aby obiekt docelowy wiedział, gdzie upuszczony obiekt znajduje się w hierarchii obiektów, która jest w pełni wykorzystywana przez Złożenie 3. Kopiowanie i wklejanie zostało rozszerzone o obsługę zewnętrznych obiektów i pozwalała użytkownikowi zdecydować, czy chce wykonać płytkie czy głębokie kopiowanie.
 
-### Object model
+### Model obiektu
 
-The `SubName` field in `Gui::SelectionObject` is for holding the selected geometry sub-element, such as face, edge or vertex. The forked FreeCAD extended usage of `SubName` to hold the path of selected object within the object hierarchy, e.g. a selection object with `Object = Assembly1` and `SubName
+Pole `SubName` w `Gui::SelectionObject` służy do trzymania wybranego elementu geometrii, takiego jak powierzchnia, krawędź lub wierzchołek. The forked FreeCAD extended usage of `SubName` to hold the path of selected object within the object hierarchy, e.g. a selection object with `Object = Assembly1` and `SubName
 = Parts.Assembly2.Constraints002.Constraint.` means the user selected the `Constraint` object of `Assembly2`, which is a child feature of the part group (`Parts`) in `Assembly1`. Notice the ending `.` in `SubName`. This is for backward compatibility purpose, so that the `SubName` can still be used to refer to a geometry sub-element of some sub-object without any ambiguity. The rule is that, any sub-object references must end with a `.`, and those names without an ending `.` are sub-element references. The aforementioned `PropertyXLink` has an optional `subname` field (assign/return as a `tuple(obj,
 subname)` in Python) for linking into a sub-object/element.
 
-`Gui.Selection` is extended with backward compatibility to provide full object path information on each selection, which makes it possible for the same object to be included in more than one group like objects without ambiguity on selection. Several new APIs have been added to FreeCAD core to provide nested child object placement and geometry information. 
+`Gui.Selection` został rozszerzony o kompatybilność wsteczną, aby zapewnić pełną informację o ścieżce obiektu dla każdego zaznaczenia, co umożliwia, aby ten sam obiekt był w więcej niż jednej grupie obiektów bez niejednoznaczności przy zaznaczeniu. Do rdzenia FreeCAD dodano kilka nowych API, aby dostarczyć zagnieżdżone informacje o umieszczeniu obiektu podrzędnego i geometrii. 
