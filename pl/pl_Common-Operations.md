@@ -16,9 +16,9 @@ After a new constraint is created, the selected elements will be highlighted in 
 
 In case you find that the constraining element highlight obscure the assembly 3D view, you can enable the _Auto Element Visibility_ feature by clicking ![AutoElementVis](../raw/master/freecad/asm3/Gui/Resources/icons/Assembly_AutoElementVis.svg?sanitize=true). When enabled, all constraining elements will be hidden by default. You can reveal them by selecting any constraint or constraint element object in the tree view.
 
-Now, save this document with whatever name you like.
+Teraz zapisz ten dokument pod dowolną nazwą.
 
-# Create a Super Assembly with External Link Array
+# Utwórz Super Złożenie za pomocą tablicy linków zewnętrznych
 
 We are going to build a multi-joint _thing_ using the above assembly as the base part.
 
