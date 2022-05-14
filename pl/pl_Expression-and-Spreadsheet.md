@@ -1,12 +1,12 @@
-# Overview
+# Przegląd
 
-Starting from version 0.9, there is a major upgrade of FreeCAD [Expression Engine](http://www.freecadweb.org/wiki/index.php?title=Expressions) and [Spreadsheet Workbench](http://www.freecadweb.org/wiki/index.php?title=Spreadsheet_Module). This article highlights the difference and enhancement made in my branch comparing to the upstream. It assumes that the reader is already familiar with the basic usage of expression and spreadsheet. If not, please check out the links above first, and also [this](https://yorikvanhavre.gitbooks.io/a-freecad-manual/content/working_with_freecad/using_spreadsheets.html) book chapter.
+Począwszy od wersji 0.9, jest duża aktualizacja FreeCAD [Silnik wyrażeń](http://www.freecadweb.org/wiki/index.php?title=Expressions) i [Arkusz kalkulacyjny](http://www.freecadweb.org/wiki/index.php?title=Spreadsheet_Module). Ten artykuł podkreśla różnicę i ulepszenia dokonane w mojej gałęzi w porównaniu z wcześniejszą wersją. Zakłada, że czytelnik jest już zaznajomiony z podstawowym użyciem wyrażenia i arkusza kalkulacyjnego. Jeśli nie, sprawdź najpierw linki powyżej, a także [ten](https://yorikvanhavre.gitbooks.io/a-freecad-manual/content/working_with_freecad/using_spreadsheets.html) rozdział książki.
 
-Here is a brief list of the enhancements,
+Oto krótka lista ulepszeń,
 
-* Expression syntax has been greatly extended to become a full blown scripting language. The syntax is borrowed from Python with a few extension to support FreeCAD unit system, document object reference, etc. It is _mostly_ backward compatible with upstream syntax with very few [exceptions](#python-syntax-mode).
+* Składnia wyrażenia została znacznie rozszerzona i stała się pełnowartościowym językiem skryptowym. Składnia jest zapożyczona z Pythona z kilkoma rozszerzeniami w celu obsługi systemu jednostek FreeCADa, odniesienia do obiektu w dokumencie, itp. Jest ona _w większości_ wstecznie zgodna ze składnią upstreamową z bardzo nielicznymi [wyjątkami](#python-syntax-mode).
 
-* Because of the extended syntax, expression can now evaluates into any type of Python object. And the expression engine has been extended to support binding to any type of property. See [here](#expression-binding) for more details.
+* Ze względu na rozszerzoną składnię, wyrażenie może teraz oceniać każdy typ obiektu Pythona. Silnik wyrażeń został rozszerzony o obsługę wiązania z dowolnym typem właściwości. Zobacz [tutaj](#expression-binding) po więcej szczegółów.
 
 * Both the `PropertyExpressionEngine` and `PropertySheet` has been modified to behave similarly as a link property that supports external objects. This means,
   * The external referenced document will be automatically opened together with the owner document;

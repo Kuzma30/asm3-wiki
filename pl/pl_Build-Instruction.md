@@ -120,7 +120,7 @@ install_name_tool -change \
     "/usr/local/opt/python@2/Frameworks/Python.framework/Versions/2.7/Python" "@rpath/Python" _slvs.so
 ```
 
-Ostatnie polecenie zmienia ścieżkę skonsolidowanej biblioteki tak, aby była względna w stosunku do programu ładującego biblioteki dynamiczne pakietu. In case you used a different `CMake` configuration, you can find out your linked library path using the following command
+Ostatnie polecenie zmienia ścieżkę skonsolidowanej biblioteki tak, aby była względna w stosunku do programu ładującego biblioteki dynamiczne pakietu. Jeśli użyłeś innej konfiguracji `CMake`, możesz sprawdzić ścieżkę skonsolidowanych bibliotek, używając następującego polecenia
 
 ```
 otool -L _slvs.so
