@@ -1,4 +1,4 @@
-**UWAGA: Instrukcja budowy zawarta w tym artykule jest przestarzała. Środowisko Złożenie 3 teraz działa z oficjalną wersją FreeCAD 0.19 i nowszą. Ponadto możesz teraz zainstalować zaplecze solvera SolveSpave za pomocą polecenia `pip install py-slvs`**. Repozytorium koła Pythona można znaleźć [tutaj](https://github.com/realthunder/slvs_py/).
+**UWAGA: Instrukcja kompilacji zawarta w tym artykule jest przestarzała. Środowisko Złożenie 3 teraz działa z oficjalną wersją FreeCAD 0.19 i nowszą. Ponadto możesz teraz zainstalować zaplecze solvera SolveSpave za pomocą polecenia `install py-slvs`**. Repozytorium koła Pythona można znaleźć [tutaj](https://github.com/realthunder/slvs_py/).
 
 ~~ W chwili pisania tego tekstu środowisko Złożenie 3 działa tylko z rozwidloną [gałęzią](https://github.com/realthunder/FreeCAD/tree/LinkStage3) FreeCAD. Najpierw należy zapoznać się z tą gałęzią i [zbudować](https://github.com/realthunder/FreeCAD/tree/LinkStage3#compiling) ją samodzielnie.~~
 
@@ -36,7 +36,7 @@ Po zakończeniu kompilacji należy skopiować `slvs.py` i `_slvs.so` z katalogu 
 
 ## Kompilacja Skrośna dla Windows
 
-Zbudować dla 64-bitowego Windows możesz na dwa sposoby. Tak sekcja opisuje jak wykonać na Ubuntu kompilację skrośną dla Windows
+Zbudować dla 64-bitowego Windows możesz na dwa sposoby. Ta sekcja opisuje jak wykonać na Ubuntu kompilację skrośną dla Windows
 
 ```
 apt-get install cmake mingw-w64
@@ -53,14 +53,14 @@ Aby budować w systemie Windows, należy użyć Visual Studio 2013, tego samego,
 
 Pobierz i rozpakuj gdzieś najnowszy [swig](http://www.swig.org/download.html), a następnie dodaj ścieżkę do zmiennej środowiskowej `PATH`. Nie testowałem budowania za pomocą starej wersji swig, która jest dołączona do FreeCAD libpack.
 
-Przed zbudowaniem należy wyprowadzić wszystkie podmoduły slvs. Żaden z nich nie jest w rzeczywistości używany, ale nadal jest wymagany, aby spełnić wymagania sprawdzania zależności CMake
+Przed zbudowaniem należy wyprowadzić wszystkie moduły wymagane przez slvs. Żaden z nich nie jest w rzeczywistości używany, ale nadal jest wymagany, aby spełnić wymagania sprawdzania zależności CMake
 
 ```
 cd asm3/slvs
 git submodule update --init --recursive
 ```
 
-Uruchom CMake-gui, wybierz katalog kompilacji. Dodaj wpis typu `BOOL` o nazwie `BUILD_PYTHON`i ustaw go na `true`. Następnie kliknij `configure` i wybierz Visual Studio 2013 Win64, którego używa FreeCAD. Jeśli wykonało się bez błędu, kliknij `generate`.
+Uruchom CMake-gui, wybierz katalog kompilacji. Dodaj wpis typu `BOOL` o nazwie `BUILD_PYTHON`i ustaw go na wartość `true`. Następnie kliknij `configure` i wybierz Visual Studio 2013 Win64, którego używa FreeCAD. Jeśli wykonało się bez błędu, kliknij `generate`.
 
 Na koniec otwórz plik `solvespace.sln` z katalogu kompilacji. Musisz zbudować dwa projekty, najpierw `slvs_static_excp`, a potem `_slvs`. Po zakończeniu skopiuj dane wyjściowe z miejsca kompilacji do `asm/py_slvs`
 
@@ -73,9 +73,9 @@ Jeśli chcesz zbudować wersję debugowalną, pobierz debugowalne biblioteki Pyt
 
 ## Kompilacja dla MacOS
 
-Prekompilowana wersja binarna dla systemu MacOS znajduje się w [innym](../tree/master/py_slvs_mac) podmodule. podmodule, ponieważ rozszerzenie Pythona dla systemu MacOS ma taką samą nazwę jak dla Linuksa. Aby zbudować go samodzielnie do użycia w pakiecie FreeCAD App, należy najpierw skonfigurować `Homebrew` zgodnie z tym [wiki](https://www.freecadweb.org/wiki/CompileOnMac), i zbudować pakiet FreeCAD App.
+Prekompilowana wersja binarna dla systemu MacOS znajduje się w [innym](../tree/master/py_slvs_mac) module podrzędnym, ponieważ rozszerzenie Pythona dla systemu MacOS ma taką samą nazwę jak dla Linuksa. Aby zbudować go samodzielnie do użycia w pakiecie FreeCAD App, należy najpierw skonfigurować `Homebrew` zgodnie z tym [wiki](https://www.freecadweb.org/wiki/CompileOnMac), i zbudować pakiet FreeCAD App.
 
-Zakładając, że zainstalowałeś pakiet FreeCAD pod adresem `~/jakies/miejsce/FreeCAD.app`, a następnie sklonowałeś repozytorium Złożenie 3 w `~/jakies/miejsc/FreeCAD.app/Contents/Ext/freecad/`. I bardzo ważne, upewnij się, że nazwałeś katalog kopii __asm3__. Po tym wyprowadź podmoduł `slvs` i wszystkie jego podmoduły.
+Zakładając, że zainstalowałeś pakiet FreeCAD w `~/jakies/miejsce/FreeCAD.app`, a następnie sklonowałeś repozytorium Złożenie 3 w `~/jakies/miejsc/FreeCAD.app/Contents/Ext/freecad/`. I bardzo ważne, upewnij się, że nazwałeś katalog kopii __asm3__. Po tym wyprowadź moduł podrzędny `slvs` i wszystkie jego zależności.
 
 ```
 cd ~/some/place/FreeCAD.app/Contents/Ext/freecad/asm3
@@ -130,40 +130,40 @@ Gotowe i możesz uruchomić FreeCAD.app i wypróbować Złożenie 3
 
 # SymPy + SciPy
 
-Drugi solver rozwiązywania wiązań używa [SymPy](http://www.sympy.org/) oraz [SciPy](https://www.scipy.org/). Są one w większości oparte na Pythonie, z pewną naturalną akceleracją w niektórych krytycznych miejscach. The backend implementation models after SolveSpace's solver design, that is, symbolic algebraic + non-linear least square minimization. It can be considered as a python implementation of the SolveSpace's solver.
+Drugi solver rozwiązywania wiązań używa [SymPy](http://www.sympy.org/) oraz [SciPy](https://www.scipy.org/). Są one w większości oparte na Pythonie, z pewną naturalną akceleracją w niektórych krytycznych miejscach. Implementacja backendu wzoruje się na SolveSpace, czyli symboliczna algebraiczna + nieliniowa metoda najmniejszych kwadratów. Można ją uznać za pythonową implementację solwera SolveSpace.
 
-SciPy offers a dozen of different [minimization](https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html) algorithms, but most of which cannot compete with SolveSpace performance wise. The following list shows some non-formal testing result using default parameters with the sample [assembly](#create-a-super-assembly-with-external-link-array) described later
+SciPy oferuje kilkanaście różnych algorytmów [minimalizacji](https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html), ale większość z nich nie może konkurować z SolveSpace pod względem wydajności. Poniższa lista przedstawia niektóre nieformalne wyniki testów z użyciem domyślnych parametrów z przykładowym [złożeniem](#create-a-super-assembly-with-external-link-array) opisanym później
 
-| Algorytm                      | Czas                                                       |
-| ----------------------------- | ---------------------------------------------------------- |
-| SolveSpace (jako odniesienie) | 0.006s                                                     |
-| Nelder-Mead                   | Not converge                                               |
-| Powell                        | 7.8s                                                       |
-| CG                            | 10+37s <sup>[1](#f1)</sup>                                 |
-| BFGT                          | 10+0.8 <sup>[1](#f1)</sup>                                 |
-| Newtonon-CG                   | 10+61+0.5s <sup>[2](#f2),</sup><sup>[3](#f3)</sup>         |
-| L-BFGS-B                      | 10+1.5s <sup>[1](#f1),</sup><sup>[3](#f3)</sup>            |
-| TNC                           | 10+0.8s <sup>[1](#f1)</sup>                                |
-| COBYLA                        | 0.2s <sup>[3](#f3)</sup>                                   |
-| SLSQP                         | 10+0.3 <sup>[1](#f1),</sup><sup>[3](#f3)</sup>             |
-| dogleg                        | 10+61+?s <sup>[2](#f2)</sup> Failed to solve, linalg error |
-| trust-ncg                     | 10+61+1.5s <sup>[2](#f2)</sup>                             |
+| Algorytm                      | Czas wykonywania                                                    |
+| ----------------------------- | ------------------------------------------------------------------- |
+| SolveSpace (jako odniesienie) | 0,006s                                                              |
+| Nelder-Mead                   | Nie zbiega się                                                      |
+| Powell                        | 7,8s                                                                |
+| CG                            | 10+37s <sup>[1](#f1)</sup>                                          |
+| BFGT                          | 10+0,8 <sup>[1](#f1)</sup>                                          |
+| Newtonon-CG                   | 10+61+0,5s <sup>[2](#f2),</sup><sup>[3](#f3)</sup>                  |
+| L-BFGS-B                      | 10+1,5s <sup>[1](#f1),</sup><sup>[3](#f3)</sup>                     |
+| TNC                           | 10+0,8s <sup>[1](#f1)</sup>                                         |
+| COBYLA                        | 0,2s <sup>[3](#f3)</sup>                                            |
+| SLSQP                         | 10+0,3 <sup>[1](#f1),</sup><sup>[3](#f3)</sup>                      |
+| dogleg                        | 10+61+?s <sup>[2](#f2)</sup> Niepowodzenie rozwiązania, błąd linalg |
+| trust-ncg                     | 10+61+1,5s <sup>[2](#f2)</sup>                                      |
 
-<b name="f1">[1]</b> Including Jacobian matrix calculation (10s in this test case), which is implemented using sympy lambdify with numpy.
+<b name="f1">[1]</b> W tym obliczanie macierzy Jakobiana (10s w tym przypadku testowym), które jest realizowane przy użyciu sympy lambdify z numpy.
 
-<b name="f2">[2]</b> Including Hessian matrix calculation (61s in this test case), in addition to Jacobian matrix.
+<b name="f2">[2]</b> W tym obliczanie macierzy Hessiana (61s w tym przypadku testowym), oprócz macierzy Jacobiana.
 
-<b name="f3">[3]</b> The obtained solution contains small gaps in some of the coincidence constrained points. Incorrect use of the algorithm?
+<b name="f3">[3]</b> Otrzymane rozwiązanie zawiera niewielkie luki dla niektórych punktów z więzami zbieżności. Niepoprawne użycie algorytmu?
 
 Powody, dla których napisano ten backend, są następujące,
 
 * SolveSpace posiada licencję GPL, co jest niezgodne z licencją LGPL programu FreeCAD
-* To gain more insight of the solver system, and easy experimentation with new ideas due to its python based nature,
-* W przypadku przyszłego rozszerzenia, symulacja oparta na fizyce, może być?
+* Aby uzyskać lepszy wgląd w system solvera i łatwo eksperymentować z nowymi pomysłami dzięki temu, że jest oparty na języku Python,
+* W przypadku przyszłego rozszerzenia, symulacja oparta na fizyce, być może?
 
 Będziesz musiał zainstalować SymPy i SciPy dla swojej platformy.
 
 ```
-pip install --upgrade sympy scipy
+install --upgrade sympy scipy
 ```
 
