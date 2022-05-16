@@ -4,7 +4,7 @@ Począwszy od wersji 0.9, jest duża aktualizacja FreeCAD [Silnik wyrażeń](htt
 
 Oto krótka lista ulepszeń,
 
-* Składnia wyrażenia została znacznie rozszerzona i stała się pełnowartościowym językiem skryptowym. Składnia jest zapożyczona z Pythona z kilkoma rozszerzeniami w celu obsługi systemu jednostek FreeCADa, odniesienia do obiektu w dokumencie, itp. Jest ona _w większości_ wstecznie zgodna ze składnią upstreamową z bardzo nielicznymi [wyjątkami](#python-syntax-mode).
+* Składnia wyrażenia została znacznie rozszerzona i stała się pełnowartościowym językiem skryptowym. Składnia jest zapożyczona ze środowiska Python z kilkoma rozszerzeniami w celu obsługi systemu jednostek programu FreeCAD, odniesienia do obiektu w dokumencie, itp. Jest ona _w większości_ wstecznie zgodna ze składnią upstreamową z bardzo nielicznymi [wyjątkami](#python-syntax-mode).
 
 * Ze względu na rozszerzoną składnię, wyrażenie może teraz oceniać każdy typ obiektu Pythona. Silnik wyrażeń został rozszerzony o obsługę wiązania z dowolnym typem właściwości. Zobacz [tutaj](#expression-binding) po więcej szczegółów.
 

@@ -1,4 +1,4 @@
-Projekt Złożenie 3 (i fork FreeCADa) częściowo odpowiada niedokończonemu złożeniu we FreeCADzie [planowi projektu](https://www.freecadweb.org/wiki/Assembly_project), w szczególności sekcja [Infrustracture](https://www.freecadweb.org/wiki/Assembly_project#Infrastructure) i [Model obiektów](https://www.freecadweb.org/wiki/Assembly_project#Object_model), podsumowana poniżej,
+Projekt Złożenie 3 (i fork FreeCADa) częściowo odpowiada [planowi projektu](https://www.freecadweb.org/wiki/Assembly_project) niedokończonego złożenia w programie FreeCAD, w szczególności sekcja [Infrastruktura](https://www.freecadweb.org/wiki/Assembly_project#Infrastructure) i [Model obiektów](https://www.freecadweb.org/wiki/Assembly_project#Object_model), podsumowana poniżej,
 
 ### Multi model
 
