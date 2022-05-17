@@ -12,7 +12,7 @@
 
 Możesz kliknąć ![Auto recompute](../raw/master/freecad/asm3/Gui/Resources/icons/Assembly_AutoRecompute.svg?sanitize=true) aby włączyć automatyczne rozwiązywanie po wprowadzeniu zmian w wiązaniu.
 
-Po utworzeniu nowego wiązania wybrane elementy zostaną podświetlone na czerwono. Kolor poszczególnych elementów ograniczających możesz łatwo zmienić na stronie właściwości obiektu widoku. Lub możesz ustawić kolor całego wiązania przez zmianę koloru samego obiektu wiązania. Upewnij się, że ustawiłeś właściwość widoku `OverrideMaterial` właściwość widoku na `Prawda`.
+Po utworzeniu nowego wiązania wybrane elementy zostaną podświetlone na czerwono. Kolor poszczególnych elementów ograniczających możesz łatwo zmienić na stronie właściwości obiektu widoku. Lub możesz ustawić kolor całego wiązania przez zmianę koloru samego obiektu wiązania. Upewnij się, że ustawiłeś parametr właściwości widoku `OverrideMaterial` na wartość `Prawda`.
 
 In case you find that the constraining element highlight obscure the assembly 3D view, you can enable the _Auto Element Visibility_ feature by clicking ![AutoElementVis](../raw/master/freecad/asm3/Gui/Resources/icons/Assembly_AutoElementVis.svg?sanitize=true). When enabled, all constraining elements will be hidden by default. You can reveal them by selecting any constraint or constraint element object in the tree view.
 
