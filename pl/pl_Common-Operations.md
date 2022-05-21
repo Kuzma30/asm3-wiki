@@ -4,15 +4,15 @@
 * Przełącz się na środowisko pracy `Część` i utwórz `Sześcian` i `Walec`
 * Przełącz na środowisko pracy `Złożenie 3`, kliknij ![AddAssembly](../raw/master/freecad/asm3/Gui/Resources/icons/Assembly_New_Assembly.svg?sanitize=true) aby utworzyć nowe złożenie
 * Wybierz `sześcian` oraz `walec` i przeciągnij je do swojego złożenia
-* Wybierz dowolną płaszczyznę `walca` lub `sześcianu`i kliknij ![Move](../raw/master/freecad/asm3/Gui/Resources/icons/Assembly_Move.svg?sanitize=true) aby aktywować ręczny ruch części. Click any arrow to drag the `Cylinder` on top of the `Cube`, press the `ESC` key to leave part movement (Alternative: right-click `Assembly` in the tree view and click `Finish editing`)
+* Wybierz dowolną płaszczyznę `walca` lub `sześcianu`i kliknij ![Move](../raw/master/freecad/asm3/Gui/Resources/icons/Assembly_Move.svg?sanitize=true) aby aktywować ręczny ruch części. Kliknij na dowolną strzałkę by przeciągnąć `Walec` na górną ścianę `sześcianu`, naciśnij klawisz `ESC` by opuścić tryb ruchu części (alternatywnie: kliknij prawym przyciskiem `Złożenie` w widoku drzewa i kliknij `Zakończ edycję`)
 * Select the top face of the `Cube` and (while holding the `CTRL` key) select the bottom face or edge of the `Cylinder` and then click ![AddCoincidence](../raw/master/freecad/asm3/Gui/Resources/icons/constraints/Assembly_ConstraintCoincidence.svg?sanitize=true) to create a plane coincidence constraint.
 * Finally, click ![Solve](../raw/master/freecad/asm3/Gui/Resources/icons/AssemblyWorkbench.svg?sanitize=true) to solve the constraint system.
 
 [[images/simple.gif]]
 
-You can click ![Auto recompute](../raw/master/freecad/asm3/Gui/Resources/icons/Assembly_AutoRecompute.svg?sanitize=true) to enable auto-solving with any changes in constraint.
+Możesz kliknąć ![Auto recompute](../raw/master/freecad/asm3/Gui/Resources/icons/Assembly_AutoRecompute.svg?sanitize=true) aby włączyć automatyczne rozwiązywanie po wprowadzeniu zmian w wiązaniu.
 
-After a new constraint is created, the selected elements will be highlighted in red. You can easily change the color of individual constraining elements under its view object property page. Or, set the color of the entire constraint by changing the color of constraint object itself. Make sure you set the `OverrideMaterial` view property to `True`.
+Po utworzeniu nowego wiązania wybrane elementy zostaną podświetlone na czerwono. Kolor poszczególnych elementów ograniczających możesz łatwo zmienić na stronie właściwości obiektu widoku. Lub możesz ustawić kolor całego wiązania przez zmianę koloru samego obiektu wiązania. Upewnij się, że ustawiłeś parametr właściwości widoku `OverrideMaterial` na wartość `Prawda`.
 
 In case you find that the constraining element highlight obscure the assembly 3D view, you can enable the _Auto Element Visibility_ feature by clicking ![AutoElementVis](../raw/master/freecad/asm3/Gui/Resources/icons/Assembly_AutoElementVis.svg?sanitize=true). When enabled, all constraining elements will be hidden by default. You can reveal them by selecting any constraint or constraint element object in the tree view.
 
