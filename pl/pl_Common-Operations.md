@@ -4,7 +4,7 @@
 * Przełącz się na środowisko pracy `Część` i utwórz `Sześcian` i `Walec`
 * Przełącz na środowisko pracy `Złożenie 3`, kliknij ![AddAssembly](../raw/master/freecad/asm3/Gui/Resources/icons/Assembly_New_Assembly.svg?sanitize=true) aby utworzyć nowe złożenie
 * Wybierz `sześcian` oraz `walec` i przeciągnij je do swojego złożenia
-* Wybierz dowolną płaszczyznę `walca` lub `sześcianu`i kliknij ![Move](../raw/master/freecad/asm3/Gui/Resources/icons/Assembly_Move.svg?sanitize=true) aby aktywować ręczny ruch części. Click any arrow to drag the `Cylinder` on top of the `Cube`, press the `ESC` key to leave part movement (Alternative: right-click `Assembly` in the tree view and click `Finish editing`)
+* Wybierz dowolną płaszczyznę `walca` lub `sześcianu`i kliknij ![Move](../raw/master/freecad/asm3/Gui/Resources/icons/Assembly_Move.svg?sanitize=true) aby aktywować ręczny ruch części. Kliknij na dowolną strzałkę by przeciągnąć `Walec` na górną ścianę `sześcianu`, naciśnij klawisz `ESC` by opuścić tryb ruchu części (alternatywnie: kliknij prawym przyciskiem `Złożenie` w widoku drzewa i kliknij `Zakończ edycję`)
 * Select the top face of the `Cube` and (while holding the `CTRL` key) select the bottom face or edge of the `Cylinder` and then click ![AddCoincidence](../raw/master/freecad/asm3/Gui/Resources/icons/constraints/Assembly_ConstraintCoincidence.svg?sanitize=true) to create a plane coincidence constraint.
 * Finally, click ![Solve](../raw/master/freecad/asm3/Gui/Resources/icons/AssemblyWorkbench.svg?sanitize=true) to solve the constraint system.
 
