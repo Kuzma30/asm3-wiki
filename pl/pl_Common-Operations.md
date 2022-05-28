@@ -4,9 +4,9 @@
 * Przełącz się na środowisko pracy `Część` i utwórz `Sześcian` i `Walec`
 * Przełącz na środowisko pracy `Złożenie 3`, kliknij ![AddAssembly](../raw/master/freecad/asm3/Gui/Resources/icons/Assembly_New_Assembly.svg?sanitize=true) aby utworzyć nowe złożenie
 * Wybierz `sześcian` oraz `walec` i przeciągnij je do swojego złożenia
-* Wybierz dowolną płaszczyznę `walca` lub `sześcianu`i kliknij ![Move](../raw/master/freecad/asm3/Gui/Resources/icons/Assembly_Move.svg?sanitize=true) aby aktywować ręczny ruch części. Kliknij na dowolną strzałkę by przeciągnąć `Walec` na górną ścianę `sześcianu`, naciśnij klawisz `ESC` by opuścić tryb ruchu części (alternatywnie: kliknij prawym przyciskiem `Złożenie` w widoku drzewa i kliknij `Zakończ edycję`)
-* Select the top face of the `Cube` and (while holding the `CTRL` key) select the bottom face or edge of the `Cylinder` and then click ![AddCoincidence](../raw/master/freecad/asm3/Gui/Resources/icons/constraints/Assembly_ConstraintCoincidence.svg?sanitize=true) to create a plane coincidence constraint.
-* Finally, click ![Solve](../raw/master/freecad/asm3/Gui/Resources/icons/AssemblyWorkbench.svg?sanitize=true) to solve the constraint system.
+* Wybierz dowolną płaszczyznę `walca` lub `sześcianu`i kliknij ![Move](../raw/master/freecad/asm3/Gui/Resources/icons/Assembly_Move.svg?sanitize=true) aby aktywować ręczny ruch części. Kliknij na dowolną strzałkę, by przeciągnąć `walec` na górną ścianę `sześcianu`, naciśnij klawisz `ESC` by opuścić tryb ruchu części (alternatywnie: kliknij prawym przyciskiem `Złożenie` w widoku drzewa i wybierz `Zakończ edycję`)
+* Zaznacz górną ścianę `sześcianu` i (trzymając klawisz `CTRL`) zaznacz dolną ściankę lub krawędź `walca`, a następnie kliknij przycisk ![AddCoincidence](../raw/master/freecad/asm3/Gui/Resources/icons/constraints/Assembly_ConstraintCoincidence.svg?sanitize=true) aby utworzyć wiązanie współpłaszczyznowości.
+* W końcu kliknij ![Solve](../raw/master/freecad/asm3/Gui/Resources/icons/AssemblyWorkbench.svg?sanitize=true) by rozwiązać układ wiązań.
 
 [[images/simple.gif]]
 
@@ -14,7 +14,7 @@ Możesz kliknąć ![Auto recompute](../raw/master/freecad/asm3/Gui/Resources/ico
 
 Po utworzeniu nowego wiązania wybrane elementy zostaną podświetlone na czerwono. Kolor poszczególnych elementów ograniczających możesz łatwo zmienić na stronie właściwości obiektu widoku. Lub możesz ustawić kolor całego wiązania przez zmianę koloru samego obiektu wiązania. Upewnij się, że ustawiłeś parametr właściwości widoku `OverrideMaterial` na wartość `Prawda`.
 
-In case you find that the constraining element highlight obscure the assembly 3D view, you can enable the _Auto Element Visibility_ feature by clicking ![AutoElementVis](../raw/master/freecad/asm3/Gui/Resources/icons/Assembly_AutoElementVis.svg?sanitize=true). When enabled, all constraining elements will be hidden by default. You can reveal them by selecting any constraint or constraint element object in the tree view.
+Jeśli zauważysz, że podświetlenie elementu ograniczającego zasłania widok 3D złożenia, możesz włączyć funkcję _Automatyczna Widoczność Elementów_ klikając przycisk ![AutoElementVis](../raw/master/freecad/asm3/Gui/Resources/icons/Assembly_AutoElementVis.svg?sanitize=true). Po włączeniu tej opcji wszystkie elementy wiążące będą domyślnie ukryte. Możesz je wyświetlić, zaznaczając dowolne wiązanie lub wiązanie obiektu elementu w widoku drzewa.
 
 Teraz zapisz ten dokument pod dowolną nazwą.
 
@@ -54,9 +54,9 @@ If you have enabled ![AutoRecompute](../raw/master/freecad/asm3/Gui/Resources/ic
 
 [[images/move.gif]]
 
-# Import External Assembly
+# Import Złożenia zewnętrznego
 
-In some cases, it will be easier to distribute your multi-hierarchy assembly as a single self-contained document. FreeCAD core provides a convenient command to help with this otherwise not so trivial task. Simply right-click any item in the document you want to distribute, and select `Link actions -> Import all
-links`, and that's all. Kliknij w przycisk ![Solve](../raw/master/freecad/asm3/Gui/Resources/icons/AssemblyWorkbench.svg?sanitize=true) aby zobaczyć, czy wszystko jest w porządku. Oczywiście możesz wybiórczo zaimportować dowolny obiekt, który zechcesz. Po prostu kliknij prawym przyciskiem myszy na ten element i wybierz opcję `Akcje z łączami -> Importuj
+W niektórych przypadkach łatwiej jest rozpowszechniać złożenie obejmujące wiele gałęzi jako pojedynczy, samodzielny dokument. Rdzeń programu FreeCAD udostępnia wygodne polecenie, które pomaga w tym, skądinąd nie tak trywialnym, zadaniu. Wystarczy kliknąć prawym przyciskiem myszki dowolną pozycję w dokumencie, który chcesz rozpowszechnić, i wybierz `Akcje łącza -> Importuj wszystkie
+łącza`, i to wszystko. Kliknij w przycisk ![Solve](../raw/master/freecad/asm3/Gui/Resources/icons/AssemblyWorkbench.svg?sanitize=true) aby zobaczyć, czy wszystko jest w porządku. Oczywiście możesz wybiórczo zaimportować dowolny obiekt, który zechcesz. Po prostu kliknij prawym przyciskiem myszy na ten element i wybierz opcję `Akcje z łączami -> Importuj
 link`.
 
