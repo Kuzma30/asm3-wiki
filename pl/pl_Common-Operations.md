@@ -29,7 +29,7 @@ We are going to build a multi-joint _thing_ using the above assembly as the base
 * Select any face of any `Cube`, click ![Move](../raw/master/freecad/asm3/Gui/Resources/icons/Assembly_Move.svg?sanitize=true) and click any arrow to drag to spread out the parts. Click the edges of the movement sphere to turn the part. Press `Esc` to leave part movement.
 * Select any face of the left most `Cube` in 3D view, and click ![Lock](../raw/master/freecad/asm3/Gui/Resources/icons/constraints/Assembly_ConstraintLock.svg?sanitize=true) to lock the left most sub assembly.
 * Orient the parts whatever you like. Select two face from any two assembly, and create a plane coincidence constraint. If you've enabled _auto recompute_, then the two assembly will now be snapped together
-* Do the same for the rest of the parts.
+* Należy postępować tak samo w przypadku pozostałych części.
 
 [[images/super.gif]]
 
