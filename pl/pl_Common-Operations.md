@@ -20,7 +20,7 @@ Teraz zapisz ten dokument pod dowolną nazwą.
 
 # Utwórz Super Złożenie za pomocą tablicy linków zewnętrznych
 
-We are going to build a multi-joint _thing_ using the above assembly as the base part.
+Zamierzamy zbudować _rzecz_ z wieloma połączeniami, używając powyższego zespołu jako części podstawowej.
 
 * Create a new document, and save it to whatever name you like. Yes, you need to save both the link and linked document at least once for external linking to work, because `PropertyXLink` need the file path information of both document to calculate relative path.
 * Make sure the current active 3D view is the new empty document. Now, in the tree view, select the assembly we just created previously, and then hold on `CTRL` key and right click the new document item in the tree view, and select `Link actions -> Make link`. A `Link` will be created that brings the assembly into the new document. You probably need to click `Fit content` button (or press `V,F` in 3D view) to see the assembly.
