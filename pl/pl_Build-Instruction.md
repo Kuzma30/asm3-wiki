@@ -149,9 +149,9 @@ SciPy oferuje kilkanaście różnych algorytmów [minimalizacji](https://docs.sc
 | dogleg                        | 10+61+?s <sup>[2](#f2)</sup> Niepowodzenie rozwiązania, błąd linalg |
 | trust-ncg                     | 10+61+1,5s <sup>[2](#f2)</sup>                                      |
 
-<b name="f1">[1]</b> W tym obliczanie macierzy Jakobiana (10s w tym przypadku testowym), które jest realizowane przy użyciu sympy lambdify z numpy.
+<b name="f1">[1]</b> W tym obliczanie macierzy Jakobiego (10s w tym przypadku testowym), które jest realizowane przy użyciu sympy lambdify z numpy.
 
-<b name="f2">[2]</b> W tym obliczanie macierzy Hessiana (61s w tym przypadku testowym), oprócz macierzy Jacobiana.
+<b name="f2">[2]</b> W tym obliczanie macierzy Hessego (61s w tym przypadku testowym), oprócz macierzy Jacobiego.
 
 <b name="f3">[3]</b> Otrzymane rozwiązanie zawiera niewielkie luki dla niektórych punktów z więzami zbieżności. Niepoprawne użycie algorytmu?
 
