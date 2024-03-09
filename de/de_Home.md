@@ -1,9 +1,9 @@
-Welcome to the FreeCAD Assembly3 wiki!
+Willkommen zum FreeCAD-Assembly3-Wiki!
 
 * [[Build Instruction]]
-* [[Concepts]]
+* [[Konzepte]]
 * [[Navigation]]
-* Tutorials
+* Anleitungen
     * [[Common Operations]]
     * [[Replacing Part]]
     * [[Create Skeleton Sketch]]
