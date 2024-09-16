@@ -6,12 +6,12 @@ we are going to build a skeleton sketch as follow,
 
 [[images/linkage-dimensioned.png]]
 
-* Switch to Assembly3 workbench
-* Create an empty assembly container
+* Zum Arbeitsbereich Assembly3 wechseln
+* Einen leeren Baugruppen-Container erstellen
 * Select the newly create assembly object, and click ![AddWorkplane](../raw/master/freecad/asm3/Gui/Resources/icons/Assembly_Add_Workplane.svg?sanitize=true) to add a work plane. Note that you can use any other object with planar edge or face to define the sketch plane. The Assembly3 work plane is just a convenience.
 * This is an optional step, change the plane `Width` and `Length` to 100mm, and then scale and position the 3D view to put the entire plane in the center. Then hide the plane to not interfere with the draft object editing. The sizing of the plane is to give you a rough idea of how long the lines should be. It is suggested to draw the initial sketch close to the final structure to avoid confusing the solver.
 * Select the new work plane, and click ![AddSketchPlane](../raw/master/freecad/asm3/Gui/Resources/icons/constraints/Assembly_ConstraintSketchPlane.svg?sanitize=true) to add a `sketchPlane` constraint
-* Now, switch to Draft workbench
+* Jetzt zum Arbeitsbereich Draft wechseln
 * Add a few wires according to the above picture. You can add one wire for each colored lines, or you can use multi-segment wires as much as possible to reduce the number of point coincidence constraints needed later.
 * This is an optional step. For two point line segment, you can set the `Length` property of the draft wire to define the length now. For multi-point poly-lines, you can set the length in later step.
 * Drag all draft wires into the assembly container.
